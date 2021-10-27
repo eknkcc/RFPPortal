@@ -36,5 +36,15 @@
             Agreement
         }
 
+        /// <summary>
+        ///  Enum of current status of a RFP
+        /// </summary>
+        public enum RfpStatusTypes
+        {
+            Pending,
+            Active,
+            Waiting,
+            Completed
+        }
     }
 }

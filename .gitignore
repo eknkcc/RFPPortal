@@ -7,3 +7,4 @@
 /RFPPortalWebsite/obj
 /RFPPortalWebsite/Properties/PublishProfiles
 *.user
+/.vs/ProjectSettings.json

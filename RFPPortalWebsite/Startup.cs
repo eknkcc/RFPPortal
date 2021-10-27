@@ -23,7 +23,7 @@ namespace RFPPortalWebsite
             Configuration = configuration;
 
             LoadConfig(configuration);
-            //InitializeService();
+            InitializeService();
         }
 
         public static void LoadConfig(IConfiguration configuration)
@@ -36,7 +36,7 @@ namespace RFPPortalWebsite
         {
             monitizer = new Monitizer();
 
-            ApplicationStartResult mysqlMigrationcontrol = mysql.Migrate(new dao_rfpdb_context().Database);
+            ApplicationStartResult mysqlMigrationcontrol = mysql.Migrate(new rfpdb_context().Database);
             if (!mysqlMigrationcontrol.Success)
             {
                 monitizer.startSuccesful = -1;

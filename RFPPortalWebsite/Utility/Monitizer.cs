@@ -1,4 +1,5 @@
 ﻿using Helpers.Models.SharedModels;
+using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace RFPPortalWebsite.Utility
@@ -89,34 +91,49 @@ namespace RFPPortalWebsite.Utility
         /// <param name="IdField">Exception source primary key id</param>
         public void AddException(Exception ex, Enums.LogTypes LogType, bool isfatal = false, string IdFieldName = "", int IdField = 0)
         {
-            exceptionCounter++;
-
-            if (isfatal)
+            Task.Run(() =>
             {
-                fatalCounter++;
-            }
+                try
+                {
+                    exceptionCounter++;
 
-            ErrorLog log = new ErrorLog();
-            log.Application = appName;
-            log.Server = ipAddress;
-            log.Date = DateTime.Now;
-            log.IdField = IdField;
-            log.IdFieldName = IdFieldName;
-            log.Message = GetExceptionMessages(ex);
-            MethodBase site = ex.TargetSite;
-            string methodName = site == null ? "" : site.Name;
-            log.Target = methodName;
-            string trace = ex.StackTrace == null ? "" : ex.StackTrace;
-            log.Trace = trace;
-            log.Type = LogType.ToString();
+                    if (isfatal)
+                    {
+                        fatalCounter++;
+                    }
 
-            exceptions.Add(log);
+                    ErrorLog log = new ErrorLog();
+                    log.Application = appName;
+                    log.Server = ipAddress;
+                    log.Date = DateTime.Now;
+                    log.IdField = IdField;
+                    log.IdFieldName = IdFieldName;
+                    log.Message = GetExceptionMessages(ex);
+                    MethodBase site = ex.TargetSite;
+                    string methodName = site == null ? "" : site.Name;
+                    log.Target = methodName;
+                    string trace = ex.StackTrace == null ? "" : ex.StackTrace;
+                    log.Trace = trace;
+                    log.Type = LogType.ToString();
 
-            if (exceptions.Count > 1000)
-            {
-                exceptions.RemoveAt(0);
-            }
+                    exceptions.Add(log);
 
+                    if (exceptions.Count > 1000)
+                    {
+                        exceptions.RemoveAt(0);
+                    }
+
+                    using (rfpdb_context db = new rfpdb_context())
+                    {
+                        db.ErrorLogs.Add(log);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception exc)
+                {
+                    AddConsole("Exception while saving exception log. " + exc.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -128,21 +145,36 @@ namespace RFPPortalWebsite.Utility
         /// <param name="IdField">Log source primary key id</param>
         public void AddApplicationLog(Enums.LogTypes type, string explanation, string IdFieldName = "", int IdField = 0)
         {
-            ApplicationLog log = new ApplicationLog();
-            log.Application = appName;
-            log.Server = ipAddress;
-            log.IdField = IdField;
-            log.IdFieldName = IdFieldName;
-            log.Explanation = explanation;
-            log.Type = type.ToString();
-            log.Date = DateTime.Now;
-            logs.Add(log);
-
-            if (logs.Count > 1000)
+            Task.Run(() =>
             {
-                logs.RemoveAt(0);
-            }
+                try
+                {
+                    ApplicationLog log = new ApplicationLog();
+                    log.Application = appName;
+                    log.Server = ipAddress;
+                    log.IdField = IdField;
+                    log.IdFieldName = IdFieldName;
+                    log.Explanation = explanation;
+                    log.Type = type.ToString();
+                    log.Date = DateTime.Now;
+                    logs.Add(log);
 
+                    if (logs.Count > 1000)
+                    {
+                        logs.RemoveAt(0);
+                    }
+
+                    using (rfpdb_context db = new rfpdb_context())
+                    {
+                        db.ApplicationLogs.Add(log);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception exc)
+                {
+                    AddConsole("Exception while saving application log. " + exc.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -155,20 +187,35 @@ namespace RFPPortalWebsite.Utility
         /// <param name="port">User request port</param>
         public void AddUserLog(int userId, Enums.UserLogType type, string explanation, string ip = "", string port = "")
         {
-            UserLog log = new UserLog();
-            log.Application = appName;
-            log.Ip = ip;
-            log.Port = port;
-            log.UserId = userId;
-            log.Explanation = explanation;
-            log.Type = type.ToString();
-            log.Date = DateTime.Now;
-
-            if (logs.Count > 1000)
+            Task.Run(() =>
             {
-                logs.RemoveAt(0);
-            }
+                try
+                {
+                    UserLog log = new UserLog();
+                    log.Application = appName;
+                    log.Ip = ip;
+                    log.Port = port;
+                    log.UserId = userId;
+                    log.Explanation = explanation;
+                    log.Type = type.ToString();
+                    log.Date = DateTime.Now;
 
+                    if (logs.Count > 1000)
+                    {
+                        logs.RemoveAt(0);
+                    }
+
+                    using (rfpdb_context db = new rfpdb_context())
+                    {
+                        db.UserLogs.Add(log);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception exc)
+                {
+                    AddConsole("Exception while saving user log. " + exc.Message);
+                }
+            });
         }
 
         /// <summary>
