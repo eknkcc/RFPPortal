@@ -103,6 +103,7 @@ a:hover {
     text-transform: uppercase;
     text-align: center;
     font-size: 2.5rem;
+    margin-bottom:0;
 }
 
 /* Cards */
@@ -418,9 +419,13 @@ a:hover {
     }
 }
 
-.blueDot {
+.dot_blue {
     color: #1A99FF
 }
-.redDot {
-    color: rgba(189, 21, 11, 0.75)
+.dot_green {
+    color: rgb(0, 249, 62);
+}
+
+.cursor-pointer{
+    cursor:pointer;
 }

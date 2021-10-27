@@ -4,71 +4,81 @@
 
 @model List<RFPPortalWebsite.Models.DbModels.Rfp>
 
-<section class="light">
-    <div class="container py-2">
-        <div class="h1 text-center text-dark" id="pageHeaderTitle">RFP's</div>
+<section>
+    <div class="container mt-3">
+        <div class="h1 text-center text-dark mb-4 p-4" id="pageHeaderTitle">Request For Proposals</div>
+        <hr />
+        <input placeholder="Search by title or description" class="form-control mb-4 p-4" />
+
         @try
         {
             foreach (var item in Model)
             {
-                if (@item.Status.ToLower() == "active")
+                string biddingType = "";
+                string remainingTime = "";
+                if (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
                 {
-                    <article class="postcard light blue">
-                        <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
-                            <img class="postcard__img" src="~/images/blockchain.jpg" alt="Image Title" />
-                        </a>
-                        <div class="postcard__text t-dark">
-                            <h1 class="postcard__title blue"><a href="#">@item.Title</a></h1>
-                            <div class="postcard__subtitle small">
-                                <time datetime="@item.CreateDate">
-                                    <i class="fas fa-calendar-alt mr-2"></i>@item.CreateDate.ToLocalTime()
-                                </time>
-                            </div>
-                            <div class="postcard__bar"></div>
-                            <div class="postcard__preview-txt">
-                                @item.Description
-                            </div>
-                            <ul class="postcard__tagbox">
-                                <li class="tag__item">
-                                    <i class="fas fa-circle mr-2 blueDot"></i>@item.Status
-                                </li>
-                                <li class="tag__item">
-                                    <i class="fas fa-clock mr-2" title="Time Remaining"></i>@item.Timeframe
-                                </li>
-                                <li class="tag__item play blue">
-                                    <a href="./RFP-Detail/@item.RfpID"><i class="fas fa-play mr-2"></i>Details and Bids</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </article>
+                    biddingType = "Internal Bidding";
+                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) - DateTime.Now).Days + " days remaining";
+                }
+                else if (DateTime.Now >= item.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
+                         DateTime.Now <= item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
+                {
+                    biddingType = "Public Bidding";
+                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays) - DateTime.Now).Days + " days remaining";
                 }
                 else
                 {
-                    <article class="postcard light red">
-                        <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
-                            <img class="postcard__img" src="~/images/blockchain.jpg" alt="Image Title" />
-                        </a>
-                        <div class="postcard__text t-dark">
-                            <h1 class="postcard__title red"><a onclick="window.location.href='./RFP-Detail/'+@item.RfpID">Podcast Title</a></h1>
-                            <div class="postcard__subtitle small">
-                                <time datetime="@item.CreateDate">
-                                    <i class="fas fa-calendar-alt mr-2"></i>@item.CreateDate.ToLocalTime()
-                                </time>
-                            </div>
-                            <div class="postcard__bar"></div>
-                            <div class="postcard__preview-txt">
-                                @item.Description
-                            </div>
-                            <ul class="postcard__tagbox">
-                                <li class="tag__item"><i class="fas fa-circle mr-2 redDot"></i>@item.Status</li>
-                                <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@item.Timeframe</li>
-                                <li class="tag__item play red">
-                                    <a href="./RFP-Detail/@item.RfpID"><i class="fas fa-play mr-2"></i>Details and Bids</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </article>
+                    biddingType = "Bidding Ended";
                 }
+
+                string clr = "";
+                if (item.Status.ToLower() == "active")
+                {
+                    clr = "green";
+                }
+                else
+                {
+                    clr = "blue";
+                }
+
+
+                <article class="postcard light cursor-pointer @clr">
+                    <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
+                        <img class="postcard__img" src="~/images/casper.png" alt="Image Title" />
+                    </a>
+                    <div class="postcard__text t-dark" onclick="window.location.href='./RFP-Detail/'+@item.RfpID">
+                        <h1 class="postcard__title @clr"><a onclick="window.location.href='./RFP-Detail/'+@item.RfpID">Podcast Title</a></h1>
+                        <div class="postcard__subtitle small">
+                            <time datetime="@item.CreateDate">
+                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
+                            </time>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">
+                            @if (@item.Description.Length > 50)
+                            {
+                                @item.Description.Substring(0, Math.Min(item.Description.Length, 50)) <span>..</span>
+                            }
+                            else
+                            {
+                                @item.Description
+                            }
+                        </div>
+                        <ul class="postcard__tagbox">
+                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status</li>
+                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+                            {
+                                <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
+                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> @biddingType</li>
+                            }
+                            else
+                            {
+                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> @biddingType</li>
+                            }
+                        </ul>
+                    </div>
+                </article>
 
             }
         }
