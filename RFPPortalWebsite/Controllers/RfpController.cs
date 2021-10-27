@@ -53,6 +53,32 @@ namespace RFPPortalWebsite.Controllers
         }
 
         /// <summary>
+        ///  Returns object of RFP bids for given RFP by identity.
+        /// </summary>
+        /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
+        /// <returns>RFP Bid Object</returns>
+        [Route("GetRfpById")]
+        [HttpGet]
+        public Rfp GetRfpById(int rfpid)
+        {
+            Rfp model = new Rfp();
+
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    model = db.Rfps.SingleOrDefault(x => x.RfpID == rfpid);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return model;
+        }
+
+        /// <summary>
         ///  Returns list of RFPs in the database by status with pagination.
         ///  Returns all paginated records in the database if status parameter is null or empty.
         /// </summary>

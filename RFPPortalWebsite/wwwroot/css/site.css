@@ -417,3 +417,10 @@ a:hover {
         background-image: linear-gradient(80deg, rgba(189, 187, 73, 0.1), transparent 50%);
     }
 }
+
+.blueDot {
+    color: #1A99FF
+}
+.redDot {
+    color: rgba(189, 21, 11, 0.75)
+}
