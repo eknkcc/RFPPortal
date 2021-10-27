@@ -103,7 +103,7 @@ namespace RFPPortalWebsite.Controllers
         /// <returns></returns>
         [Route("ChooseWinningBid")]
         [HttpPut]
-        [AdminAuthorization]
+        [IpWhitelistAuthorization]
         public AjaxResponse ChooseWinningBid([FromQuery] int RfpBidID)
         {
 

@@ -21,10 +21,8 @@
         /// </summary>
         public enum UserIdentityType
         {
-            Admin,
-            Associate,
-            VotingAssociate,
-            Public
+            Public,
+            Internal,
         }
 
         /// <summary>

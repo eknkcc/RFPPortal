@@ -18,8 +18,4 @@
     <PackageReference Include="PagedList.Core" Version="1.17.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
-  </ItemGroup>
-
 </Project>

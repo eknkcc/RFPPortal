@@ -53,10 +53,10 @@ namespace RFPPortalWebsite.Controllers
         }
 
         /// <summary>
-        ///  Returns object of RFP bids for given RFP by identity.
+        ///  Returns object of RFP for given identity.
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
-        /// <returns>RFP Bid Object</returns>
+        /// <returns>Rfp Object</returns>
         [Route("GetRfpById")]
         [HttpGet]
         public Rfp GetRfpById(int rfpid)

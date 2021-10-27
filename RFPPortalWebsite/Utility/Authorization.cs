@@ -77,12 +77,12 @@ namespace RFPPortalWebsite.Utility
     }
 
     /// <summary>
-    ///  Authorization attribute for admin.
+    ///  Authorization attribute for third party admin.
     ///  Only accepts requests from ip addresses in whitelist defined in appsettings.json
     /// </summary>
-    public class AdminAuthorization : ActionFilterAttribute
+    public class IpWhitelistAuthorization : ActionFilterAttribute
     {
-        public AdminAuthorization()
+        public IpWhitelistAuthorization()
         {
         }
 
