@@ -6,6 +6,7 @@ using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
+using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,7 @@ namespace RFPPortalWebsite.Controllers
         /// <returns></returns>
         [Route("ChooseWinningBid")]
         [HttpPut]
+        [AdminAuthorization]
         public AjaxResponse ChooseWinningBid([FromQuery] int RfpBidID)
         {
 

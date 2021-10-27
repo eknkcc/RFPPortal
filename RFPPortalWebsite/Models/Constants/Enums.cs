@@ -23,7 +23,8 @@
         {
             Admin,
             Associate,
-            VotingAssociate
+            VotingAssociate,
+            Public
         }
 
         /// <summary>
