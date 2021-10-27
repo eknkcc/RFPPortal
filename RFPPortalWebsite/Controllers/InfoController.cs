@@ -1,6 +1,7 @@
 ﻿using Helpers.Models.SharedModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace RFPPortalWebsite.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [LocalMachineAuthorization]
     public class InfoController : ControllerBase
     {
         [HttpGet("GetAppInfo", Name = "GetAppInfo")]

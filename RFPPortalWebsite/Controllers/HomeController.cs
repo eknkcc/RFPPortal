@@ -21,6 +21,9 @@ namespace RFPPortalWebsite.Controllers
             return View();
         }
 
-
+        public IActionResult Unauthorized()
+        {
+            return View();
+        }
     }
 }

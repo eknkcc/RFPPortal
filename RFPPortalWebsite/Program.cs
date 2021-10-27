@@ -16,6 +16,10 @@ namespace RFPPortalWebsite
         public class Settings
         {
             public string DbConnectionString { get; set; }
+            public int InternalBiddingDays { get; set; }
+            public int PublicBiddingDays { get; set; }
+            public List<string> IpWhitelist { get; set; }
+            public string EncryptionKey { get; set; }
         }
 
         public static Settings _settings { get; set; } = new Settings();
