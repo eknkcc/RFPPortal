@@ -10,23 +10,17 @@ namespace RFPPortalWebsite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [Route("RFP_Detail/{BidID}")]
+        public IActionResult RFP_Detail(int BidID)
         {
             return View();
         }
 
-  
+
     }
 }
