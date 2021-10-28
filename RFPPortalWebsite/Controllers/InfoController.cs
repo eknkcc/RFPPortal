@@ -9,17 +9,29 @@ using System.Threading.Tasks;
 
 namespace RFPPortalWebsite.Controllers
 {
+    /// <summary>
+    ///  InfoController contains healthcheck methods for the application
+    ///  This controller only responds requests from local machine (LocalMachineAuthorization)
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     [LocalMachineAuthorization]
     public class InfoController : ControllerBase
     {
+        /// <summary>
+        ///  Get application information, logs, errors etc. 
+        /// </summary>
+        /// <returns>MonitizerResult class</returns>
         [HttpGet("GetAppInfo", Name = "GetAppInfo")]
         public MonitizerResult GetAppInfo()
         {
             return Program.monitizer.GetMonitizerResult();
         }
 
+        /// <summary>
+        ///  Reset application exception list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ResetErrors", Name = "ResetErrors")]
         public bool ResetErrors()
         {

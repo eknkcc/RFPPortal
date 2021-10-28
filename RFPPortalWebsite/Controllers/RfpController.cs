@@ -6,6 +6,7 @@ using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
+using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ using static RFPPortalWebsite.Models.Constants.Enums;
 
 namespace RFPPortalWebsite.Controllers
 {
+    /// <summary>
+    ///  RfpController contains Rfp CRUD operations.
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class RfpController : ControllerBase
@@ -56,7 +60,7 @@ namespace RFPPortalWebsite.Controllers
         ///  Returns object of RFP for given identity.
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
-        /// <returns>Rfp Object</returns>
+        /// <returns>Rfp single object</returns>
         [Route("GetRfpById")]
         [HttpGet]
         public Rfp GetRfpById(int rfpid)
@@ -83,7 +87,7 @@ namespace RFPPortalWebsite.Controllers
         ///  Returns all paginated records in the database if status parameter is null or empty.
         /// </summary>
         /// <param name="status">Status of the RFP</param>
-        /// <returns>RFP List</returns>
+        /// <returns>RFP List with pagination entity</returns>
         [Route("GetRfpsByStatusPaged")]
         [HttpGet]
         public PaginationEntity<Rfp> GetRfpsByStatusPaged(string status, int page = 1, int pageCount = 30)
@@ -122,9 +126,10 @@ namespace RFPPortalWebsite.Controllers
         ///  Returns list of RFP bids for given RFP by identity.
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
-        /// <returns>RFP Bid List</returns>
+        /// <returns>Bid List for given RfpId</returns>
         [Route("GetRfpBidsByRfpId")]
         [HttpGet]
+        [InternalUserAuthorization]
         public List<RfpBid> GetRfpBidsByRfpId(int rfpid)
         {
             List<RfpBid> model = new List<RfpBid>();
@@ -147,11 +152,13 @@ namespace RFPPortalWebsite.Controllers
 
         /// <summary>
         ///  Post RFP to database
+        ///  This method can only be accessed by third party admin in ip whitelist.
         /// </summary>
         /// <param name="model">Rfp model</param>
-        /// <returns></returns>
+        /// <returns>Submitted RFP</returns>
         [Route("SubmitRfpForm")]
         [HttpPost]
+        [IpWhitelistAuthorization]
         public AjaxResponse SubmitRfpForm(Rfp model)
         {
             try
@@ -174,11 +181,13 @@ namespace RFPPortalWebsite.Controllers
 
         /// <summary>
         ///  Changes the status of the given Rfp record
+        ///  This method can only be accessed by third party admin in ip whitelist.
         /// </summary>
         /// <param name="model">Rfp model</param>
-        /// <returns></returns>
+        /// <returns>Updated RFP</returns>
         [Route("ChangeRfpStatus")]
         [HttpPut]
+        [IpWhitelistAuthorization]
         public AjaxResponse ChangeRfpStatus(Rfp model)
         {
             try
