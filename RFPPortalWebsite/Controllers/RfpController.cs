@@ -6,6 +6,7 @@ using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
+using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
@@ -130,16 +131,22 @@ namespace RFPPortalWebsite.Controllers
         [Route("GetRfpBidsByRfpId")]
         [HttpGet]
         [InternalUserAuthorization]
-        public List<RfpBid> GetRfpBidsByRfpId(int rfpid)
+        public List<RfpBidWUser> GetRfpBidsByRfpId(int rfpid)
         {
-            List<RfpBid> model = new List<RfpBid>();
+            List<RfpBidWUser> model = new List<RfpBidWUser>();
 
             try
             {
                 using (rfpdb_context db = new rfpdb_context())
                 {
-
-                    model = db.RfpBids.Where(x => x.RfpID == rfpid).ToList();
+                    model = (from bid in db.RfpBids
+                             join user in db.Users on bid.UserId equals user.UserId
+                             where bid.RfpID == rfpid
+                             select new RfpBidWUser
+                             {
+                                 Bid = bid,
+                                 Username = user.UserName
+                             }).ToList();
                 }
             }
             catch (Exception ex)

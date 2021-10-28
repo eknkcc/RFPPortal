@@ -5,10 +5,10 @@
 @model List<RFPPortalWebsite.Models.DbModels.Rfp>
 
 <section>
-    <div class="container mt-3">
-        <div class="h1 text-center text-dark mb-4 p-4" id="pageHeaderTitle">Request For Proposals</div>
+    <div class="container">
+        <div class="h1 text-center text-dark p-4" id="pageHeaderTitle">Request For Proposals</div>
         <hr />
-        <input placeholder="Search by title or description" class="form-control mb-4 p-4" />
+        @*<input placeholder="Search by title or description" class="form-control mb-4 p-4" />*@
 
         @try
         {
@@ -45,10 +45,10 @@
 
                 <article class="postcard light cursor-pointer @clr">
                     <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
-                        <img class="postcard__img" src="~/images/casper.png" alt="Image Title" />
+                        <img class="postcard__img" src="~/images/casper.png" alt="Casper" />
                     </a>
-                    <div class="postcard__text t-dark" onclick="window.location.href='./RFP-Detail/'+@item.RfpID">
-                        <h1 class="postcard__title @clr"><a onclick="window.location.href='./RFP-Detail/'+@item.RfpID">Podcast Title</a></h1>
+                    <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='./RFP-Detail/'+@item.RfpID">
+                        <h1 class="postcard__title @clr"><a onclick="window.location.href='./RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
                         <div class="postcard__subtitle small">
                             <time datetime="@item.CreateDate">
                                 <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")

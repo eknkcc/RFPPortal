@@ -74,14 +74,17 @@ body {
 
 /**********Cards************/
 
-/*@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");*/
 /* This pen */
 body {
-    /*font-family: "Baloo 2", cursive;*/
-    /*font-size: 16px;*/
+    font-family: "Cairo", sans-serif;
     color: #ffffff;
     text-rendering: optimizeLegibility;
     font-weight: initial;
+
+    background-image: url("../images/bg.png"); /* The image used */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .dark {
@@ -99,11 +102,12 @@ a:hover {
 }
 
 #pageHeaderTitle {
+    font-weight:bold;
     margin: 2rem 0;
     text-transform: uppercase;
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom:0;
+    margin-bottom: 0;
 }
 
 /* Cards */
@@ -194,17 +198,18 @@ a:hover {
 
         .postcard .postcard__tagbox .tag__item {
             display: inline-block;
-            background: rgba(83, 83, 83, 0.4);
-            border-radius: 3px;
+            background: rgb(236, 236, 236);
+            border-radius: 5px;
             padding: 2.5px 10px;
             margin: 0 5px 5px 0;
             cursor: default;
             user-select: none;
             transition: background-color 0.3s;
+            border: 1px solid #c4c4c4;
         }
 
             .postcard .postcard__tagbox .tag__item:hover {
-                background: rgba(83, 83, 83, 0.8);
+                background: rgba(83, 83, 83, 0.3);
             }
 
     .postcard:before {
@@ -247,7 +252,7 @@ a:hover {
             width: 100%;
         }
 
-        .postcard .media.postcard__text:before {
+        .postcard .media.postcard__text2:before {
             content: "";
             position: absolute;
             display: block;
@@ -269,12 +274,12 @@ a:hover {
             flex-direction: row-reverse;
         }
 
-        .postcard:nth-child(2n+1) .postcard__text::before {
+        .postcard:nth-child(2n+1) .postcard__text2::before {
             left: -12px !important;
             transform: rotate(4deg);
         }
 
-        .postcard:nth-child(2n+0) .postcard__text::before {
+        .postcard:nth-child(2n+0) .postcard__text2::before {
             right: -12px !important;
             transform: rotate(-4deg);
         }
@@ -285,7 +290,7 @@ a:hover {
         padding: 2rem 3.5rem;
     }
 
-        .postcard__text:before {
+        .postcard__text2:before {
             content: "";
             position: absolute;
             display: block;
@@ -294,11 +299,11 @@ a:hover {
             width: 55px;
         }
 
-    .postcard.dark .postcard__text:before {
+    .postcard.dark .postcard__text2:before {
         background: #18151f;
     }
 
-    .postcard.light .postcard__text:before {
+    .postcard.light .postcard__text2:before {
         background: #e1e5ea;
     }
 }
@@ -428,4 +433,8 @@ a:hover {
 
 .cursor-pointer{
     cursor:pointer;
+}
+
+.btn:focus{
+    outline:none
 }
