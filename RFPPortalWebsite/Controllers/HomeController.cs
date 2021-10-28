@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PagedList.Core;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,23 @@ namespace RFPPortalWebsite.Controllers
         public IActionResult Unauthorized()
         {
             return View();
+        }
+
+
+
+        [HttpPost]
+        public JsonResult SaveBid(NewBidModel NewBid)
+        {
+
+
+            return Json("");
+        }
+
+        [HttpGet]
+        public JsonResult GetUserFromBidCode(string BidCode)
+        {
+
+            return Json("");
         }
 
     }

@@ -132,44 +132,65 @@ catch { }
                     </button>
                 </div>
                 <div class="modal-body">
+                    @{
+                        string namexxx = HttpContextAccessor.HttpContext.Session.GetString("NameSurname");
+
+                    }
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                    {
+                        <div>
+                            If you have a Bid Code please click <a href="#" onclick="EnterBidCode();">here</a>
+                        </div>
+                    }
+
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")">
+                        <input type="text" class="form-control" id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="GSM" value="@HttpContextAccessor.HttpContext.Session.GetString("GSM")">
+                        <input type="email" class="form-control" id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")">
+                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Timeframe">
+                        <input type="text" class="form-control" id="amount" placeholder="Amount">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Amount">
+                        <textarea type="text" class="form-control" id="note" placeholder="Note"></textarea>
                     </div>
-                    <div class="form-group">
-                        <textarea type="text" class="form-control" id="name" placeholder="Note"></textarea>
-                    </div>
-                    @*<div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>*@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-info">Submit Bid</button>
+                    <button type="button" class="btn btn-info" onclick="SubmitBid(this)">Submit Bid</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="bitModal" tabindex="-1" role="dialog" aria-labelledby="bitModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Please enter your Bid Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea type="text" class="form-control" id="bidCode" placeholder="Bid Code"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="SubmitBidCode(this)">Submit Bid Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @section Scripts{
         <script>
@@ -202,9 +223,63 @@ catch { }
                 // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    document.getElementById("demo").innerHTML = "Bidding Ended";
                 }
 
+            }
+
+            function SubmitBid(e) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Bid Sending..');
+
+                $.ajax({
+                    type: "Post",
+                    url: './Home/SaveBid',
+                    data: { "Username": $("#username").val(), "Name": $("#name").val(), "Email": $("#email").val(), "TimeFrame": $("#timeframe").val(), "amount": $("#Amount").val(),"note":$("#Note").val()},
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+
+
+                        $(e).prop("disabled", true);
+                        $(e).html('Submit Bid');
+                    },
+                    error: function () {
+                        $(e).prop("disabled", true);
+                        $(e).html('Submit Bid');
+                    }
+
+
+                });
+            }
+
+
+            function EnterBidCode() {
+
+            }
+
+
+            function SubmitBidCode(e) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+                $.ajax({
+                    type: "Post",
+                    url: './Home/GetUserFromBidCode',
+                    data: { "bidCode": $("#bidCode").val()},
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+
+
+                        $(e).prop("disabled", true);
+                        $(e).html('Submit Bid');
+                    },
+                    error: function () {
+                        $(e).prop("disabled", true);
+                        $(e).html('Submit Bid');
+                    }
+                });
             }
 
         </script>
