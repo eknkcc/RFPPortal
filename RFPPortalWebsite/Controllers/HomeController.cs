@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PagedList.Core;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Utility;
 using System;
@@ -20,8 +21,9 @@ namespace RFPPortalWebsite.Controllers
         }
 
         [Route("Rfps")]
-        [Route("Rfps/{AuthKey}")]
-        public IActionResult Rfps(string AuthKey)
+        [Route("Rfps/{Page}")]
+        [Route("Rfps/{Page}/{AuthKey}")]
+        public IActionResult Rfps(int Page = 1, string AuthKey = "")
         {
             if (!string.IsNullOrEmpty(AuthKey))
             {
@@ -37,20 +39,18 @@ namespace RFPPortalWebsite.Controllers
             }
 
             RfpController cont = new RfpController();
-            List<Rfp> model = new List<Rfp>();
+            PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
+
             try
             {
-                model = cont.GetRfpsByStatus("");
+                model = cont.GetRfpsByStatusPaged("", Page, 5);
             }
             catch (Exception)
             {
                 return View(new List<Rfp>());
             }
 
-
-
             return View(model);
-
         }
 
         [Route("RFP-Detail/{BidID}")]

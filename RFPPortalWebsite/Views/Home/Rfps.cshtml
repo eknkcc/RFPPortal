@@ -1,14 +1,19 @@
 ﻿@{
     ViewData["Title"] = "RFP Portal";
 }
+@using PagedList.Core.Mvc
+@using PagedList.Core
 
-@model List<RFPPortalWebsite.Models.DbModels.Rfp>
+@model PagedList.Core.IPagedList<RFPPortalWebsite.Models.DbModels.Rfp>
 
 <section>
     <div class="container">
-        <div class="h1 text-center text-dark p-4" id="pageHeaderTitle">Request For Proposals</div>
-        <hr />
-        @*<input placeholder="Search by title or description" class="form-control mb-4 p-4" />*@
+
+        @*############ SEARCH INPUT ############*@
+        <input placeholder="Search by title or description" class="form-control mb-4 p-4" />
+
+
+        @*############ MAIN CONTENT STARTS ############*@
 
         @try
         {
@@ -42,13 +47,12 @@
                     clr = "blue";
                 }
 
-
                 <article class="postcard light cursor-pointer @clr">
                     <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
                         <img class="postcard__img" src="~/images/casper.png" alt="Casper" />
                     </a>
-                    <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='./RFP-Detail/'+@item.RfpID">
-                        <h1 class="postcard__title @clr"><a onclick="window.location.href='./RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
+                    <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='../RFP-Detail/'+@item.RfpID">
+                        <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
                         <div class="postcard__subtitle small">
                             <time datetime="@item.CreateDate">
                                 <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
@@ -79,11 +83,23 @@
                         </ul>
                     </div>
                 </article>
-
             }
         }
         catch { }
 
+        @*############ MAIN CONTENT ENDS ############*@
+
+
+        @*############ PAGINATION ############*@
+        <center>
+            <table class="mb-5">
+                <tr>
+                    <td colspan="3" align="center">
+                        <pager class="pager-container" list="@Model" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Rfps" asp-controller="Home" />
+                    </td>
+                </tr>
+            </table>
+        </center>
 
     </div>
 </section>

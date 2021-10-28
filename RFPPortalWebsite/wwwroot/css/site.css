@@ -80,11 +80,6 @@ body {
     color: #ffffff;
     text-rendering: optimizeLegibility;
     font-weight: initial;
-
-    background-image: url("../images/bg.png"); /* The image used */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .dark {
@@ -102,12 +97,11 @@ a:hover {
 }
 
 #pageHeaderTitle {
-    font-weight:bold;
-    margin: 2rem 0;
+    font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 0;
+    padding-top: 6.5rem;
+    font-size:3rem;
 }
 
 /* Cards */
@@ -438,3 +432,25 @@ a:hover {
 .btn:focus{
     outline:none
 }
+
+#headerDiv {
+    width: 100%;
+    height: 300px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1000%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cpath d='M0%2c364.516C69.434%2c365.87%2c137.037%2c341.651%2c194.541%2c302.712C251.178%2c264.36%2c291.485%2c208.287%2c321.489%2c146.819C352.103%2c84.103%2c375.105%2c16.51%2c368.142%2c-52.931C361.014%2c-124.024%2c334.795%2c-196.158%2c282.245%2c-244.567C231.687%2c-291.142%2c157.268%2c-291.797%2c90.611%2c-308.594C26.795%2c-324.675%2c-36.423%2c-357.534%2c-100.102%2c-340.917C-164.412%2c-324.136%2c-214.187%2c-273.139%2c-252.737%2c-218.998C-289.001%2c-168.068%2c-298.464%2c-105.966%2c-311.006%2c-44.716C-324.343%2c20.414%2c-350.621%2c87.306%2c-328.282%2c149.921C-305.329%2c214.256%2c-246.901%2c257.845%2c-189.726%2c295.22C-132.205%2c332.821%2c-68.707%2c363.176%2c0%2c364.516' fill='%230b2138'%3e%3c/path%3e%3cpath d='M1440 1149.438C1557.768 1168.999 1683.093 1158.6109999999999 1787.488 1100.702 1895.067 1041.027 1998.784 946.8109999999999 2022.8 826.156 2046.216 708.516 1939.941 608.396 1908.52 492.637 1882.141 395.453 1909.755 285.255 1853.338 201.841 1794.297 114.54700000000003 1697.981 55.06900000000002 1595.62 30.005999999999972 1495.496 5.490000000000009 1391.95 30.956000000000017 1294.669 65.04899999999998 1201.243 97.791 1111.654 144.56400000000002 1049.313 221.46699999999998 988.085 296.997 973.198 395.078 950.492 489.619 925.455 593.865 868.975 702.998 909.858 802.108 950.904 901.613 1069.507 937.413 1159.542 996.4010000000001 1250.466 1055.971 1332.769 1131.627 1440 1149.438' fill='%23113356'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1000'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+#footerDiv {
+    width: 100%;
+    height: 50px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1023%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cpath d='M0%2c561.183C108.801%2c565.357%2c213.079%2c531.866%2c310.282%2c482.808C416.165%2c429.369%2c532.186%2c373.399%2c583.722%2c266.577C635.538%2c159.174%2c600.76%2c34.099%2c583.699%2c-83.923C566.651%2c-201.857%2c577.202%2c-344.952%2c484.499%2c-419.821C390.83%2c-495.47%2c248.048%2c-417.514%2c131.804%2c-448.882C19.594%2c-479.162%2c-61.992%2c-622.594%2c-175.571%2c-597.939C-287.65%2c-573.61%2c-310.187%2c-420.465%2c-387.855%2c-336.078C-468.859%2c-248.066%2c-631.957%2c-211.439%2c-641.066%2c-92.171C-650.338%2c29.223%2c-493.113%2c92.506%2c-428.469%2c195.675C-375.075%2c280.89%2c-371.857%2c394.311%2c-295.351%2c459.575C-214.505%2c528.541%2c-106.188%2c557.109%2c0%2c561.183' fill='%230b2138'%3e%3c/path%3e%3cpath d='M1440 1032.108C1537.187 1024.437 1643.635 1057.176 1725.127 1003.6669999999999 1806.468 950.2570000000001 1816.2939999999999 838.44 1864.061 753.662 1917.391 659.009 2037.1689999999999 583.899 2022.271 476.282 2007.385 368.755 1881.163 318.28499999999997 1794.702 252.649 1724.444 199.31400000000002 1642.605 174.22500000000002 1566.234 130.086 1460.217 68.81299999999999 1379.331-78.72799999999995 1258.812-57.07000000000005 1142.057-36.087999999999965 1128.388 133.022 1050.76 222.721 973.2 312.341 813.694 350.429 803.928 468.547 794.024 588.331 948.569 652.662 1006.5029999999999 757.971 1058.313 852.148 1033.5529999999999 993.633 1124.4 1051.083 1215.315 1108.577 1332.765 1040.5720000000001 1440 1032.108' fill='%23113356'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1023'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+    #footerDiv div {
+        height:30px;
+    }

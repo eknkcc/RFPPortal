@@ -91,10 +91,8 @@ namespace RFPPortalWebsite.Controllers
         /// <returns>RFP List with pagination entity</returns>
         [Route("GetRfpsByStatusPaged")]
         [HttpGet]
-        public PaginationEntity<Rfp> GetRfpsByStatusPaged(string status, int page = 1, int pageCount = 30)
+        public PagedList.Core.IPagedList<Rfp> GetRfpsByStatusPaged(string status, int page = 1, int pageCount = 30)
         {
-            PaginationEntity<Rfp> res = new PaginationEntity<Rfp>();
-
             try
             {
                 using (rfpdb_context db = new rfpdb_context())
@@ -102,16 +100,12 @@ namespace RFPPortalWebsite.Controllers
                     if (!string.IsNullOrEmpty(status))
                     {
                         IPagedList<Rfp> lst = db.Rfps.Where(x => x.Status == status).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
-
-                        res.Items = lst;
-                        res.MetaData = new PaginationMetaData() { Count = lst.Count, FirstItemOnPage = lst.FirstItemOnPage, HasNextPage = lst.HasNextPage, HasPreviousPage = lst.HasPreviousPage, IsFirstPage = lst.IsFirstPage, IsLastPage = lst.IsLastPage, LastItemOnPage = lst.LastItemOnPage, PageCount = lst.PageCount, PageNumber = lst.PageNumber, PageSize = lst.PageSize, TotalItemCount = lst.TotalItemCount };
+                        return lst;
                     }
                     else
                     {
                         IPagedList<Rfp> lst = db.Rfps.OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
-
-                        res.Items = lst;
-                        res.MetaData = new PaginationMetaData() { Count = lst.Count, FirstItemOnPage = lst.FirstItemOnPage, HasNextPage = lst.HasNextPage, HasPreviousPage = lst.HasPreviousPage, IsFirstPage = lst.IsFirstPage, IsLastPage = lst.IsLastPage, LastItemOnPage = lst.LastItemOnPage, PageCount = lst.PageCount, PageNumber = lst.PageNumber, PageSize = lst.PageSize, TotalItemCount = lst.TotalItemCount };
+                        return lst;
                     }
                 }
             }
@@ -120,7 +114,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return res;
+            return new PagedList<Rfp>(null, 1, 1);
         }
 
         /// <summary>

@@ -4,35 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - RFPPortalWebsite</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/fontawesome-all.min.css" rel="stylesheet" />
 </head>
 <body>
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RFPPortalWebsite</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-    </header>*@
+    @*############ HEADER STARTS ############*@
+    <header class="mb-5">
+        <div id="headerDiv">
+            <div class="text-center text-light" id="pageHeaderTitle">Request For Proposals</div>
+        </div>
+    </header>
+    @*############ HEADER ENDS ############*@
+
+
+    @*############ CONTENT STARTS ############*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    @*############ CONTENT ENDS ############*@
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - All rights reserved.
+
+    @*############ FOOTER STARTS ############*@
+    <footer class="footer text-muted">
+        <div id="footerDiv">
+            <div class="container text-light">
+                &copy; @DateTime.Now.Year - All rights reserved.
+            </div>
         </div>
     </footer>
+    @*############ FOOTER ENDS ############*@
+
+
+    @*############ SCRIPTS ############*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
