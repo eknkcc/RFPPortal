@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Helpers.Models.SharedModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using RFPPortalWebsite.Controllers;
+using RFPPortalWebsite.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +24,12 @@ namespace RFPPortalWebsite.Utility
         {
             try
             {
-                bool control = true;
+                bool control = false;
 
                 //Check if user logged in
-                if (context.HttpContext.Session.GetInt32("UserID") == null)
+                if (context.HttpContext.Session.Get("UserID") != null)
                 {
-                    control = false;
+                    control = true;
                 }
 
                 //Unauthorized request
@@ -56,18 +59,16 @@ namespace RFPPortalWebsite.Utility
         {
             try
             {
-                bool control = true;
+                bool control = false;
 
                 //Check if user logged in
-                if (context.HttpContext.Session.GetInt32("UserID") == null)
+                if (context.HttpContext.Session.GetInt32("UserID") != null)
                 {
-                    control = false;
-                }
-
-                //Check if user type is internal
-                if (context.HttpContext.Session.GetString("UserType") == null || context.HttpContext.Session.GetString("UserType") != Models.Constants.Enums.UserIdentityType.Internal.ToString())
-                {
-                    control = false;
+                    //Check if user type is internal
+                    if (context.HttpContext.Session.GetString("UserType") != null && context.HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString())
+                    {
+                        control = true;
+                    }
                 }
 
                 //Unauthorized request

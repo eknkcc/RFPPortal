@@ -79,7 +79,7 @@
                                 <th scope="col">Bid Date</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col">Time</th>
-                                <th scope="col">Note</th>
+                                <th scope="col">Additional Note</th>
 
                             </tr>
                         </thead>
@@ -132,16 +132,6 @@ catch { }
                     </button>
                 </div>
                 <div class="modal-body">
-                    @{
-                        string namexxx = HttpContextAccessor.HttpContext.Session.GetString("NameSurname");
-
-                    }
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-                    {
-                        <div>
-                            If you have a Bid Code please click <a href="#" onclick="EnterBidCode();">here</a>
-                        </div>
-                    }
 
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")">
@@ -159,8 +149,15 @@ catch { }
                         <input type="text" class="form-control" id="amount" placeholder="Amount">
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="note" placeholder="Note"></textarea>
+                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note"></textarea>
                     </div>
+
+                    @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("NameSurname")))
+                    {
+                        <div class="text-dark">
+                            If you have an existing auth key <a href="#" onclick="EnterBidCode();">click here</a> to load your user information.
+                        </div>
+                    }
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -194,6 +191,9 @@ catch { }
 
     @section Scripts{
         <script>
+            //Get AuthKey of the user from Session
+            var authkey = "@HttpContextAccessor.HttpContext.Session.GetString("AuthKey")";
+
             // Set the date we're counting down to
             var countDownDate = new Date(@Model.TimeRemaining.Year,@Model.TimeRemaining.Month-1,@Model.TimeRemaining.Day,@Model.TimeRemaining.Hour,@Model.TimeRemaining.Minute,0,0).getTime();
 
@@ -232,32 +232,73 @@ catch { }
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Bid Sending..');
 
-                $.ajax({
-                    type: "Post",
-                    url: './Home/SaveBid',
-                    data: { "Username": $("#username").val(), "Name": $("#name").val(), "Email": $("#email").val(), "TimeFrame": $("#timeframe").val(), "amount": $("#Amount").val(),"note":$("#Note").val()},
-                    cache: false,
-                    async: true,
-                    success: function (result) {
+                if (authkey.length <= 0) {
+                    var username = $("#username").val();
+                    var namesurname = $("#name").val();
+                    var email = $("#email").val();
+
+                     $.ajax({
+                         type: "POST",
+                         url: '../RegisterPublicUser',
+                         contentType: 'application/json',
+                         data: JSON.stringify({ "username": username, "namesurname": namesurname, "email": email }),
+                         success: function (result) {
+
+                             if (result.success == true) {
+                                 PostBid(result.content.authKey);
+                             }
+                             else {
+                                 toastr.error(result.message,"Error");
+                             }
+
+                             $(e).prop("disabled", false);
+                             $(e).html('Submit Bid');
+                         },
+                         error: function () {
+                             $(e).prop("disabled", false);
+                             $(e).html('Submit Bid');
+                         }
 
 
-                        $(e).prop("disabled", true);
-                        $(e).html('Submit Bid');
-                    },
-                    error: function () {
-                        $(e).prop("disabled", true);
-                        $(e).html('Submit Bid');
-                    }
+                    });
+                }
+                else {
+                    PostBid(authkey);
+                }
 
-
-                });
             }
 
+            function PostBid(authkey) {
+
+                var timeframe = $("#timeframe").val();
+                var amount = parseFloat($("#amount").val());
+                var note = $("#note").val();
+
+                 $.ajax({
+                     type: "POST",
+                     url: '../SaveBid',
+                     contentType: 'application/json',
+                     data: JSON.stringify({ "TimeFrame": timeframe, "Amount": amount, "Note": note, "RfpID": @Model.RfpDeatil.RfpID }),
+                     success: function (result) {
+
+                         if (result.success == true) {
+                             toastr.success(result.message, "Success");
+                             setTimeout(function () { location.reload(); }, 1000);
+                         }
+                         else {
+                             toastr.error(result.message, "Error");
+                         }
+
+                     },
+                     error: function () {
+
+                     }
+                });
+            }
 
             function EnterBidCode() {
 
             }
-
 
             function SubmitBidCode(e) {
                 $(e).prop("disabled", true);

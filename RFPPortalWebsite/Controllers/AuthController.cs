@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFPPortalWebsite.Contexts;
+using RFPPortalWebsite.Methods;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
@@ -34,6 +35,7 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
+                //Validations
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Email already exists control
@@ -47,39 +49,26 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new AjaxResponse() { Success = false, Message = "Username already exists." };
                     }
+                }
 
-                    //Create new user object
-                    User userModel = new User();
-                    userModel.Email = registerInput.email.ToLower();
-                    userModel.UserName = registerInput.username;
-                    userModel.NameSurname = registerInput.namesurname;
-                    userModel.CreateDate = DateTime.Now;
-                    userModel.UserType = UserIdentityType.Public.ToString();
-                    Guid g = Guid.NewGuid();
-                    userModel.AuthKey = g.ToString();
+                //Get user's ip and port
+                registerInput.ip = Utility.IpHelper.GetClientIpAddress(HttpContext);
+                registerInput.port = Utility.IpHelper.GetClientIpAddress(HttpContext);
 
-                    //Insert user object to database
-                    db.Users.Add(userModel);
-                    db.SaveChanges();
+                //Register user
+                string authkey = AuthMethods.RegisterPublic(registerInput);
 
-                    if (userModel != null && userModel.UserId != 0)
-                    {
-                        //Logging
-                        Program.monitizer.AddUserLog(userModel.UserId, Models.Constants.Enums.UserLogType.Auth, "User register successful.", registerInput.ip, registerInput.port);
-
-                        return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = userModel.AuthKey } };
-                    }
-                    else
-                    {
-                        return new AjaxResponse() { Success = false, Message = "User post error" };
-                    }
+                if (!string.IsNullOrEmpty(authkey))
+                {
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = authkey } };
                 }
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return new AjaxResponse() { Success = false, Message = "Unexpected error" };
             }
+
+            return new AjaxResponse() { Success = false, Message = "Unexpected error" };
         }
 
         /// <summary>
@@ -93,15 +82,13 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
-                using (rfpdb_context db = new rfpdb_context())
+                User user = Methods.AuthMethods.GetUserInfo(authkey);
+                if(user.UserId > 0)
                 {
-                    //Control with email
-                    if (!string.IsNullOrEmpty(authkey) && db.Users.Count(x => x.AuthKey == authkey) > 0)
-                    {
-                        var user = db.Users.First(x => x.AuthKey == authkey);
-                        return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
-                    }
-
+                    return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
+                }
+                else
+                {
                     return new AjaxResponse() { Success = false, Message = "User not found." };
                 }
             }
@@ -126,6 +113,7 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
+                //Validations
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Email already exists control
@@ -141,39 +129,22 @@ namespace RFPPortalWebsite.Controllers
                         var user = db.Users.First(x => x.Email == registerInput.email);
                         return new AjaxResponse() { Success = false, Message = "Username already exists." };
                     }
+                }
 
-                    //Create new user object
-                    User userModel = new User();
-                    userModel.Email = registerInput.email.ToLower();
-                    userModel.UserName = registerInput.username;
-                    userModel.NameSurname = registerInput.namesurname;
-                    userModel.CreateDate = DateTime.Now;
-                    userModel.UserType = UserIdentityType.Internal.ToString();
-                    Guid g = Guid.NewGuid();
-                    userModel.AuthKey = g.ToString();
+                //Register user
+                string authkey = AuthMethods.RegisterInternal(registerInput);
 
-                    //Insert user object to database
-                    db.Users.Add(userModel);
-                    db.SaveChanges();
-
-                    if (userModel != null && userModel.UserId != 0)
-                    {
-                        //Logging
-                        Program.monitizer.AddUserLog(userModel.UserId, Models.Constants.Enums.UserLogType.Auth, "User register successful.", registerInput.ip, registerInput.port);
-
-                        return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = userModel.AuthKey } };
-                    }
-                    else
-                    {
-                        return new AjaxResponse() { Success = false, Message = "User post error" };
-                    }
+                if (!string.IsNullOrEmpty(authkey))
+                {
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = authkey } };
                 }
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return new AjaxResponse() { Success = false, Message = "Unexpected error" };
             }
+
+            return new AjaxResponse() { Success = false, Message = "Unexpected error" };
         }
 
 
@@ -190,22 +161,13 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
-                using (rfpdb_context db = new rfpdb_context())
+                string authkey = Methods.AuthMethods.GetUserAuthKey(username, email);
+                if (!string.IsNullOrEmpty(authkey))
                 {
-                    //Control with email
-                    if (!string.IsNullOrEmpty(email)  && db.Users.Count(x => x.Email == email) > 0)
-                    {
-                        var user = db.Users.First(x => x.Email == email);
-                        return new AjaxResponse() { Success = true, Message = "User found.", Content = new { AuthKey = user.AuthKey } };
-                    }
-
-                    //Control with username
-                    if (!string.IsNullOrEmpty(username) && db.Users.Count(x => x.UserName == username) > 0)
-                    {
-                        var user = db.Users.First(x => x.Email == email);
-                        return new AjaxResponse() { Success = true, Message = "User found.", Content = new { AuthKey = user.AuthKey } };
-                    }
-
+                    return new AjaxResponse() { Success = true, Message = "User found.", Content = new { AuthKey = authkey } };
+                }
+                else
+                {
                     return new AjaxResponse() { Success = false, Message = "User not found." };
                 }
             }

@@ -33,19 +33,20 @@ namespace RFPPortalWebsite.Controllers
         [Route("SubmitBid")]
         [HttpPost]
         [PublicUserAuthorization]
-        public AjaxResponse SubmitBid(RfpBid model)
+        public AjaxResponse SubmitBid([FromBody] RfpBid model)
         {
             try
             {
-                //Check if user is trying to submit bid for another user
-                if (HttpContext.Session.GetInt32("UserID") != model.UserId)
-                {
-                    return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
-                }
-
+                //Validations
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
+
+                    //Check if user is trying to submit bid for another user
+                    if (HttpContext.Session.GetInt32("UserID") != model.UserId)
+                    {
+                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
+                    }
 
                     //Check if RfpID is a valid identity.
                     if (rfp == null || rfp.RfpID <= 0)
@@ -64,16 +65,21 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserID. Please delete your bid first." };
                     }
+                }
 
-                    //Post bid to database
-                    model.CreateDate = DateTime.Now;
-                    db.RfpBids.Add(model);
-                    db.SaveChanges();
+                model.UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserID"));
+                RfpBid bidResult = Methods.BidMethods.SubmitBid(model);
 
+                if (bidResult.RfpBidID > 0)
+                {
                     //Log
-                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserID")), UserLogType.Request, "User submitted a new bid for RFP: " + model.RfpID);
+                    Program.monitizer.AddUserLog(model.UserId, UserLogType.Request, "User submitted a new bid for RFP: " + model.RfpID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully posted.", Content = model };
+                    return new AjaxResponse() { Success = true, Message = "Bid submitted successfully.", Content = bidResult };
+                }
+                else
+                {
+                    return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
                 }
             }
             catch (Exception ex)
@@ -95,9 +101,11 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
+                //Validations
+                RfpBid rfpbid = new RfpBid();
                 using (rfpdb_context db = new rfpdb_context())
                 {
-                    var rfpbid = db.RfpBids.Find(RfpBidID);
+                    rfpbid = db.RfpBids.Find(RfpBidID);
 
                     //Check if user is trying to delete bid for another user
                     if (HttpContext.Session.GetInt32("UserID") != rfpbid.UserId)
@@ -110,11 +118,12 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
                     }
+                }
 
-                    //Delete bid from database
-                    db.RfpBids.Remove(rfpbid);
-                    db.SaveChanges();
-
+                //Delete bid
+                bool result = Methods.BidMethods.DeleteBid(RfpBidID);
+                if (result == true)
+                {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserID")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
@@ -124,8 +133,9 @@ namespace RFPPortalWebsite.Controllers
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
-                return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
             }
+
+            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
         /// <summary>
@@ -140,10 +150,12 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
+                //Validations
+                RfpBid rfpbid = new RfpBid();
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Check if bid identity is valid
-                    var rfpbid = db.RfpBids.Find(RfpBidID);
+                    rfpbid = db.RfpBids.Find(RfpBidID);
                     if (rfpbid == null || rfpbid.RfpID <= 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfpBidID." };
@@ -155,25 +167,25 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new AjaxResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
                     }
+                }
 
-                    //Rfp winner bid database update
-                    rfp.WinnerRfpBidID = RfpBidID;
-                    rfp.Status = Enums.RfpStatusTypes.Completed.ToString();
-
-                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    db.SaveChanges();
-
+                //Update RFP's winning bid
+                bool result = Methods.BidMethods.ChooseWinningBid(rfpbid);
+                if (result == true)
+                {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserID")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated.", Content = rfp };
+                    return new AjaxResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
                 }
+
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
-                return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
             }
+
+            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
     }

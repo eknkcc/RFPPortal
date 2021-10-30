@@ -1,27 +1,19 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PagedList.Core;
+﻿using PagedList.Core;
 using RFPPortalWebsite.Contexts;
-using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
-using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
-using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static RFPPortalWebsite.Models.Constants.Enums;
 
-namespace RFPPortalWebsite.Controllers
+namespace RFPPortalWebsite.Methods
 {
     /// <summary>
-    ///  RfpController contains Rfp CRUD operations.
+    ///  Rfp methods bussiness layer
     /// </summary>
-    [Route("[controller]")]
-    [ApiController]
-    public class RfpController : ControllerBase
+    public class RfpMethods
     {
         /// <summary>
         ///  Returns list of RFPs in the database by status.
@@ -29,15 +21,23 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="status">Status of the RFP</param>
         /// <returns>RFP List</returns>
-        [Route("GetRfpsByStatus")]
-        [HttpGet]
-        public List<Rfp> GetRfpsByStatus(string status)
+        public static List<Rfp> GetRfpsByStatus(string status)
         {
             List<Rfp> model = new List<Rfp>();
 
             try
             {
-                model = Methods.RfpMethods.GetRfpsByStatus(status);
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    if (!string.IsNullOrEmpty(status))
+                    {
+                        model = db.Rfps.Where(x => x.Status == status).ToList();
+                    }
+                    else
+                    {
+                        model = db.Rfps.ToList();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -52,15 +52,16 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
         /// <returns>Rfp single object</returns>
-        [Route("GetRfpById")]
-        [HttpGet]
-        public Rfp GetRfpById(int rfpid)
+        public static Rfp GetRfpById(int rfpid)
         {
             Rfp model = new Rfp();
 
             try
             {
-                model = Methods.RfpMethods.GetRfpById(rfpid);
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    model = db.Rfps.SingleOrDefault(x => x.RfpID == rfpid);
+                }
             }
             catch (Exception ex)
             {
@@ -76,15 +77,23 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="status">Status of the RFP</param>
         /// <returns>RFP List with pagination entity</returns>
-        [Route("GetRfpsByStatusPaged")]
-        [HttpGet]
-        public PagedList.Core.IPagedList<Rfp> GetRfpsByStatusPaged(string status, int page = 1, int pageCount = 30)
+        public static PagedList.Core.IPagedList<Rfp> GetRfpsByStatusPaged(string status, int page = 1, int pageCount = 30)
         {
             try
             {
-                IPagedList<Rfp> lst = Methods.RfpMethods.GetRfpsByStatusPaged(status, page, pageCount);
-
-                return lst;
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    if (!string.IsNullOrEmpty(status))
+                    {
+                        IPagedList<Rfp> lst = db.Rfps.Where(x => x.Status == status).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        return lst;
+                    }
+                    else
+                    {
+                        IPagedList<Rfp> lst = db.Rfps.OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        return lst;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -99,16 +108,23 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>
         /// <returns>Bid List for given RfpId</returns>
-        [Route("GetRfpBidsByRfpId")]
-        [HttpGet]
-        [InternalUserAuthorization]
-        public List<RfpBidWUser> GetRfpBidsByRfpId(int rfpid)
+        public static List<RfpBidWUser> GetRfpBidsByRfpId(int rfpid)
         {
             List<RfpBidWUser> model = new List<RfpBidWUser>();
 
             try
             {
-                model = Methods.RfpMethods.GetRfpBidsByRfpId(rfpid);
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    model = (from bid in db.RfpBids
+                             join user in db.Users on bid.UserId equals user.UserId
+                             where bid.RfpID == rfpid
+                             select new RfpBidWUser
+                             {
+                                 Bid = bid,
+                                 Username = user.UserName
+                             }).ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -124,20 +140,17 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="model">Rfp model</param>
         /// <returns>Submitted RFP</returns>
-        [Route("SubmitRfpForm")]
-        [HttpPost]
-        [IpWhitelistAuthorization]
-        public AjaxResponse SubmitRfpForm(Rfp model)
+        public static Rfp SubmitRfpForm(Rfp model)
         {
             try
             {
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     model.CreateDate = DateTime.Now;
-                    model = Methods.RfpMethods.SubmitRfpForm(model);
+                    db.Rfps.Add(model);
+                    db.SaveChanges();
 
-                    if (model.RfpID > 0)
-                        return new AjaxResponse() { Success = true, Message = "Rfp form succesfully posted.", Content = model };
+                    return model;
                 }
             }
             catch (Exception ex)
@@ -145,7 +158,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new Rfp();
         }
 
         /// <summary>
@@ -154,45 +167,26 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="model">Rfp model</param>
         /// <returns>Updated RFP</returns>
-        [Route("ChangeRfpStatus")]
-        [HttpPut]
-        [IpWhitelistAuthorization]
-        public AjaxResponse ChangeRfpStatus(Rfp model)
+        public static Rfp ChangeRfpStatus(Rfp model)
         {
             try
             {
-                //Validations
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
+                    rfp.Status = model.Status;
+                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
 
-                    if (rfp == null || rfp.RfpID <= 0)
-                    {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
-                    }
-
-                    try
-                    {
-                        Enums.RfpStatusTypes type = (Enums.RfpStatusTypes)Enum.Parse(typeof(Enums.RfpStatusTypes), model.Status);
-                    }
-                    catch
-                    {
-                        return new AjaxResponse() { Success = false, Message = "Invalid status. Please post a valid status. Valid status codes: Pending, Active, Waiting, Completed" };
-                    }
+                    return rfp;
                 }
-
-                model = Methods.RfpMethods.ChangeRfpStatus(model);
-
-                return new AjaxResponse() { Success = true, Message = "Rfp status succesfully updated.", Content = model };
-
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new Rfp();
         }
-
     }
 }
