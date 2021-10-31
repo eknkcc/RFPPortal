@@ -132,15 +132,22 @@ catch { }
                     </button>
                 </div>
                 <div class="modal-body">
+                    @{
+                        string disabled = "";
+                        if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") != null)
+                        {
+                            disabled = "disabled";
+                        }
+                    }
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")">
+                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")">
+                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")">
+                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="timeframe" placeholder="Timeframe">
@@ -149,10 +156,10 @@ catch { }
                         <input type="text" class="form-control" id="amount" placeholder="Amount">
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note"></textarea>
+                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5"></textarea>
                     </div>
 
-                    @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("NameSurname")))
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") == null)
                     {
                         <div class="text-dark">
                             If you have an existing auth key <a href="#" onclick="EnterBidCode();">click here</a> to load your user information.
@@ -230,41 +237,68 @@ catch { }
 
             function SubmitBid(e) {
                 $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Bid Sending..');
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Sending Bid..');
 
                 if (authkey.length <= 0) {
-                    var username = $("#username").val();
-                    var namesurname = $("#name").val();
-                    var email = $("#email").val();
 
-                     $.ajax({
-                         type: "POST",
-                         url: '../RegisterPublicUser',
-                         contentType: 'application/json',
-                         data: JSON.stringify({ "username": username, "namesurname": namesurname, "email": email }),
-                         success: function (result) {
+                    RegisterUser();
 
-                             if (result.success == true) {
-                                 PostBid(result.content.authKey);
-                             }
-                             else {
-                                 toastr.error(result.message,"Error");
-                             }
+                    SignInUser();
+                }
 
-                             $(e).prop("disabled", false);
-                             $(e).html('Submit Bid');
-                         },
-                         error: function () {
-                             $(e).prop("disabled", false);
-                             $(e).html('Submit Bid');
-                         }
+                PostBid(authkey);
+
+                $(e).prop("disabled", false);
+                $(e).html('Submit Bid');
+            }
+
+            function RegisterUser() {
+                var username = $("#username").val();
+                var namesurname = $("#name").val();
+                var email = $("#email").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '../Auth/RegisterPublic',
+                    contentType: 'application/json',
+                    async: false,
+                    data: JSON.stringify({ "username": username, "namesurname": namesurname, "email": email }),
+                    success: function (result) {
+
+                        if (result.success == true) {
+                            authkey = result.content.authKey;
+                        }
+                        else {
+                            toastr.error(result.message, "Error");
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+
+            }
+
+            function SignInUser() {
+                if (authkey.length > 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: '../SignIn/'+authkey,
+                        async: false,
+                        success: function (result) {
+
+                            if (result.success != true) {
+                                toastr.error(result.message, "Error");
+                            }
+                        },
+                        error: function () {
+
+                        }
 
 
                     });
                 }
-                else {
-                    PostBid(authkey);
-                }
+
 
             }
 
@@ -276,14 +310,15 @@ catch { }
 
                  $.ajax({
                      type: "POST",
-                     url: '../SaveBid',
+                     url: '../Bid/SubmitBid',
+                     async: false,
                      contentType: 'application/json',
                      data: JSON.stringify({ "TimeFrame": timeframe, "Amount": amount, "Note": note, "RfpID": @Model.RfpDeatil.RfpID }),
                      success: function (result) {
 
                          if (result.success == true) {
                              toastr.success(result.message, "Success");
-                             setTimeout(function () { location.reload(); }, 1000);
+                             setTimeout(function () { location.reload(); }, 1500);
                          }
                          else {
                              toastr.error(result.message, "Error");

@@ -42,12 +42,6 @@ namespace RFPPortalWebsite.Controllers
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
 
-                    //Check if user is trying to submit bid for another user
-                    if (HttpContext.Session.GetInt32("UserID") != model.UserId)
-                    {
-                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
-                    }
-
                     //Check if RfpID is a valid identity.
                     if (rfp == null || rfp.RfpID <= 0)
                     {
@@ -63,11 +57,11 @@ namespace RFPPortalWebsite.Controllers
                     //Check if user already has an existing bid
                     if (db.RfpBids.Count(x => x.UserId == model.UserId && x.RfpID == model.RfpID) > 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserID. Please delete your bid first." };
+                        return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
                     }
                 }
 
-                model.UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserID"));
+                model.UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 RfpBid bidResult = Methods.BidMethods.SubmitBid(model);
 
                 if (bidResult.RfpBidID > 0)
@@ -108,7 +102,7 @@ namespace RFPPortalWebsite.Controllers
                     rfpbid = db.RfpBids.Find(RfpBidID);
 
                     //Check if user is trying to delete bid for another user
-                    if (HttpContext.Session.GetInt32("UserID") != rfpbid.UserId)
+                    if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
                     {
                         return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
                     }
@@ -125,7 +119,7 @@ namespace RFPPortalWebsite.Controllers
                 if (result == true)
                 {
                     //Log
-                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserID")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
                     return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
                 }
@@ -174,7 +168,7 @@ namespace RFPPortalWebsite.Controllers
                 if (result == true)
                 {
                     //Log
-                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserID")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
 
                     return new AjaxResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
                 }

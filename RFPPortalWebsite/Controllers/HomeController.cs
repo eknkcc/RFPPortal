@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PagedList.Core;
+using RFPPortalWebsite.Methods;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
@@ -30,18 +31,7 @@ namespace RFPPortalWebsite.Controllers
         {
             if (!string.IsNullOrEmpty(AuthKey))
             {
-                AuthController authCont = new AuthController();
-                AjaxResponse response = authCont.GetUserInfo(AuthKey);
-                if (response.Success == true)
-                {
-                    var userObj = response.Content as User;
-                    HttpContext.Session.SetString("AuthKey", userObj.AuthKey);
-                    HttpContext.Session.SetInt32("UserId", userObj.UserId);
-                    HttpContext.Session.SetString("UserType", userObj.UserType);
-                    HttpContext.Session.SetString("NameSurname", userObj.NameSurname);
-                    HttpContext.Session.SetString("Email", userObj.Email);
-                    HttpContext.Session.SetString("Username", userObj.UserName);
-                }
+                SignIn(AuthKey);
             }
 
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
@@ -57,18 +47,7 @@ namespace RFPPortalWebsite.Controllers
         {
             if (!string.IsNullOrEmpty(AuthKey))
             {
-                AuthController authCont = new AuthController();
-                AjaxResponse response = authCont.GetUserInfo(AuthKey);
-                if (response.Success == true)
-                {
-                    var userObj = response.Content as User;
-                    HttpContext.Session.SetString("AuthKey", userObj.AuthKey);
-                    HttpContext.Session.SetInt32("UserId", userObj.UserId);
-                    HttpContext.Session.SetString("UserType", userObj.UserType);
-                    HttpContext.Session.SetString("NameSurname", userObj.NameSurname);
-                    HttpContext.Session.SetString("Email", userObj.Email);
-                    HttpContext.Session.SetString("Username", userObj.UserName);
-                }
+                SignIn(AuthKey);
             }
 
             RfpController cont = new RfpController();
@@ -103,66 +82,45 @@ namespace RFPPortalWebsite.Controllers
             return View(model);
         }
 
+        [Route("SignIn/{AuthKey}")]
+        public IActionResult SignIn(string AuthKey)
+        {
+            User usr = Methods.AuthMethods.GetUserInfo(AuthKey);
+            if(usr.UserId > 0)
+            {
+                HttpContext.Session.SetString("AuthKey", usr.AuthKey);
+                HttpContext.Session.SetInt32("UserId", usr.UserId);
+                HttpContext.Session.SetString("UserType", usr.UserType);
+                HttpContext.Session.SetString("NameSurname", usr.NameSurname);
+                HttpContext.Session.SetString("Email", usr.Email);
+                HttpContext.Session.SetString("Username", usr.UserName);
+                return Json(new AjaxResponse() { Success = true, Message = "Sign in successful.", Content = new { User = usr } });
+            }
+
+            return Json(new AjaxResponse() { Success = false, Message = "Sign in failed." });
+        }
+
         public IActionResult Unauthorized()
         {
             return View();
         }
 
-        [HttpPost("RegisterPublicUser", Name = "RegisterPublicUser")]
-        public JsonResult RegisterPublicUser([FromBody] RegisterModel registerInput)
-        {
-            try
-            {
-                AuthController authCont = new AuthController();
-                registerInput.ip = Utility.IpHelper.GetClientIpAddress(HttpContext);
-                registerInput.port = Utility.IpHelper.GetClientIpAddress(HttpContext);
-                AjaxResponse response = authCont.RegisterPublic(registerInput);
-                if (response.Success == true)
-                {
-                    dynamic content = response.Content;
-                    string AuthKey = content.AuthKey.ToString();
-                    AjaxResponse response2 = authCont.GetUserInfo(AuthKey);
-                    dynamic d = response2.Content;
-                    User userObj = d.User as User;
-                    HttpContext.Session.SetString("AuthKey", userObj.AuthKey);
-                    HttpContext.Session.SetInt32("UserId", userObj.UserId);
-                    HttpContext.Session.SetString("UserType", userObj.UserType);
-                    HttpContext.Session.SetString("NameSurname", userObj.NameSurname);
-                    HttpContext.Session.SetString("Email", userObj.Email);
-                    HttpContext.Session.SetString("Username", userObj.UserName);
-                }
-                return Json(response);
-            }
-            catch (Exception ex)
-            {
-                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return Json(new AjaxResponse() { Success = false, Message = "Unexpected error" });
-            }
-        }
+        //[HttpPost("SaveBid", Name = "SaveBid")]
+        //[PublicUserAuthorization]
+        //public JsonResult SaveBid([FromBody] NewBidModel NewBid)
+        //{
+        //    try
+        //    {
+        //        RfpBid bid = BidMethods.SubmitBid(new RfpBid() { Amount = NewBid.Amount, CreateDate = DateTime.Now, Note = NewBid.Note, Time = NewBid.TimeFrame, UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), RfpID = NewBid.RfpID });
+        //        return Json(bid);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Program.monitizer.AddException(ex, LogTypes.ApplicationError);
+        //        return Json(new AjaxResponse() { Success = false, Message = "Unexpected error" });
+        //    }
+        //}
 
-        [HttpPost("SaveBid", Name = "SaveBid")]
-        public JsonResult SaveBid([FromBody] NewBidModel NewBid)
-        {
-            try
-            {
-                BidController cont = new BidController();
-                AjaxResponse responseFinal = cont.SubmitBid(new RfpBid() { Amount = NewBid.Amount, CreateDate = DateTime.Now, Note = NewBid.Note, Time = NewBid.TimeFrame, UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), RfpID = NewBid.RfpID });
-                return Json(responseFinal);
-
-            }
-            catch (Exception ex)
-            {
-                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return Json(new AjaxResponse() { Success = false, Message = "Unexpected error" });
-            }
-        }
-
-        [HttpGet]
-        public JsonResult GetUserFromBidCode(string BidCode)
-        {
-
-            return Json("");
-        }
 
     }
 }

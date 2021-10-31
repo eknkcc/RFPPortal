@@ -27,7 +27,7 @@ namespace RFPPortalWebsite.Utility
                 bool control = false;
 
                 //Check if user logged in
-                if (context.HttpContext.Session.Get("UserID") != null)
+                if (context.HttpContext.Session.Get("UserId") != null)
                 {
                     control = true;
                 }
@@ -62,7 +62,7 @@ namespace RFPPortalWebsite.Utility
                 bool control = false;
 
                 //Check if user logged in
-                if (context.HttpContext.Session.GetInt32("UserID") != null)
+                if (context.HttpContext.Session.GetInt32("UserId") != null)
                 {
                     //Check if user type is internal
                     if (context.HttpContext.Session.GetString("UserType") != null && context.HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString())
