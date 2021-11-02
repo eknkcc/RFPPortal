@@ -1,0 +1,34 @@
+version: '3.4'
+
+volumes:
+  rfp_datafiles: 
+
+services:
+  rfpportal_db:
+    image: mysql:5.7
+    volumes:
+      - rfp_datafiles:/var/lib/mysql      
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Fidelio06
+      - MYSQL_DATABASE=daorfpdb
+    networks:
+      - rfpnetwork
+
+  rfpportalwebsite:
+    image: ${DOCKER_REGISTRY-}rfpportalwebsite
+    build:
+      context: .
+      dockerfile: RFPPortalWebsite/Dockerfile
+    depends_on:
+      - rfpportal_db
+    networks:
+     - rfpnetwork
+
+
+
+networks:
+  rfpnetwork:
+    name: rfpnetwork
+    driver: bridge
+
