@@ -100,7 +100,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("SignUp")]
         public IActionResult SignUp(RegisterModel rgstr)
         {
-            if (rgstr.Password != rgstr.Password)
+            if (rgstr.Password != rgstr.RePassword)
             {
                 return Json(new AjaxResponse { Success = false, Message = "Passwords are not compatible." });
             }
@@ -114,7 +114,23 @@ namespace RFPPortalWebsite.Controllers
             }
             catch 
             {
-                return Json(new AjaxResponse() { Success = true, Message = "Sign up successful." });
+                return Json(new AjaxResponse() { Success = false, Message = "Sign up failed." });
+            }
+            return Json(resp);
+        }
+
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            AjaxResponse resp = new AjaxResponse();
+            try
+            {
+                HttpContext.Session.Clear();
+                resp.Success = true;
+            }
+            catch
+            {
+                return Json(new AjaxResponse() { Success = false, Message = "Log out failed." });
             }
 
             return Json(resp);

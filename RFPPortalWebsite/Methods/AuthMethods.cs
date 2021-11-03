@@ -41,11 +41,11 @@ namespace RFPPortalWebsite.Methods
                         userModel.UserType = Models.Constants.Enums.UserIdentityType.Public.ToString();
                         userModel.UserName = registerInput.UserName;
                     }
-
+                    var hashPass = Utility.Encryption.EncryptPassword(registerInput.Password);
                     userModel.Email = registerInput.Email.ToLower();
                     userModel.NameSurname = registerInput.NameSurname;
                     userModel.CreateDate = DateTime.Now;
-                    userModel.Password = registerInput.Password;
+                    userModel.Password = hashPass;
                     Guid g = Guid.NewGuid();
 
 
@@ -85,10 +85,12 @@ namespace RFPPortalWebsite.Methods
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Control with email
-                    if (!string.IsNullOrEmpty(email) && db.Users.Count(x => x.Email == email && x.Password == pass) > 0)
+                    if (!string.IsNullOrEmpty(email) && db.Users.Count(x => x.Email == email) > 0)
                     {
-                        var user = db.Users.First(x => x.Email == email && x.Password == pass);
-                        return user;
+                        var user = db.Users.First(x => x.Email == email);
+
+                        if(Utility.Encryption.CheckPassword(user.Password, pass))
+                            return user;
                     }
 
                     return new User();
@@ -111,8 +113,8 @@ namespace RFPPortalWebsite.Methods
                 {
                     //Control with email
 
-                    var checkUserJson = Request.GetDxD(Program._settings.DxDApiForUser + "?email=" + email, Program._settings.DxDApiToken);
-                    registerResponse = Serializers.DeserializeJson<DxDUserModel>(checkUserJson);
+                    var checkUserJson = Utility.Request.GetDxD(Program._settings.DxDApiForUser + email, Program._settings.DxDApiToken);
+                    registerResponse = Utility.Serializers.DeserializeJson<DxDUserModel>(checkUserJson);
 
                     if (registerResponse == null)
                         return new DxDUserModel();

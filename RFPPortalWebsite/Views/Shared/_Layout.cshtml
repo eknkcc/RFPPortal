@@ -38,19 +38,18 @@
 
                 }
 
-                <div class="login-container">
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-                    {
-                        <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
-                    }
-                    else
-                    {
-                        <button id="LogoutButton" type="button" onclick="Logout()">Log out</button>
-                    }
-                </div>
+            <div class="login-container">
+                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                {
+                    <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
+                }
+                else
+                {
+                    <button id="LogoutButton" type="button" onclick="Logout(this)">Log out</button>
+                }
             </div>
-
-
+        </div>
+        <div id="headerDiv">
             <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
         </div>
     </header>
@@ -81,7 +80,7 @@
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in show" id="signin">
                             <div class="form-horizontal">
-                                <fieldset>
+                                <fieldset id="signInForm">
                                     <!-- Sign In Form -->
                                     <!-- Text input-->
                                     <div class="group">
@@ -195,39 +194,75 @@
         });
 
         function SignUp(e) {
+            control = true;
+            $('#signUpForm input').each(function (i, obj) {
+                if ($(obj).val() == "") {
+                    $(obj).addClass("brdr");
+                    control = false
+                } else {
+                    $(obj).removeClass("brdr");
+                }
+            });
+            if (control) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+                $.ajax({
+                    type: "Post",
+                    url: '../SignUp',
+                    data: $("#signUpForm").serialize(),
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+                        if (result.success == true) {
+                            toastr.success(result.message);
+                            $('#signUpForm input').each(function (i, obj) {
+                                $(obj).val("");
+                            });
+                            $("#signup").removeClass("active show");
+                            $("#signin").addClass("active show");
+                            $('#tab1').addClass('login-shadow');
+                            $('#tab2').removeClass('signup-shadow');
+                        }
+                        else {
+                            toastr.warning(result.message);
+                        }
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign Up');
+                    },
+                    error: function () {
+                        toastr.error("An error occurred during the process. Please try again later. ");
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign Up');
+                    }
+                });
+            }
+
+        }
+        function Logout(e) {
             $(e).prop("disabled", true);
-            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>');
 
             $.ajax({
                 type: "Post",
-                url: '../SignUp',
-                data: $("#signUpForm").serialize(),
+                url: '../Logout',
                 cache: false,
                 async: true,
                 success: function (result) {
-           
                     if (result.success == true) {
-                        toastr.success(result.message);
-                        $("#LoginEmail").val(result.content.email);
-                        $("signup").removeClass("active show");
-                        $("signin").addClass("active show");
-                        $('#tab1').addClass('login-shadow');
-                        $('#tab2').removeClass('signup-shadow');
+                        setTimeout(function () { location.reload(); }, 1000);
                     }
                     else {
                         toastr.warning(result.message);
                     }
                     $(e).prop("disabled", false);
-                    $(e).html('Sign Up');
                 },
                 error: function () {
                     toastr.error("An error occurred during the process. Please try again later. ");
                     $(e).prop("disabled", false);
-                    $(e).html('Sign Up');
                 }
             });
         }
-
     </script>
 
     @RenderSection("Scripts", required: false)

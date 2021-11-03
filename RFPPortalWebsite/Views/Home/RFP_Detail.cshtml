@@ -246,10 +246,14 @@ catch { }
             });
 
             function NewBidModal() {
-                if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == null) {
-                    $("#LoginModal").modal("toggle");
-                } else {
-                    $("#bidModal").modal("toggle");
+                debugger;
+                @if (HttpContextAccessor.HttpContext.Session.GetString("Username") == null || HttpContextAccessor.HttpContext.Session.GetString("Username") == "")
+                {
+                    <text>$("#LoginModal").modal("toggle");</text>
+                }
+                else
+                {
+                    <text>$("#bidModal").modal("toggle");</text>
                 }
             }
 
@@ -280,48 +284,9 @@ catch { }
             function SubmitBid(e) {
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Sending Bid..');
-
-
-
-                    RegisterUser();
-
-                    SignInUser();
-
-
                 PostBid();
-
                 $(e).prop("disabled", false);
                 $(e).html('Submit Bid');
-            }
-
-            function RegisterUser() {
-                var username = $("#username").val();
-                var namesurname = $("#name").val();
-                var email = $("#email").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: '../Auth/RegisterPublic',
-                    contentType: 'application/json',
-                    async: false,
-                    data: JSON.stringify({ "username": username, "namesurname": namesurname, "email": email }),
-                    success: function (result) {
-                        if (result.success == true) {
-                            $("#authKey").text(authkey);
-                            $("#bidModal").modal("toggle");
-                            setTimeout(function(){
-                                $("#AuthToggle").modal("toggle");
-                            }, 500)
--                       }
-                        else {
-                            toastr.error(result.message, "Error");
-                        }
-                    },
-                    error: function () {
-
-                    }
-                });
-
             }
 
             function PostBid() {
@@ -353,8 +318,6 @@ catch { }
                 });
             }
 
-
-
             function EditBidModal(id) {
                 $("#EditTimeframe").val($("#timeFrame_" + id).text());
                 $("#EditAmount").val($("#amount_" + id).text());
@@ -384,34 +347,43 @@ catch { }
 @section Scripts2{
     <script>
         function Login(e) {
-            $(e).prop("disabled", true);
-            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
-
-            $.ajax({
-                type: "Post",
-                url: '../SignIn',
-                data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
-                cache: false,
-                async: true,
-                success: function (result) {
-                    console.log(result);
-                    debugger;
-                    if (result.success == true) {
-                        toastr.success("Welcome, " + result.content.user.nameSurname);
-                        setTimeout(function () { location.reload(); }, 1500);
-                    }
-                    else {
-                        toastr.warning(result.message);
-                    }
-                    $(e).prop("disabled", false);
-                    $(e).html('Log in');
-                },
-                error: function () {
-                    toastr.error("An error occurred during the process. Please try again later. ");
-                    $(e).prop("disabled", false);
-                    $(e).html('Log in');
+            control = true;
+            $('#signInForm input').each(function (i, obj) {
+                if ($(obj).val() == "") {
+                    $(obj).addClass("brdr");
+                    control = false
+                } else {
+                    $(obj).removeClass("brdr");
                 }
             });
+            if (control) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+                $.ajax({
+                    type: "Post",
+                    url: '../SignIn',
+                    data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+                        if (result.success == true) {
+                            toastr.success("Welcome, " + result.content.user.nameSurname);
+                            setTimeout(function () { location.reload(); }, 1500);
+                        }
+                        else {
+                            toastr.warning(result.message);
+                        }
+                        $(e).prop("disabled", false);
+                        $(e).html('Log in');
+                    },
+                    error: function () {
+                        toastr.error("An error occurred during the process. Please try again later. ");
+                        $(e).prop("disabled", false);
+                        $(e).html('Log in');
+                    }
+                });
+            }
         }
     </script>
 
