@@ -2,6 +2,7 @@
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
+using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +47,9 @@ namespace RFPPortalWebsite.Methods
                     userModel.NameSurname = registerInput.NameSurname;
                     userModel.CreateDate = DateTime.Now;
                     userModel.Password = hashPass;
-                    Guid g = Guid.NewGuid();
+                    userModel.IsActive = false;
 
+                    Guid g = Guid.NewGuid();
 
                     //Insert user object to database
                     db.Users.Add(userModel);
@@ -78,7 +80,7 @@ namespace RFPPortalWebsite.Methods
         /// </summary>
         /// <param name="email">User's email</param>
         /// <returns>AjaxResponse object with user object</returns>
-        public static User GetUserInfo(string email, string pass)
+        public static User UserSignIn(string email, string pass)
         {
             try
             {
@@ -89,8 +91,15 @@ namespace RFPPortalWebsite.Methods
                     {
                         var user = db.Users.First(x => x.Email == email);
 
+                        if(user == null || user.IsActive == false)
+                        {
+                            return new User();
+                        }
+
                         if(Utility.Encryption.CheckPassword(user.Password, pass))
+                        {
                             return user;
+                        }
                     }
 
                     return new User();
@@ -102,7 +111,6 @@ namespace RFPPortalWebsite.Methods
                 return new User();
             }
         }
-
 
         private static DxDUserModel CheckDxDUser(string email)
         {
@@ -130,5 +138,45 @@ namespace RFPPortalWebsite.Methods
             return registerResponse;
         }
 
+        /// <summary>
+        ///  Email approval method after registration
+        /// </summary>
+        /// <param name="model">Token generated from the Register method</param>
+        /// <returns>Generic AjaxResponse class</returns>
+        public static User RegisterComplete(string registerToken)
+        {
+            try
+            {
+                //Decrypt token in the email
+                string stre = Encryption.DecryptString(registerToken);
+
+                //Check if it's a valid token
+                if (stre.Split('|').Length > 1)
+                {
+                    string email = stre.Split('|')[0];
+
+                    //Find user in database
+                    using (rfpdb_context db = new rfpdb_context())
+                    {
+                        User modelUser = db.Users.SingleOrDefault(x => x.Email == email);
+
+                        if (modelUser != null && modelUser.UserId > 0)
+                        {
+                            //Change active status of the user and update database
+                            modelUser.IsActive = true;
+                            db.SaveChanges();
+
+                            return modelUser;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
+            }
+
+            return new User();
+        }
     }
 }

@@ -211,7 +211,7 @@ catch { }
         </div>
     </div>
 
-    <div class="modal fade" id="DeleteBidModal" tabindex="-1" role="dialog" aria-labelledby="editBidModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteBidModal" tabindex="-1" role="dialog" aria-labelledby="editBidModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -327,8 +327,8 @@ catch { }
             }
 
             function DeleteBidModal(id) {
-                $("#DeleteButtons button:nth-of-type(2)").attr("id", id);
-                $("#DeleteBidModal").modal("toggle");
+                $("#deleteButtons button:nth-of-type(2)").attr("id", id);
+                $("#deleteBidModal").modal("toggle");
             }
 
             function ConfirmEditBid(id) {
@@ -341,51 +341,4 @@ catch { }
 
         </script>
     }
-
-}
-
-@section Scripts2{
-    <script>
-        function Login(e) {
-            control = true;
-            $('#signInForm input').each(function (i, obj) {
-                if ($(obj).val() == "") {
-                    $(obj).addClass("brdr");
-                    control = false
-                } else {
-                    $(obj).removeClass("brdr");
-                }
-            });
-            if (control) {
-                $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
-
-                $.ajax({
-                    type: "Post",
-                    url: '../SignIn',
-                    data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
-                    cache: false,
-                    async: true,
-                    success: function (result) {
-                        if (result.success == true) {
-                            toastr.success("Welcome, " + result.content.user.nameSurname);
-                            setTimeout(function () { location.reload(); }, 1500);
-                        }
-                        else {
-                            toastr.warning(result.message);
-                        }
-                        $(e).prop("disabled", false);
-                        $(e).html('Log in');
-                    },
-                    error: function () {
-                        toastr.error("An error occurred during the process. Please try again later. ");
-                        $(e).prop("disabled", false);
-                        $(e).html('Log in');
-                    }
-                });
-            }
-        }
-    </script>
-
-
 }

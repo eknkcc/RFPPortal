@@ -83,7 +83,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("SignIn")]
         public IActionResult SignIn(string email,string pass)
         {
-            User usr = Methods.AuthMethods.GetUserInfo(email, pass);
+            User usr = Methods.AuthMethods.UserSignIn(email, pass);
             if (usr.UserId > 0)
             {
                 HttpContext.Session.SetInt32("UserId", usr.UserId);
@@ -97,26 +97,30 @@ namespace RFPPortalWebsite.Controllers
             return Json(new AjaxResponse() { Success = false, Message = "Sign in failed." });
         }
 
-        [Route("SignUp")]
-        public IActionResult SignUp(RegisterModel rgstr)
+        /// <summary>
+        /// Completes user registration from activation link in the confirmation email
+        /// </summary>
+        /// <param name="str">Encrypted user information in the registration email</param>
+        /// <returns></returns>
+        [Route("RegisterCompleteView")]
+        public IActionResult RegisterCompleteView(string str)
         {
-            if (rgstr.Password != rgstr.RePassword)
-            {
-                return Json(new AjaxResponse { Success = false, Message = "Passwords are not compatible." });
-            }
-
-            AuthController cont = new AuthController();
             AjaxResponse resp = new AjaxResponse();
 
-            try
+            User usr = AuthMethods.RegisterComplete(str);
+
+            if (usr.UserId > 0)
             {
-                resp = cont.RegisterUser(rgstr);
+                TempData["toastr-type"] = "success";
+                TempData["toastr-message"] = "User activation successful.";
             }
-            catch 
+            else
             {
-                return Json(new AjaxResponse() { Success = false, Message = "Sign up failed." });
+                TempData["toastr-type"] = "error";
+                TempData["toastr-message"] = "Invalid user activation request.";
             }
-            return Json(resp);
+
+            return RedirectToAction("Index");
         }
 
         [Route("Logout")]

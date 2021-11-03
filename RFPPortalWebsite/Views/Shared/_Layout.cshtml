@@ -38,20 +38,20 @@
 
                 }
 
-            <div class="login-container">
-                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-                {
-                    <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
-                }
-                else
-                {
-                    <button id="LogoutButton" type="button" onclick="Logout(this)">Log out</button>
-                }
+                <div class="login-container">
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                    {
+                        <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
+                    }
+                    else
+                    {
+                        <button id="LogoutButton" type="button" onclick="Logout(this)">Log out</button>
+                    }
+                </div>
             </div>
-        </div>
-        <div id="headerDiv">
-            <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
-        </div>
+            <div id="headerDiv">
+                <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
+            </div>
     </header>
     @*############ HEADER ENDS ############*@
 
@@ -108,30 +108,30 @@
                                     <!-- Sign Up Form -->
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input name="NameSurname" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signupname" name="NameSurname" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Name</label>
                                     </div>
 
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input name="UserName" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signupusername" name="UserName" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">User Name</label>
                                     </div>
 
                                     <!-- Password input-->
                                     <div class="group">
-                                        <input name="Email" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signupemail" name="Email" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Email</label>
                                     </div>
 
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input name="Password" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signuppassword" name="Password" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Password</label>
                                     </div>
 
                                     <div class="group">
-                                        <input name="RePassword" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signuppassword2" name="RePassword" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Confirm Password</label>
                                     </div>
 
@@ -171,6 +171,17 @@
     <script src="~/js/toastr.js"></script>
     <script>
         $(document).ready(function () {
+
+            $('#tab1').on('click', function () {
+                $('#tab1').addClass('login-shadow');
+                $('#tab2').removeClass('signup-shadow');
+            });
+
+            $('#tab2').on('click', function () {
+                $('#tab2').addClass('signup-shadow');
+                $('#tab1').removeClass('login-shadow');
+            });
+
             $('.input').blur(function () {
                 var $this = $(this);
                 if ($this.val())
@@ -179,19 +190,64 @@
                     $this.removeClass('used');
             });
 
+            //Display toastr message from server side
+            var toastrMessage = '@TempData["toastr-message"]';
+            var toastrType = '@TempData["toastr-type"]';
+
+            if (toastrMessage.length > 0) {
+                if (toastrType == "warning") {
+                    toastr.warning(toastrMessage);
+                }
+                else if (toastrType == "error") {
+                    toastr.error(toastrMessage);
+                }
+                else if (toastrType == "success") {
+                    toastr.success(toastrMessage);
+                }
+            }
         });
 
-        $('#tab1').on('click', function () {
-            $('#tab1').addClass('login-shadow');
-            $('#tab2').removeClass('signup-shadow');
-        });
+        function Login(e) {
+            control = true;
+            $('#signInForm input').each(function (i, obj) {
+                if ($(obj).val() == "") {
+                    $(obj).addClass("brdr");
+                    control = false
+                } else {
+                    $(obj).removeClass("brdr");
+                }
+            });
+            if (control) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
-        $('#tab2').on('click', function () {
-            $('#tab2').addClass('signup-shadow');
-            $('#tab1').removeClass('login-shadow');
+                $.ajax({
+                    type: "Post",
+                    url: '../SignIn',
+                    data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+                        debugger;
+                        if (result.success == true) {
+                            toastr.success("Welcome, " + result.content.user.nameSurname);
+                            window.location.reload();
+                        }
+                        else {
+                            toastr.warning(result.message);
+                        }
+                        $(e).prop("disabled", false);
+                        $(e).html('Log in');
+                    },
+                    error: function () {
+                        toastr.error("An error occurred during the process. Please try again later. ");
+                        $(e).prop("disabled", false);
+                        $(e).html('Log in');
+                    }
+                });
+            }
 
-
-        });
+        }
 
         function SignUp(e) {
             control = true;
@@ -207,10 +263,17 @@
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
+                var username = $("#signupusername").val();
+                var namesurname = $("#signupname").val();
+                var email = $("#signupemail").val();
+                var password = $("#signuppassword").val();
+                var password2 = $("#signuppassword2").val();
+
                 $.ajax({
                     type: "Post",
-                    url: '../SignUp',
-                    data: $("#signUpForm").serialize(),
+                    url: '../Auth/RegisterUser',
+                    data: JSON.stringify({ "UserName": username, "NameSurname": namesurname, "Email": email, "Password": password, "RePassword": password2 }),
+                    contentType: 'application/json',
                     cache: false,
                     async: true,
                     success: function (result) {
@@ -239,6 +302,7 @@
             }
 
         }
+
         function Logout(e) {
             $(e).prop("disabled", true);
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>');

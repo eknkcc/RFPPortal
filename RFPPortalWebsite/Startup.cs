@@ -37,6 +37,8 @@ namespace RFPPortalWebsite
 
         public static void InitializeService()
         {
+            Encryption.EncryptionKey = Program._settings.EncryptionKey;
+
             monitizer = new Monitizer();
 
             ApplicationStartResult mysqlMigrationcontrol = mysql.Migrate(new rfpdb_context().Database);
