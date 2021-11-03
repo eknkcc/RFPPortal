@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RFP Portal</title>
+    <title>DEVxDAO - Request for Proposals (RFP) Portal</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -35,7 +35,11 @@
                     <a class="btn btn-outline-primary mr-2" href="../My-Bids"><i class="fa fa-id-card-alt"></i> My Bids</a>
 
                     <div class="login-container">
-                        <button class="btn btn-primary px-3" type="button" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</button>
+                        <div class="d-inline-block mr-3">
+                            <p class="mb-0">@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")</p>
+                            <small><b>User Type:</b> @HttpContextAccessor.HttpContext.Session.GetString("UserType")</small>
+                        </div>
+                        <button class="btn btn-primary px-3 d-inline-block" type="button" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</button>
                     </div>
                 }
                 else
@@ -212,7 +216,15 @@
                     toastr.success(toastrMessage);
                 }
             }
+
+            //Search signup email in DEVxDAO
+            @*$('#signupemail').keyup(function () {
+                if ($('#signupemail').val().length > 3 && $('#signupemail').val().indexOf('@Html.Raw("@")') > -1 && $('#signupemail').val().indexOf('.') > -1) {
+                    SearchEmail($('#signupemail').val());
+                }
+            });*@
         });
+
 
         //User sign in method
         function Login(e) {
@@ -238,7 +250,7 @@
                     url: '../SignIn',
                     data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
                     cache: false,
-                    async: false,
+                    async: true,
                     success: function (result) {
                         if (result.success == true) {
                             toastr.success("Welcome, " + result.content.user.nameSurname);
@@ -247,16 +259,20 @@
                         else {
                             toastr.warning(result.message);
                         }
+
+                        //Enable submit button
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign In');
                     },
                     error: function () {
                         toastr.error("An error occurred during the process. Please try again later. ");
+
+                        //Enable submit button
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign In');
                     }
                 });
             }
-
-            //Enable submit button
-            $(e).prop("disabled", false);
-            $(e).html('Sign In');
 
         }
 
@@ -293,7 +309,7 @@
                     data: JSON.stringify({ "UserName": username, "NameSurname": namesurname, "Email": email, "Password": password, "RePassword": password2 }),
                     contentType: 'application/json',
                     cache: false,
-                    async: false,
+                    async: true,
                     success: function (result) {
                         if (result.success == true) {
 
@@ -310,16 +326,20 @@
                         else {
                             toastr.warning(result.message);
                         }
+
+                        //Enable submit button
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign Up');
                     },
                     error: function () {
                         toastr.error("An error occurred during the process. Please try again later. ");
+
+                        //Enable submit button
+                        $(e).prop("disabled", false);
+                        $(e).html('Sign Up');
                     }
                 });
             }
-
-            //Enable submit button
-            $(e).prop("disabled", false);
-            $(e).html('Sign Up');
         }
 
         //Logout method
@@ -328,6 +348,28 @@
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>');
 
             window.location.href = '../Logout';
+        }
+
+        //Search registration email in DEVxDAO
+        function SearchEmail(email) {
+            $.ajax({
+                type: "GET",
+                url: '../CheckDevxDaoUser?email=' + email,
+                cache: false,
+                async: true,
+                success: function (result) {
+                    if (result.success == true) {
+
+                    }
+                    else {
+
+                    }
+                },
+                error: function () {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                }
+            });
+
         }
     </script>
 

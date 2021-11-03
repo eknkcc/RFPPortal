@@ -1,16 +1,21 @@
-﻿@model RFPPortalWebsite.Models.ViewModels.RfpDetailModel
-
+﻿
+@model RFPPortalWebsite.Models.ViewModels.RfpDetailModel
+@*User session accessor*@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
 @try
 {
     string clr = "";
-    if (Model.RfpDeatil.Status.ToLower() == "active")
+    if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
     {
         clr = "green";
     }
-    else
+    else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
+    {
+        clr = "red";
+    }
+    else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
     {
         clr = "blue";
     }
@@ -46,7 +51,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="m-0">@Model.RfpDeatil.Status</p>
+                            <p id="demo"></p>
                         </div>
                     </div>
 
@@ -55,77 +60,75 @@
                         @Model.RfpDeatil.Description
                     </div>
                     <ul class="postcard__tagbox">
-                        <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status</li>
-                        @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                        <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status Bidding</li>
+                        @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
+               Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                         {
-                            <li class="tag__item play"><i class="fas fa-play mr-2"></i> @Model.BiddingType</li>
+                            <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
                         }
                         else
                         {
-                            <li class="tag__item play"><i class="fas fa-stop mr-2"></i>  @Model.BiddingType</li>
+                            <li class="tag__item play"><i class="fas fa-stop mr-2"></i> Bidding Ended</li>
                         }
                     </ul>
-                    <table class="table table-striped table-hover mt-4">
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Bid Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Additional Note</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="bidBody">
-                            @try
-                            {
-                                if (Model.BidList.Count() > 0)
+
+                    @if (Model.BidList.Count() > 0)
+                    {
+                        <table class="table table-striped table-hover mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Bid Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Additional Note</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="bidBody">
+                                @foreach (var item in Model.BidList)
                                 {
-                                    @foreach (var item in Model.BidList)
+                                    try
                                     {
-                                        if (item.Bid.RfpBidID == Model.RfpDeatil.Amount)
-                                        {
-                                            <tr class="table-primary">
-                                                <th scope="row">@item.Username</th>
-                                                <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@item.Bid.Amount @Model.RfpDeatil.Currency</td>
-                                                <td>@item.Bid.Time</td>
-                                                <td>@item.Bid.Note</td>
+
+                                        <tr>
+                                            <td scope="row">@item.Username</td>
+                                            <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                            <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
+                                            <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
+                                            <td id="note_@item.Bid.RfpBidID">@item.Bid.Note</td>
+                                            @if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
+                                            {
+                                                <td>
+                                                    <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
+                                                    <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                </td>
+                                            }
+                                            else
+                                            {
                                                 <td></td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <th scope="row">@item.Username</th>
-                                                <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
-                                                <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
-                                                <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
-                                                <td id="note_@item.Bid.RfpBidID">@item.Bid.Note</td>
-                                                @if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
-                                                {
-                                                    <td>
-                                                        <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
-                                                        <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
-                                            </tr>
-                                        }
+                                            }
+                                        </tr>
 
                                     }
+                                    catch
+                                    {
+                                    }
                                 }
-                            }
-                            catch
-                            {
-                            }
 
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="mt-5">
+                            <center>
+                                <i class="fas fa-frown-open emptyIcon"></i>
+                                <p>There are no bids related with this RFP</p>
+                            </center>
+                        </div>
+                    }
 
-                        </tbody>
-                    </table>
                 </div>
 
             </article>
@@ -157,22 +160,22 @@ catch { }
                     }
 
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")"  onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")"  onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")"  onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe"  onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="amount" placeholder="Amount"  onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" id="amount" placeholder="Amount" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5"  onfocus="this.removeAttribute('readonly');" readonly></textarea>
+                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -236,7 +239,7 @@ catch { }
         <script>
 
             // Set the date we're counting down to
-            var countDownDate = new Date(@Model.TimeRemaining.Year,@Model.TimeRemaining.Month-1,@Model.TimeRemaining.Day,@Model.TimeRemaining.Hour,@Model.TimeRemaining.Minute,0,0).getTime();
+            var countDownDate = new Date(@Model.EndDate.Year,@Model.EndDate.Month-1,@Model.EndDate.Day,@Model.EndDate.Hour,@Model.EndDate.Minute,0,0).getTime();
 
             $(function () {
                 CountDown();

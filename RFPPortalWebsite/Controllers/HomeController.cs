@@ -20,7 +20,7 @@ namespace RFPPortalWebsite.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
-        {         
+        {
             return RedirectToAction("Rfps");
         }
 
@@ -33,7 +33,6 @@ namespace RFPPortalWebsite.Controllers
         [Route("Rfps/{Page}")]
         public IActionResult Rfps(int Page = 1)
         {
-
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
 
             if (HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
@@ -45,7 +44,7 @@ namespace RFPPortalWebsite.Controllers
                 model = Methods.RfpMethods.GetRfpsByTypePaged(Models.Constants.Enums.RfpStatusTypes.Public, Page, 5);
             }
 
-            ViewBag.PageTitle = "Request For Proposals";
+            ViewBag.PageTitle = "Request for Proposals";
             return View(model);
         }
 
@@ -87,13 +86,13 @@ namespace RFPPortalWebsite.Controllers
                 if (model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
                 {
                     model.BiddingType = "Internal Bidding";
-                    model.TimeRemaining = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays);
+                    model.EndDate = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays);
                 }
                 else if (DateTime.Now >= model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
                 DateTime.Now <= model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
                 {
                     model.BiddingType = "Public Bidding";
-                    model.TimeRemaining = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays);
+                    model.EndDate = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays);
                 }
                 else
                 {
@@ -113,8 +112,11 @@ namespace RFPPortalWebsite.Controllers
         [Route("My-Bids")]
         public IActionResult My_Bids()
         {
-            ViewBag.PageTitle = "User's Bids";
-            return View();
+            ViewBag.PageTitle = "My Bids";
+
+            List<MyBidsModel> model = Methods.BidMethods.GetUserBids(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")));
+
+            return View(model);
         }
 
 
@@ -181,6 +183,13 @@ namespace RFPPortalWebsite.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("CheckDevxDaoUser")]
+        public IActionResult CheckDevxDaoUser(string email)
+        {
+            DxDUserModel model = AuthMethods.CheckDxDUser(email);
+
+            return Json(model);
+        }
         #endregion
 
     }

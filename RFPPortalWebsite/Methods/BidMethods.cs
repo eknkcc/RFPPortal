@@ -1,6 +1,7 @@
 ﻿using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +27,14 @@ namespace RFPPortalWebsite.Methods
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
-                   
+
                     //Post bid to database
                     model.CreateDate = DateTime.Now;
                     db.RfpBids.Add(model);
                     db.SaveChanges();
 
                     //Logging
-                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "User post bid successful. Bid: "+ Utility.Serializers.SerializeJson(model));
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "User post bid successful. Bid: " + Utility.Serializers.SerializeJson(model));
 
                     return model;
                 }
@@ -125,7 +126,7 @@ namespace RFPPortalWebsite.Methods
                     rfp.Amount = model.Amount;
                     rfp.Note = model.Note;
                     rfp.Time = model.Time;
-                   
+
                     db.SaveChanges();
 
                     //Logging
@@ -139,6 +140,39 @@ namespace RFPPortalWebsite.Methods
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
                 return new RfpBid();
             }
+        }
+
+        /// <summary>
+        ///  Get user bids with RFP info
+        /// </summary>
+        /// <param name="userid">User identity</param>
+        /// <returns></returns>
+        public static List<MyBidsModel> GetUserBids(int userid)
+        {
+            List<MyBidsModel> res = new List<MyBidsModel>();
+
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    res = (from bid in db.RfpBids
+                           join rfp in db.Rfps on bid.RfpID equals rfp.RfpID
+                           where bid.UserId == userid
+                           select new MyBidsModel
+                           {
+                               Bid = bid,
+                               RfpID = rfp.RfpID,
+                               Status = rfp.Status,
+                               Title = rfp.Title
+                           }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return res;
         }
     }
 }

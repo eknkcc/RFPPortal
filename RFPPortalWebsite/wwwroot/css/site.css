@@ -514,12 +514,11 @@ a:hover {
     .topnav .login-container button {
         float: right;
         padding: 6px 10px;
-        margin-top: 8px;
-        margin-right: 16px;
         color: white;
         font-size: 17px;
         border: none;
         cursor: pointer;
+        height: 45px;
     }
 
         .topnav .login-container button:hover {
@@ -772,4 +771,10 @@ select {
 
 .brdr {
     border-bottom: 1px solid red;
+}
+
+.emptyIcon {
+    font-size: 55px;
+    color: #a3a3a3;
+    margin-bottom: 22px;
 }

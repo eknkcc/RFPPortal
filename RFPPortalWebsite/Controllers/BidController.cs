@@ -169,7 +169,7 @@ namespace RFPPortalWebsite.Controllers
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp bid edited deleted." };
+                    return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully edited." };
                 }
             }
             catch (Exception ex)
