@@ -11,6 +11,29 @@ namespace RFPPortalWebsite.Utility
     /// </summary>
     public static class Request
     {
+        public static string GetDxD(string url, string token = "")
+        {
+            string result = string.Empty;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Headers.Add("AcceptLanguage", System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                if (!String.IsNullOrEmpty(token))
+                    request.Headers.Add("Authorization", token);
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
         public static string Get(string url, string token="")
         {
             string result = string.Empty;

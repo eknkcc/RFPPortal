@@ -23,8 +23,7 @@
         {
             Public,
             Internal,
-            Admin,
-            VA
+            Admin
         }
 
         /// <summary>

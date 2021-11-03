@@ -55,22 +55,6 @@
 @section Scripts{
 
     <script>
-        $.fn.serializeObject = function () {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function () {
-                if (o[this.name] !== undefined) {
-                    if (!o[this.name].push) {
-                        o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                } else {
-                    o[this.name] = this.value || '';
-                }
-            });
-            return o;
-        };
-
         function SubmitForm(e) {
             $(e).prop("disabled", true);
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
@@ -78,12 +62,11 @@
             $.ajax({
                 type: "Post",
                 url: '../SubmitForm',
-                data: $('#RFPform').serializeObject(),
+                data: $('#RFPform').serialize(),
                 cache: false,
                 async: true,
                 success: function (result) {
-                    console.log(result);
-                    debugger;
+                
                     if (result.success == true) {
                         toastr.success(result.message);
                         $(':input').not(':button, :submit, :reset, :hidden').val('');
