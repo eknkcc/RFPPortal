@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using static RFPPortalWebsite.Models.Constants.Enums;
 using static RFPPortalWebsite.Program;
 
@@ -19,6 +20,7 @@ namespace RFPPortalWebsite
 {
     public class Startup
     {
+        public static System.Timers.Timer rfpStatusTimer;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -56,6 +58,39 @@ namespace RFPPortalWebsite
                 monitizer.startSuccesful = 1;
                 monitizer.AddApplicationLog(LogTypes.ApplicationLog, monitizer.appName + " application started successfully.");
             }
+
+            rfpStatusTimer = new System.Timers.Timer(10000);
+            rfpStatusTimer.Elapsed += CheckRfpStatus;
+            rfpStatusTimer.AutoReset = true;
+            rfpStatusTimer.Enabled = true;
+        }
+
+        private static void CheckRfpStatus(Object source, ElapsedEventArgs e)
+        {
+            using (rfpdb_context db = new rfpdb_context())
+            {
+                //Check if Rfp internal bidding ended and public bidding started
+                var dt = DateTime.Now.AddDays(-Program._settings.InternalBiddingDays);
+                var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.CreateDate < dt && x.WinnerRfpBidID == null).ToList();
+
+                foreach (var rfp in publicRfps)
+                {
+                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Public.ToString();
+                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                //Check if rfp public bidding ended without any winner
+                var dt2 = DateTime.Now.AddDays(-(Program._settings.PublicBiddingDays + Program._settings.InternalBiddingDays));
+                var expiredRfps = db.Rfps.Where(x=> x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.CreateDate < dt2 && x.WinnerRfpBidID == null).ToList();
+
+                foreach (var rfp in expiredRfps)
+                {
+                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
+                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -77,7 +112,7 @@ namespace RFPPortalWebsite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

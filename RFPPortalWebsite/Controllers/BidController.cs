@@ -1,5 +1,4 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
 using RFPPortalWebsite.Contexts;
@@ -49,10 +48,10 @@ namespace RFPPortalWebsite.Controllers
                     }
 
                     //Check if Rfp status is active.
-                    if (rfp.Status != Enums.RfpStatusTypes.Active.ToString())
-                    {
-                        return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
-                    }
+                    //if (rfp.Status != Enums.RfpStatusTypes.Active.ToString())
+                    //{
+                    //    return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
+                    //}
 
                     //Check if user already has an existing bid
                     if (db.RfpBids.Count(x => x.UserId == model.UserId && x.RfpID == model.RfpID) > 0)

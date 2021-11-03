@@ -33,7 +33,7 @@ namespace RFPPortalWebsite.Methods
                     User userModel = new User();
                     if (model.success)
                     {
-                        userModel.UserType = Models.Constants.Enums.UserIdentityType.VA.ToString();
+                        userModel.UserType = Models.Constants.Enums.UserIdentityType.Internal.ToString();
                         userModel.UserName = model.User.forum_name;
                     }
                     else

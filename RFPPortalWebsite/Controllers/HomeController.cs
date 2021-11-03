@@ -1,11 +1,11 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PagedList.Core;
 using RFPPortalWebsite.Methods;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
 using System;
@@ -31,7 +31,15 @@ namespace RFPPortalWebsite.Controllers
         {
            
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
-            model = Methods.RfpMethods.GetRfpsByStatusPaged("", Page, 5);
+
+            if(HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
+            {
+                model = Methods.RfpMethods.GetRfpsByTypePaged(null, Page, 5);
+            }
+            else
+            {
+                model = Methods.RfpMethods.GetRfpsByTypePaged(Models.Constants.Enums.RfpStatusTypes.Public, Page, 5);
+            }
 
             ViewBag.Message = "Request For Proposals";
             return View(model);
@@ -96,8 +104,10 @@ namespace RFPPortalWebsite.Controllers
             {
                 return Json(new AjaxResponse { Success = false, Message = "Passwords are not compatible." });
             }
+
             AuthController cont = new AuthController();
             AjaxResponse resp = new AjaxResponse();
+
             try
             {
                 resp = cont.RegisterUser(rgstr);
@@ -106,6 +116,7 @@ namespace RFPPortalWebsite.Controllers
             {
                 return Json(new AjaxResponse() { Success = true, Message = "Sign up successful." });
             }
+
             return Json(resp);
         }
 
@@ -129,7 +140,7 @@ namespace RFPPortalWebsite.Controllers
         {
             model.UserId = (int)HttpContext.Session.GetInt32("UserId");
             model.CreateDate = DateTime.Now;
-            model.Status = Models.Constants.Enums.RfpStatusTypes.Active.ToString();
+            model.Status = Models.Constants.Enums.RfpStatusTypes.Internal.ToString();
 
             Rfp usr = Methods.RfpMethods.SubmitRfpForm(model);
             if (usr.RfpID > 0)

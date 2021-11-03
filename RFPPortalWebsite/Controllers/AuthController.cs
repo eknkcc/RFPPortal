@@ -1,9 +1,9 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Methods;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
 using System;
@@ -50,7 +50,9 @@ namespace RFPPortalWebsite.Controllers
                         return new AjaxResponse() { Success = false, Message = "Username already exists." };
                     }
                 }
+
                 User usr = AuthMethods.UserRegister(registerInput);
+
                 if (usr.UserId > 0)
                 {
                     return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User{ Email = usr.Email  } };

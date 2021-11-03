@@ -82,7 +82,7 @@
                         </div>
                         <ul class="postcard__tagbox">
                             <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status</li>
-                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                             {
                                 <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
                                 <li class="tag__item play"><i class="fas fa-play mr-2"></i> @biddingType</li>

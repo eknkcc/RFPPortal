@@ -17,38 +17,40 @@
 <body>
     @*############ HEADER STARTS ############*@
     <header class="mb-5">
-        <div class="topnav">
-            <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfps" ? "active" : "" )" href="../Rfps">RFPs</a>
-            @if (RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() == HttpContextAccessor.HttpContext.Session.GetString("UserType"))
-            {
-                <a id="RFPFormLink" href="../Rfp-Form" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "" )">RFP Form</a>
-            }
-            else
-            {
-                <a id="RFPFormLink" href="../Rfp-Form" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "")">RFP Form</a>
-            }
-            @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-            {
-                <a id="BiddedProposals" href="../Bidded-Rfps" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
-            }
-            else
-            {
-                <a id="BiddedProposals" href="../Bidded-Rfps" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
-
-            }
-
-            <div class="login-container">
-                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+        <div id="headerDiv">
+            <div class="topnav">
+                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfps" ? "active" : "" )" href="../Rfps">RFPs</a>
+                @if (RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() == HttpContextAccessor.HttpContext.Session.GetString("UserType"))
                 {
-                    <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
+                    <a id="RFPFormLink" href="../Rfp-Form" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "" )">RFP Form</a>
                 }
                 else
                 {
-                    <button id="LogoutButton" type="button" onclick="Logout()">Log out</button>
+                    <a id="RFPFormLink" href="../Rfp-Form" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "")">RFP Form</a>
                 }
+                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                {
+                    <a id="BiddedProposals" href="../Bidded-Rfps" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
+                }
+                else
+                {
+                    <a id="BiddedProposals" href="../Bidded-Rfps" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
+
+                }
+
+                <div class="login-container">
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                    {
+                        <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
+                    }
+                    else
+                    {
+                        <button id="LogoutButton" type="button" onclick="Logout()">Log out</button>
+                    }
+                </div>
             </div>
-        </div>
-        <div id="headerDiv">
+
+
             <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
         </div>
     </header>
@@ -206,7 +208,7 @@
            
                     if (result.success == true) {
                         toastr.success(result.message);
-                        $("#LoginEmail").val(result.content.user.email);
+                        $("#LoginEmail").val(result.content.email);
                         $("signup").removeClass("active show");
                         $("signin").addClass("active show");
                         $('#tab1').addClass('login-shadow');

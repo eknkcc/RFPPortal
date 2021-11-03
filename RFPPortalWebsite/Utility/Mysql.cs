@@ -1,5 +1,4 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using MySql.Data.MySqlClient;
 using RFPPortalWebsite.Models.SharedModels;

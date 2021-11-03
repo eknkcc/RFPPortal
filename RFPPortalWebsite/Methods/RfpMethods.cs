@@ -104,6 +104,47 @@ namespace RFPPortalWebsite.Methods
         }
 
         /// <summary>
+        ///  Returns list of RFPs in the database by type (internal or public) with pagination.
+        ///  Returns all paginated records in the database if type parameter is null or empty.
+        /// </summary>
+        /// <param name="type">Type of the RFP (Internal or Public)</param>
+        /// <returns>RFP List with pagination entity</returns>
+        public static PagedList.Core.IPagedList<Rfp> GetRfpsByTypePaged(Models.Constants.Enums.RfpStatusTypes? type, int page = 1, int pageCount = 30)
+        {
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    if(type == null)
+                    {
+                        IPagedList<Rfp> lst = db.Rfps.OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        return lst;
+                    }
+                    else if (type == RfpStatusTypes.Internal)
+                    {
+                        var dt = DateTime.Now.AddDays(-Program._settings.InternalBiddingDays);
+
+                        IPagedList<Rfp> lst = db.Rfps.Where(x => DateTime.Now < x.CreateDate.AddDays(Program._settings.InternalBiddingDays)).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        return lst;
+                    }
+                    else if (type == RfpStatusTypes.Public)
+                    {
+                        var dt = DateTime.Now.AddDays(-Program._settings.InternalBiddingDays);
+                        IPagedList<Rfp> lst = db.Rfps.Where(x => dt > x.CreateDate).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        
+                        return lst;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return new PagedList<Rfp>(null, 1, 1);
+        }
+
+        /// <summary>
         ///  Returns list of RFP bids for given RFP by identity.
         /// </summary>
         /// <param name="rfpid">RFP identity (Rfps table primary key)</param>

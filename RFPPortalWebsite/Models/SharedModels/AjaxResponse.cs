@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Helpers.Models.SharedModels
+namespace RFPPortalWebsite.Models.SharedModels
 {   
     /// <summary>
     ///  Simple http response class

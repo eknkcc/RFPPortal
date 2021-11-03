@@ -23,7 +23,7 @@
                     <button type="button" class="btn btn-lg btn-outline-secondary border-0" onclick="window.location.href='./../Rfps'"><i class="fas fa-backward mr-2"></i>RFP's</button>
                 </div>
                 <div>
-                    @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+                    @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                     {
                         <button type="button" class="btn btn-lg btn-info" onclick="NewBidModal()"><i class="fas fa-plus mr-2"></i>New Bid</button>
                     }
@@ -46,14 +46,7 @@
                             </div>
                         </div>
                         <div>
-                            @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
-                            {
-                                <p class="m-0" id="demo"></p>
-                            }
-                            else
-                            {
-                                <p class="m-0">Bidding Ended</p>
-                            }
+                            <p class="m-0">@Model.RfpDeatil.Status</p>
                         </div>
                     </div>
 
@@ -63,7 +56,7 @@
                     </div>
                     <ul class="postcard__tagbox">
                         <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status</li>
-                        @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+                        @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                         {
                             <li class="tag__item play"><i class="fas fa-play mr-2"></i> @Model.BiddingType</li>
                         }
@@ -142,7 +135,7 @@
 catch { }
 
 
-@if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+@if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
 {
 
     <div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">

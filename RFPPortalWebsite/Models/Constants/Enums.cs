@@ -23,8 +23,7 @@
         {
             Public,
             Internal,
-            Admin,
-            VA
+            Admin
         }
 
         /// <summary>
@@ -43,8 +42,11 @@
         public enum RfpStatusTypes
         {
             AdminApproval,
-            Active,
-            Completed
+            Internal,
+            Public,
+            Completed,
+            Expired
         }
+
     }
 }
