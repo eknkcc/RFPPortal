@@ -64,7 +64,7 @@ namespace RFPPortalWebsite.Controllers
                     //Send email
                     EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
 
-                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User { Email = usr.Email } };
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.Please verify your account from your email.", Content = new User{ Email = usr.Email  } };
                 }
             }
             catch (Exception ex)

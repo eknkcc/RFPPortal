@@ -98,5 +98,38 @@ namespace RFPPortalWebsite.Methods
                 return false;
             }
         }
+
+
+
+        /// <summary>
+        ///  Edits RFP Bid to database
+        /// </summary>
+        /// <param name="model">RfpBid model</param>
+        /// <returns></returns>
+        public static RfpBid EditBid(RfpBid model)
+        {
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    var rfp = db.RfpBids.Find(model.RfpBidID);
+
+
+                    //Post edited bid to database
+                    rfp.Amount = model.Amount;
+                    rfp.Note = model.Note;
+                    rfp.Time = model.Time;
+                    db.RfpBids.Update(model);
+                    db.SaveChanges();
+
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+                return new RfpBid();
+            }
+        }
     }
 }

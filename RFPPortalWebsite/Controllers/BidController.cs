@@ -131,6 +131,51 @@ namespace RFPPortalWebsite.Controllers
             return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
+
+        [Route("EditBid")]
+        [HttpPost]
+        [PublicUserAuthorization]
+        public AjaxResponse EditBid([FromBody] RfpBid model)
+        {
+            try
+            {
+                //Validations
+                RfpBid rfpbid = new RfpBid();
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    rfpbid = db.RfpBids.Find(model.RfpBidID);
+
+                    //Check if user is trying to delete bid for another user
+                    if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
+                    {
+                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
+                    }
+
+                    //Check if bid identity is valid
+                    if (rfpbid == null || rfpbid.RfpBidID <= 0)
+                    {
+                        return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                    }
+                }
+
+                //Delete bid
+                var result = Methods.BidMethods.EditBid(model);
+                if (result.RfpBidID > 0 )
+                {
+                    //Log
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
+
+                    return new AjaxResponse() { Success = true, Message = "Rfp bid edited deleted." };
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+        }
+
         /// <summary>
         ///  Choose winning bid from Rfp Bids with RfpBidID
         /// </summary>

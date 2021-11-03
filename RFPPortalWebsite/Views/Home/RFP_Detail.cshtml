@@ -300,17 +300,15 @@ catch { }
                      url: '../Bid/SubmitBid',
                      async: false,
                      contentType: 'application/json',
-                     data: JSON.stringify({ "TimeFrame": timeframe, "Amount": amount, "Note": note, "RfpID": @Model.RfpDeatil.RfpID }),
+                     data: JSON.stringify({ "Time": timeframe, "Amount": amount, "Note": note, "RfpID": @Model.RfpDeatil.RfpID }),
                      success: function (result) {
-
                          if (result.success == true) {
                              toastr.success(result.message, "Success");
-                             /*setTimeout(function () { location.reload(); }, 1500);*/
+                             setTimeout(function () { location.reload(); }, 1500);
                          }
                          else {
                              toastr.error(result.message, "Error");
                          }
-
                      },
                      error: function () {
 
@@ -333,10 +331,51 @@ catch { }
 
             function ConfirmEditBid(id) {
 
+                var timeframe = $("#EditTimeframe").val();
+                var amount = parseFloat($("#EditAmount").val());
+                var note = $("#EditNote").val();
+
+                 $.ajax({
+                     type: "POST",
+                     url: '../Bid/EditBid',
+                     async: false,
+                     contentType: 'application/json',
+                     data: { "RfpBidID": id, "Amount": amount, "Time": timeframe, "Note": note },
+                     success: function (result) {
+                         if (result.success == true) {
+                             toastr.success(result.message, "Success");
+                             setTimeout(function () { location.reload(); }, 1500);
+                         }
+                         else {
+                             toastr.error(result.message, "Error");
+                         }
+                     },
+                     error: function () {
+
+                     }
+                });
             }
 
             function ConfirmDeleteBid(id) {
+                $.ajax({
+                     type: "POST",
+                     url: '../Bid/DeleteBid',
+                     async: false,
+                     contentType: 'application/json',
+                     data: {"RfpBidID": @Model.RfpDeatil.RfpID },
+                     success: function (result) {
+                         if (result.success == true) {
+                             toastr.success(result.message, "Success");
+                             setTimeout(function () { location.reload(); }, 1500);
+                         }
+                         else {
+                             toastr.error(result.message, "Error");
+                         }
+                     },
+                     error: function () {
 
+                     }
+                });
             }
 
         </script>
