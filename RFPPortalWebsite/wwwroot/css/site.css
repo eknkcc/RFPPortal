@@ -2,60 +2,62 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -63,12 +65,13 @@ body {
     margin-bottom: 60px;
     background-color: #f3f5f7;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 50px; /* Vertically center the text there */
 }
 
 
@@ -101,7 +104,7 @@ a:hover {
     text-transform: uppercase;
     text-align: center;
     padding-top: 6.5rem;
-    font-size:3rem;
+    font-size: 3rem;
 }
 
 /* Cards */
@@ -284,14 +287,14 @@ a:hover {
         padding: 2rem 3.5rem;
     }
 
-        .postcard__text2:before {
-            content: "";
-            position: absolute;
-            display: block;
-            top: -20%;
-            height: 130%;
-            width: 55px;
-        }
+    .postcard__text2:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: -20%;
+        height: 130%;
+        width: 55px;
+    }
 
     .postcard.dark .postcard__text2:before {
         background: #18151f;
@@ -421,16 +424,17 @@ a:hover {
 .dot_blue {
     color: #1A99FF
 }
+
 .dot_green {
     color: rgb(0, 249, 62);
 }
 
-.cursor-pointer{
-    cursor:pointer;
+.cursor-pointer {
+    cursor: pointer;
 }
 
-.btn:focus{
-    outline:none
+.btn:focus {
+    outline: none
 }
 
 #headerDiv {
@@ -453,5 +457,311 @@ a:hover {
 }
 
     #footerDiv div {
-        height:30px;
+        height: 30px;
     }
+
+/*********Extras************/
+.btnEdit {
+    background: rgb(236, 236, 236);
+    border-radius: 5px;
+    padding: 2.5px 10px;
+    transition: background-color 0.3s;
+    border: 1px solid #c4c4c4;
+}
+
+/* Topbar */
+
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+}
+
+    .topnav a {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #0E2A47;
+            color: white;
+        }
+
+    .topnav .login-container {
+        float: right;
+    }
+
+    .topnav input[type=text] {
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 17px;
+        border: none;
+        width: 120px;
+    }
+
+    .topnav .login-container button {
+        float: right;
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background-color: #555;
+        color: white;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .topnav .login-container button:hover {
+            background-color: green;
+        }
+
+@media screen and (max-width: 600px) {
+    .topnav .login-container {
+        float: none;
+    }
+
+        .topnav a, .topnav input[type=text], .topnav .login-container button {
+            float: none;
+            display: block;
+            text-align: left;
+            width: 100%;
+            margin: 0;
+            padding: 14px;
+        }
+
+    .topnav input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+/****************Login Modal***************/
+
+.tab-style {
+    font-size: 20px;
+    width: 50%;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.nav-tabs > li > a {
+    margin-right: 0px;
+    color: grey;
+}
+    .nav-tabs > li > a.active {
+        color: #4a89dc;
+    }
+
+
+.group2 {
+    position: relative;
+    margin-top: 16px;
+}
+
+.btn-block {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+
+.login-shadow {
+    -webkit-box-shadow: 5px -5px 6px 0px rgba(82,82,82,0.52);
+    -moz-box-shadow: 5px -5px 6px 0px rgba(82,82,82,0.52);
+    box-shadow: 5px -5px 6px 0px rgba(82,82,82,0.52);
+    z-index: 1;
+}
+
+.signup-shadow {
+    -webkit-box-shadow: -5px 0px 6px 0px rgba(82,82,82,0.52);
+    -moz-box-shadow: -5px -5px 6px 0px rgba(82,82,82,0.52);
+    box-shadow: -5px 0px 6px 0px rgba(82,82,82,0.52);
+}
+
+
+.modal-header {
+    background-color: #e5ecf4;
+}
+
+.group {
+    position: relative;
+    margin-top: 20px;
+}
+
+.group3 {
+    position: relative;
+    margin-top: 40px !important;
+}
+
+.input {
+    font-size: 16px;
+    padding: 6px 10px 6px 5px;
+    -webkit-appearance: none;
+    display: block;
+    background: none;
+    color: #636363;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #757575;
+}
+
+    .input:focus {
+        outline: none;
+    }
+
+
+/* Label */
+
+.label {
+    color: #757575;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 0px;
+    top: 22px;
+    transition: all 0.2s ease;
+}
+
+
+/* active */
+
+.input:focus ~ .label, .input.used ~ .label {
+    top: -20px;
+    transform: scale(.75);
+    left: -15px;
+    /* font-size: 14px; */
+    color: #4a89dc;
+}
+
+
+/* Underline */
+
+.bar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+    .bar:before, .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #4a89dc;
+        transition: all 0.2s ease;
+    }
+
+    .bar:before {
+        left: 50%;
+    }
+
+    .bar:after {
+        right: 50%;
+    }
+
+
+/* active */
+
+.input:focus ~ .bar:before, .input:focus ~ .bar:after {
+    width: 50%;
+}
+
+
+/* Highlight */
+
+.highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
+/* active */
+
+.input:focus ~ .highlight {
+    animation: inputHighlighter 0.3s ease;
+}
+
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+    #myModal {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+    #forgot-password {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+
+
+     .modal-body {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+select {
+    /* Reset Select */
+    appearance: none;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: #636363;
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+    border-bottom: 1px solid #757575;
+}
+    /* Remove IE arrow */
+    select::-ms-expand {
+        display: none;
+    }
+/* Custom Select wrapper */
+.select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    border-radius: 0.25em;
+    overflow: hidden;
+}
+    /* Arrow */
+    .select::after {
+        content: "\25BC";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.6em;
+        background-color: #f3f5f7;
+        transition: 0.25s all ease;
+        pointer-events: none;
+        color: #757575;
+    }
+    /* Transition */
+    .select:hover::after {
+        color: #f39c12;
+    }
+

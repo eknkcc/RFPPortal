@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,8 +17,39 @@
 <body>
     @*############ HEADER STARTS ############*@
     <header class="mb-5">
+        <div class="topnav">
+            <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfps" ? "active" : "" )" href="../Rfps">RFPs</a>
+            @if (RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() == HttpContextAccessor.HttpContext.Session.GetString("UserType"))
+            {
+                <a id="RFPFormLink" href="../Rfp-Form" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "" )">RFP Form</a>
+            }
+            else
+            {
+                <a id="RFPFormLink" href="../Rfp-Form" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "")">RFP Form</a>
+            }
+            @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+            {
+                <a id="BiddedProposals" href="../Bidded-Rfps" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
+            }
+            else
+            {
+                <a id="BiddedProposals" href="../Bidded-Rfps" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
+
+            }
+
+            <div class="login-container">
+                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
+                {
+                    <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
+                }
+                else
+                {
+                    <button id="LogoutButton" type="button" onclick="Logout()">Log out</button>
+                }
+            </div>
+        </div>
         <div id="headerDiv">
-            <div class="text-center text-light" id="pageHeaderTitle">Request For Proposals</div>
+            <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
         </div>
     </header>
     @*############ HEADER ENDS ############*@
@@ -28,6 +62,94 @@
         </main>
     </div>
     @*############ CONTENT ENDS ############*@
+
+    <!-- Modal -->
+    <div class="modal fade bs-modal-sm log-sign" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="bs-example bs-example-tabs">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li id="tab1" class="active tab-style login-shadow"><a class="active" href="#signin" data-toggle="tab">Log In</a></li>
+                        <li id="tab2" class="tab-style"><a href="#signup" data-toggle="tab">Sign Up</a></li>
+
+                    </ul>
+                </div>
+                <div class="modal-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in show" id="signin">
+                            <div class="form-horizontal">
+                                <fieldset>
+                                    <!-- Sign In Form -->
+                                    <!-- Text input-->
+                                    <div class="group">
+                                        <input id="LoginEmail" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Email address</label>
+                                    </div>
+                                    <div class="group">
+                                        <input id="LoginPass" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Password</label>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="signin"></label>
+                                        <div class="controls">
+                                            <button id="signin" name="signin" class="btn btn-primary btn-block" onclick="Login(this)">Log In</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="signup">
+                            <div class="form-horizontal">
+                                <fieldset id="signUpForm">
+                                    <!-- Sign Up Form -->
+                                    <!-- Text input-->
+                                    <div class="group">
+                                        <input name="NameSurname" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Name</label>
+                                    </div>
+
+                                    <!-- Text input-->
+                                    <div class="group">
+                                        <input name="UserName" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">User Name</label>
+                                    </div>
+
+                                    <!-- Password input-->
+                                    <div class="group">
+                                        <input name="Email" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Email</label>
+                                    </div>
+
+                                    <!-- Text input-->
+                                    <div class="group">
+                                        <input name="Password" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Password</label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input name="RePassword" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Confirm Password</label>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="confirmsignup"></label>
+                                        <div class="controls">
+                                            <button onclick="SignUp(this)" id="confirmsignup" name="confirmsignup" class="btn btn-primary btn-block">Sign Up</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     @*############ FOOTER STARTS ############*@
@@ -46,6 +168,67 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/toastr.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.input').blur(function () {
+                var $this = $(this);
+                if ($this.val())
+                    $this.addClass('used');
+                else
+                    $this.removeClass('used');
+            });
+
+        });
+
+        $('#tab1').on('click', function () {
+            $('#tab1').addClass('login-shadow');
+            $('#tab2').removeClass('signup-shadow');
+        });
+
+        $('#tab2').on('click', function () {
+            $('#tab2').addClass('signup-shadow');
+            $('#tab1').removeClass('login-shadow');
+
+
+        });
+
+        function SignUp(e) {
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+            $.ajax({
+                type: "Post",
+                url: '../SignUp',
+                data: $("#signUpForm").serialize(),
+                cache: false,
+                async: true,
+                success: function (result) {
+           
+                    if (result.success == true) {
+                        toastr.success(result.message);
+                        $("#LoginEmail").val(result.content.user.email);
+                        $("signup").removeClass("active show");
+                        $("signin").addClass("active show");
+                        $('#tab1').addClass('login-shadow');
+                        $('#tab2').removeClass('signup-shadow');
+                    }
+                    else {
+                        toastr.warning(result.message);
+                    }
+                    $(e).prop("disabled", false);
+                    $(e).html('Sign Up');
+                },
+                error: function () {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                    $(e).prop("disabled", false);
+                    $(e).html('Sign Up');
+                }
+            });
+        }
+
+    </script>
+
     @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts2", required: false)
 </body>
 </html>

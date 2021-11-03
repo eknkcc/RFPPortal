@@ -86,6 +86,82 @@ namespace RFPPortalWebsite.Utility
     }
 
     /// <summary>
+    ///  Authorization attribute for admins
+    /// </summary>
+    public class AdminUserAuthorization : ActionFilterAttribute
+    {
+        public AdminUserAuthorization()
+        {
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            try
+            {
+                bool control = false;
+
+                //Check if user logged in
+                if (context.HttpContext.Session.GetInt32("UserId") != null)
+                {
+                    //Check if user type is admin
+                    if (context.HttpContext.Session.GetString("UserType") != null && context.HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
+                    {
+                        control = true;
+                    }
+                }
+
+                //Unauthorized request
+                if (!control)
+                {
+                    context.Result = new RedirectResult("../Home/Unauthorized");
+                }
+            }
+            catch
+            {
+                context.Result = new RedirectResult("../Home/Unauthorized");
+            }
+
+        }
+    }
+
+
+    /// <summary>
+    ///  Authorization attribute for all users
+    /// </summary>
+    public class UserAuthorization : ActionFilterAttribute
+    {
+        public UserAuthorization()
+        {
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            try
+            {
+                bool control = false;
+
+                //Check if user logged in
+                if (context.HttpContext.Session.GetInt32("UserId") != null)
+                {
+                    control = true;
+                }
+
+                //Unauthorized request
+                if (!control)
+                {
+                    context.Result = new RedirectResult("../Home/Unauthorized");
+                }
+            }
+            catch
+            {
+                context.Result = new RedirectResult("../Home/Unauthorized");
+            }
+
+        }
+    }
+
+
+    /// <summary>
     ///  Authorization attribute for third party admin.
     ///  Only accepts requests from ip addresses in whitelist defined in appsettings.json
     /// </summary>
@@ -141,7 +217,7 @@ namespace RFPPortalWebsite.Utility
                 bool control = false;
 
                 string clientIp = Utility.IpHelper.GetClientIpAddress(context.HttpContext);
-                
+
                 //Check if client request coming from local machine
                 if (clientIp == "127.0.0.1" || clientIp == "localhost" || clientIp == "::1")
                 {

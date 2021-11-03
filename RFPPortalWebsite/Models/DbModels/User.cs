@@ -15,8 +15,6 @@ namespace RFPPortalWebsite.Models.DbModels
         public string Email { get; set; }
         public string UserType { get; set; }
         public DateTime CreateDate { get; set; }
-        public string AuthKey { get; set; }
-        public string ThirdPartyKey { get; set; }
-        public string ThirdPartyType { get; set; }
+        public string Password { get; set; }
     }
 }

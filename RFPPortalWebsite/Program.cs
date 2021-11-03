@@ -20,6 +20,8 @@ namespace RFPPortalWebsite
             public int PublicBiddingDays { get; set; }
             public List<string> IpWhitelist { get; set; }
             public string EncryptionKey { get; set; }
+            public string DxDApiForUser { get; set; }
+            public string DxDApiToken { get; set; }
         }
 
         public static Settings _settings { get; set; } = new Settings();

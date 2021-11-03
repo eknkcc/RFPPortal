@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "RFP Form";
+}
+
+
+<div class="tab-pane">
+    <div class="form-horizontal">
+        <fieldset id="RFPform">
+            <!-- Sign Up Form -->
+            <!-- Text input-->
+            <div class="group">
+                <input id="Title" name="Title" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                <label class="label" for="Title">Type of Job</label>
+            </div>
+
+            <!-- Text input-->
+            <div class="group3">
+                <textarea  name="Description" required="" class="input" rows="5"></textarea>
+                <span class="highlight"></span><span class="bar"></span>
+                <label class="label" for="Description">Job Description</label>
+            </div>
+
+            <!-- Text input-->
+            <div class="group3 d-flex">
+                <div class="col-md-8 p-0">
+                    <input id="Amount" name="Amount" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                    <label class="label" for="Amount">Total Price for Job ($)</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="select pb-1">
+                        <select name="Currency">
+                            <option value="$">$</option>
+                            <option value="€">€</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group3">
+                <input id="Timeframe" name="Timeframe" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                <label class="label" for="Timeframe">Time Expectations for Job Completion</label>
+            </div>
+
+            <!-- Button -->
+            <div class="control-group d-flex justify-content-center mt-3">
+                <label class="control-label" for="confirmProposal"></label>
+                <div class="controls col-md-4">
+                    <button id="confirmProposal" name="confirmsignup" onclick="SubmitForm(this)" class="btn btn-primary btn-block">Submit Proposal</button>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+        function SubmitForm(e) {
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+            $.ajax({
+                type: "Post",
+                url: '../SubmitForm',
+                data: $('#RFPform').serializeObject(),
+                cache: false,
+                async: true,
+                success: function (result) {
+                    console.log(result);
+                    debugger;
+                    if (result.success == true) {
+                        toastr.success(result.message);
+                        $(':input').not(':button, :submit, :reset, :hidden').val('');
+                    }
+                    else {
+                        toastr.warning(result.message);
+                    }
+                    $(e).prop("disabled", false);
+                    $(e).html('Submit Proposal');
+                },
+                error: function () {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                    $(e).prop("disabled", false);
+                    $(e).html('Submit Proposal');
+                }
+            });
+        }
+    </script>
+}

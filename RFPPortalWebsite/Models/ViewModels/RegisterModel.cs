@@ -7,10 +7,10 @@ namespace RFPPortalWebsite.Models.ViewModels
 {
     public class RegisterModel
     {
-        public string email { get; set; }
-        public string username { get; set; }
-        public string namesurname { get; set; }
-        public string ip { get; set; }
-        public string port { get; set; }
+        public string UserName { get; set; }
+        public string NameSurname { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string RePassword { get; set; }
     }
 }

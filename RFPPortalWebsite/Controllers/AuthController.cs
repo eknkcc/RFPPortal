@@ -30,8 +30,8 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="registerInput">Registration information of the user</param>
         /// <returns>AjaxResponse object with registration result</returns>
-        [HttpPost("RegisterPublic", Name = "RegisterPublic")]
-        public AjaxResponse RegisterPublic([FromBody] RegisterModel registerInput)
+        [HttpPost("RegisterUser", Name = "RegisterUser")]
+        public AjaxResponse RegisterUser([FromBody] RegisterModel registerInput)
         {
             try
             {
@@ -39,28 +39,21 @@ namespace RFPPortalWebsite.Controllers
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Email already exists control
-                    if (db.Users.Count(x => x.Email == registerInput.email) > 0)
+                    if (db.Users.Count(x => x.Email == registerInput.Email) > 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Email already exists." };
                     }
 
                     //Username already exists control
-                    if (db.Users.Count(x => x.UserName == registerInput.username) > 0)
+                    if (db.Users.Count(x => x.UserName == registerInput.UserName) > 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Username already exists." };
                     }
                 }
-
-                //Get user's ip and port
-                registerInput.ip = Utility.IpHelper.GetClientIpAddress(HttpContext);
-                registerInput.port = Utility.IpHelper.GetClientIpAddress(HttpContext);
-
-                //Register user
-                string authkey = AuthMethods.RegisterPublic(registerInput);
-
-                if (!string.IsNullOrEmpty(authkey))
+                User usr = AuthMethods.UserRegister(registerInput);
+                if (usr.UserId > 0)
                 {
-                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = authkey } };
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User{ Email = usr.Email  } };
                 }
             }
             catch (Exception ex)
@@ -72,17 +65,17 @@ namespace RFPPortalWebsite.Controllers
         }
 
         /// <summary>
-        ///  Returns user information from user's AuthKey
+        ///  Returns user information from user's email and password
         ///  This method can be accessed by every user
         /// </summary>
-        /// <param name="authkey">User's auth key</param>
+        /// <param name="email">User's email and password</param>
         /// <returns>AjaxResponse object with user object</returns>
         [HttpPost("GetUserInfo", Name = "GetUserInfo")]
-        public AjaxResponse GetUserInfo(string authkey)
+        public AjaxResponse GetUserInfo(string email,string pass)
         {
             try
             {
-                User user = Methods.AuthMethods.GetUserInfo(authkey);
+                User user = Methods.AuthMethods.GetUserInfo(email,pass);
                 if(user.UserId > 0)
                 {
                     return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
@@ -100,82 +93,5 @@ namespace RFPPortalWebsite.Controllers
         }
 
 
-        /// <summary>
-        ///  Internal user registration method
-        ///  This method can only be accessed by third party admin in whitelisted ip addresses
-        ///  Check appsettings.json for ip whitelist
-        /// </summary>
-        /// <param name="registerInput">Registration information of the user</param>
-        /// <returns>AjaxResponse object with registration result</returns>
-        [HttpPost("RegisterInternal", Name = "RegisterInternal")]
-        [IpWhitelistAuthorization]
-        public AjaxResponse RegisterInternal([FromBody] RegisterModel registerInput)
-        {
-            try
-            {
-                //Validations
-                using (rfpdb_context db = new rfpdb_context())
-                {
-                    //Email already exists control
-                    if (db.Users.Count(x => x.Email == registerInput.email) > 0)
-                    {
-                        var user = db.Users.First(x => x.Email == registerInput.email);
-                        return new AjaxResponse() { Success = false, Message = "Email already exists." };
-                    }
-
-                    //Username already exists control
-                    if (db.Users.Count(x => x.UserName == registerInput.username) > 0)
-                    {
-                        var user = db.Users.First(x => x.Email == registerInput.email);
-                        return new AjaxResponse() { Success = false, Message = "Username already exists." };
-                    }
-                }
-
-                //Register user
-                string authkey = AuthMethods.RegisterInternal(registerInput);
-
-                if (!string.IsNullOrEmpty(authkey))
-                {
-                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new { AuthKey = authkey } };
-                }
-            }
-            catch (Exception ex)
-            {
-                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-            }
-
-            return new AjaxResponse() { Success = false, Message = "Unexpected error" };
-        }
-
-
-        /// <summary>
-        ///  Returns user auth key from email OR password
-        ///  This method can only be accessed by third party admin in whitelisted ip addresses
-        /// </summary>
-        /// <param name="username">Username</param>
-        /// <param name="email">Email</param>
-        /// <returns>AjaxResponse object with user AuthKey</returns>
-        [HttpPost("GetUserAuthKey", Name = "GetUserAuthKey")]
-        [IpWhitelistAuthorization]
-        public AjaxResponse GetUserAuthKey(string username, string email)
-        {
-            try
-            {
-                string authkey = Methods.AuthMethods.GetUserAuthKey(username, email);
-                if (!string.IsNullOrEmpty(authkey))
-                {
-                    return new AjaxResponse() { Success = true, Message = "User found.", Content = new { AuthKey = authkey } };
-                }
-                else
-                {
-                    return new AjaxResponse() { Success = false, Message = "User not found." };
-                }
-            }
-            catch (Exception ex)
-            {
-                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return new AjaxResponse() { Success = false, Message = "Unexpected error" };
-            }
-        }
     }
 }

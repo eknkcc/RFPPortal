@@ -23,6 +23,8 @@
         {
             Public,
             Internal,
+            Admin,
+            VA
         }
 
         /// <summary>
@@ -40,9 +42,8 @@
         /// </summary>
         public enum RfpStatusTypes
         {
-            Pending,
+            AdminApproval,
             Active,
-            Waiting,
             Completed
         }
     }

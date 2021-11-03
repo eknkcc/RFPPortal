@@ -6,8 +6,19 @@
 
 @model PagedList.Core.IPagedList<RFPPortalWebsite.Models.DbModels.Rfp>
 
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 <section>
     <div class="container">
+
+        @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") != null)
+        {
+            <div id="HeaderText" class="text-black-50">
+                Welcome, @HttpContextAccessor.HttpContext.Session.GetString("NameSurname")
+            </div>
+        }
+        
 
         @*############ SEARCH INPUT ############*@
         <input placeholder="Search by title or description" class="form-control mb-4 p-4" />
@@ -100,6 +111,47 @@
                 </tr>
             </table>
         </center>
-
     </div>
 </section>
+
+
+
+<script>
+    function Login(e) {
+        $(e).prop("disabled", true);
+        $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+        $.ajax({
+            type: "Post",
+            url: '../SignIn' ,
+            data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val()},
+            cache: false,
+            async: true,
+            success: function (result) {
+                debugger;
+                if (result.success == true) {
+                    toastr.success("Welcome, " + result.content.user.nameSurname);
+                    $("#HeaderText").text("Welcome, " + result.content.user.nameSurname);
+
+                    if (result.content.user.userType == "Admin"){
+                        $("#RFPFormLink").removeClass("d-none");
+                    }
+                    $("#BiddedProposals").removeClass("d-none");
+                    $("#LoginModal").modal("toggle");
+                    $(".login-container").html('<button id="LogoutButton" onclick="Logout()" type="button">Log out</button>');
+                }
+                else {
+                    toastr.warning(result.message);
+                }
+                $(e).prop("disabled", false);
+                $(e).html('Log in');
+            },
+            error: function () {
+                toastr.error("An error occurred during the process. Please try again later. ");
+                $(e).prop("disabled", false);
+                $(e).html('Log in');
+            }
+        });
+    }
+
+</script>

@@ -21,35 +21,25 @@ namespace RFPPortalWebsite.Controllers
     {
         public IActionResult Index()
         {
+            
             return RedirectToAction("Rfps");
         }
 
         [Route("Rfps")]
         [Route("Rfps/{Page}")]
-        [Route("Rfps/{Page}/{AuthKey}")]
-        public IActionResult Rfps(int Page = 1, string AuthKey = "")
+        public IActionResult Rfps(int Page = 1)
         {
-            if (!string.IsNullOrEmpty(AuthKey))
-            {
-                SignIn(AuthKey);
-            }
-
+           
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
-
             model = Methods.RfpMethods.GetRfpsByStatusPaged("", Page, 5);
 
+            ViewBag.Message = "Request For Proposals";
             return View(model);
         }
 
         [Route("RFP-Detail/{BidID}")]
-        [Route("RFP-Detail/{BidID}/{AuthKey}")]
-        public IActionResult RFP_Detail(int BidID, string AuthKey)
+        public IActionResult RFP_Detail(int BidID)
         {
-            if (!string.IsNullOrEmpty(AuthKey))
-            {
-                SignIn(AuthKey);
-            }
-
             RfpController cont = new RfpController();
             Models.ViewModels.RfpDetailModel model = new Models.ViewModels.RfpDetailModel();
             try
@@ -78,17 +68,16 @@ namespace RFPPortalWebsite.Controllers
             {
                 return View(new List<Rfp>());
             }
-
+            ViewBag.Message = "RFP Detail";
             return View(model);
         }
 
-        [Route("SignIn/{AuthKey}")]
-        public IActionResult SignIn(string AuthKey)
+        [Route("SignIn")]
+        public IActionResult SignIn(string email,string pass)
         {
-            User usr = Methods.AuthMethods.GetUserInfo(AuthKey);
-            if(usr.UserId > 0)
+            User usr = Methods.AuthMethods.GetUserInfo(email, pass);
+            if (usr.UserId > 0)
             {
-                HttpContext.Session.SetString("AuthKey", usr.AuthKey);
                 HttpContext.Session.SetInt32("UserId", usr.UserId);
                 HttpContext.Session.SetString("UserType", usr.UserType);
                 HttpContext.Session.SetString("NameSurname", usr.NameSurname);
@@ -98,6 +87,57 @@ namespace RFPPortalWebsite.Controllers
             }
 
             return Json(new AjaxResponse() { Success = false, Message = "Sign in failed." });
+        }
+
+        [Route("SignUp")]
+        public IActionResult SignUp(RegisterModel rgstr)
+        {
+            if (rgstr.Password != rgstr.Password)
+            {
+                return Json(new AjaxResponse { Success = false, Message = "Passwords are not compatible." });
+            }
+            AuthController cont = new AuthController();
+            AjaxResponse resp = new AjaxResponse();
+            try
+            {
+                resp = cont.RegisterUser(rgstr);
+            }
+            catch 
+            {
+                return Json(new AjaxResponse() { Success = true, Message = "Sign up successful." });
+            }
+            return Json(resp);
+        }
+
+        [AdminUserAuthorization]
+        [Route("Rfp-Form")]
+        public IActionResult Rfp_Form()
+        {
+            ViewBag.Message = "RFP Form";
+            return View();
+        }
+        [UserAuthorization]
+        [Route("Bidded-Rfps")]
+        public IActionResult Bidded_Rfps()
+        {
+            ViewBag.Message = "Bidded RFPs";
+            return View();
+        }
+        [AdminUserAuthorization]
+        [Route("SubmitForm")]
+        public IActionResult SubmitForm(Rfp model)
+        {
+            model.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            model.CreateDate = DateTime.Now;
+            model.Status = Models.Constants.Enums.RfpStatusTypes.Active.ToString();
+
+            Rfp usr = Methods.RfpMethods.SubmitRfpForm(model);
+            if (usr.RfpID > 0)
+            {
+                return Json(new AjaxResponse() { Success = true, Message = "Proposal submitted successfully." });
+            }
+
+            return Json(new AjaxResponse() { Success = false, Message = "Submission failed." });
         }
 
         public IActionResult Unauthorized()

@@ -25,7 +25,7 @@
                 <div>
                     @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
                     {
-                        <button type="button" class="btn btn-lg btn-info" data-toggle="modal" data-target="#bitModal"><i class="fas fa-plus mr-2"></i>New Bid</button>
+                        <button type="button" class="btn btn-lg btn-info" onclick="NewBidModal()"><i class="fas fa-plus mr-2"></i>New Bid</button>
                     }
                 </div>
             </div>
@@ -80,34 +80,57 @@
                                 <th scope="col">Amount</th>
                                 <th scope="col">Time</th>
                                 <th scope="col">Additional Note</th>
-
+                                <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach (var item in Model.BidList)
+                        <tbody id="bidBody">
+                            @try
                             {
-                                if (item.Bid.RfpBidID == Model.RfpDeatil.WinnerRfpBidID)
+                                if (Model.BidList.Count() > 0)
                                 {
-                                    <tr class="table-primary">
-                                        <th scope="row">@item.Username</th>
-                                        <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@item.Bid.Amount @Model.RfpDeatil.Currency</td>
-                                        <td>@item.Bid.Time</td>
-                                        <td>@item.Bid.Note</td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <th scope="row">@item.Username</th>
-                                        <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@item.Bid.Amount @Model.RfpDeatil.Currency</td>
-                                        <td>@item.Bid.Time</td>
-                                        <td>@item.Bid.Note</td>
-                                    </tr>
-                                }
+                                    @foreach (var item in Model.BidList)
+                                    {
+                                        if (item.Bid.RfpBidID == Model.RfpDeatil.Amount)
+                                        {
+                                            <tr class="table-primary">
+                                                <th scope="row">@item.Username</th>
+                                                <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                                <td>@item.Bid.Amount @Model.RfpDeatil.Currency</td>
+                                                <td>@item.Bid.Time</td>
+                                                <td>@item.Bid.Note</td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <th scope="row">@item.Username</th>
+                                                <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                                <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
+                                                <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
+                                                <td id="note_@item.Bid.RfpBidID">@item.Bid.Note</td>
+                                                @if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
+                                                {
+                                                    <td>
+                                                        <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
+                                                        <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            </tr>
+                                        }
 
+                                    }
+                                }
                             }
+                            catch
+                            {
+                            }
+
+
                         </tbody>
                     </table>
                 </div>
@@ -122,7 +145,7 @@ catch { }
 @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
 {
 
-    <div class="modal fade" id="bitModal" tabindex="-1" role="dialog" aria-labelledby="bitModalLabel" aria-hidden="true">
+    <div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,13 +181,6 @@ catch { }
                     <div class="form-group">
                         <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5"></textarea>
                     </div>
-
-                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") == null)
-                    {
-                        <div class="text-dark">
-                            If you have an existing auth key <a href="#" onclick="EnterBidCode();">click here</a> to load your user information.
-                        </div>
-                    }
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -174,32 +190,57 @@ catch { }
         </div>
     </div>
 
-    <div class="modal fade" id="bitModal" tabindex="-1" role="dialog" aria-labelledby="bitModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editBidModal" tabindex="-1" role="dialog" aria-labelledby="editBidModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-body">Please enter your Bid Code</h5>
+                    <h5 class="modal-title text-body">Edit Bid For RFP #@Model.RfpDeatil.RfpID</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="bidCode" placeholder="Bid Code"></textarea>
+                        <input type="text" class="form-control" id="EditTimeframe" placeholder="Timeframe">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="EditAmount" placeholder="Amount">
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" class="form-control" id="EditNote" placeholder="Note"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div id="editButtons" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-info" onclick="SubmitBidCode(this)">Submit Bid Code</button>
+                    <button type="button" class="btn btn-info" onclick="ConfirmEditBid(this.id)">Confirm Edit</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="DeleteBidModal" tabindex="-1" role="dialog" aria-labelledby="editBidModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Delete Bid For RFP #@Model.RfpDeatil.RfpID</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-black-50">
+                    Are you sure you want to delete the bid?
+                </div>
+                <div id="editButtons" class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="ConfirmDeleteBid(this.id)">Delete Bid</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @section Scripts{
         <script>
-            //Get AuthKey of the user from Session
-            var authkey = "@HttpContextAccessor.HttpContext.Session.GetString("AuthKey")";
 
             // Set the date we're counting down to
             var countDownDate = new Date(@Model.TimeRemaining.Year,@Model.TimeRemaining.Month-1,@Model.TimeRemaining.Day,@Model.TimeRemaining.Hour,@Model.TimeRemaining.Minute,0,0).getTime();
@@ -210,6 +251,14 @@ catch { }
                     CountDown();
                 }, 1000);
             });
+
+            function NewBidModal() {
+                if (@HttpContextAccessor.HttpContext.Session.GetString("UserType") == null) {
+                    $("#LoginModal").modal("toggle");
+                } else {
+                    $("#bidModal").modal("toggle");
+                }
+            }
 
             function CountDown() {
                 var now = new Date().getTime();
@@ -239,14 +288,14 @@ catch { }
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Sending Bid..');
 
-                if (authkey.length <= 0) {
+
 
                     RegisterUser();
 
                     SignInUser();
-                }
 
-                PostBid(authkey);
+
+                PostBid();
 
                 $(e).prop("disabled", false);
                 $(e).html('Submit Bid');
@@ -264,10 +313,13 @@ catch { }
                     async: false,
                     data: JSON.stringify({ "username": username, "namesurname": namesurname, "email": email }),
                     success: function (result) {
-
                         if (result.success == true) {
-                            authkey = result.content.authKey;
-                        }
+                            $("#authKey").text(authkey);
+                            $("#bidModal").modal("toggle");
+                            setTimeout(function(){
+                                $("#AuthToggle").modal("toggle");
+                            }, 500)
+-                       }
                         else {
                             toastr.error(result.message, "Error");
                         }
@@ -279,30 +331,7 @@ catch { }
 
             }
 
-            function SignInUser() {
-                if (authkey.length > 0) {
-                    $.ajax({
-                        type: "GET",
-                        url: '../SignIn/'+authkey,
-                        async: false,
-                        success: function (result) {
-
-                            if (result.success != true) {
-                                toastr.error(result.message, "Error");
-                            }
-                        },
-                        error: function () {
-
-                        }
-
-
-                    });
-                }
-
-
-            }
-
-            function PostBid(authkey) {
+            function PostBid() {
 
                 var timeframe = $("#timeframe").val();
                 var amount = parseFloat($("#amount").val());
@@ -318,7 +347,7 @@ catch { }
 
                          if (result.success == true) {
                              toastr.success(result.message, "Success");
-                             setTimeout(function () { location.reload(); }, 1500);
+                             /*setTimeout(function () { location.reload(); }, 1500);*/
                          }
                          else {
                              toastr.error(result.message, "Error");
@@ -331,31 +360,27 @@ catch { }
                 });
             }
 
-            function EnterBidCode() {
+
+
+            function EditBidModal(id) {
+                $("#EditTimeframe").val($("#timeFrame_" + id).text());
+                $("#EditAmount").val($("#amount_" + id).text());
+                $("#EditNote").val($("#note_" + id).text());
+                $("#editButtons button:nth-of-type(2)").attr("id", id);
+                $("#editBidModal").modal("toggle");
+            }
+
+            function DeleteBidModal(id) {
+                $("#DeleteButtons button:nth-of-type(2)").attr("id", id);
+                $("#DeleteBidModal").modal("toggle");
+            }
+
+            function ConfirmEditBid(id) {
 
             }
 
-            function SubmitBidCode(e) {
-                $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+            function ConfirmDeleteBid(id) {
 
-                $.ajax({
-                    type: "Post",
-                    url: './Home/GetUserFromBidCode',
-                    data: { "bidCode": $("#bidCode").val()},
-                    cache: false,
-                    async: true,
-                    success: function (result) {
-
-
-                        $(e).prop("disabled", true);
-                        $(e).html('Submit Bid');
-                    },
-                    error: function () {
-                        $(e).prop("disabled", true);
-                        $(e).html('Submit Bid');
-                    }
-                });
             }
 
         </script>
@@ -363,4 +388,39 @@ catch { }
 
 }
 
+@section Scripts2{
+    <script>
+        function Login(e) {
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
+            $.ajax({
+                type: "Post",
+                url: '../SignIn',
+                data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
+                cache: false,
+                async: true,
+                success: function (result) {
+                    console.log(result);
+                    debugger;
+                    if (result.success == true) {
+                        toastr.success("Welcome, " + result.content.user.nameSurname);
+                        setTimeout(function () { location.reload(); }, 1500);
+                    }
+                    else {
+                        toastr.warning(result.message);
+                    }
+                    $(e).prop("disabled", false);
+                    $(e).html('Log in');
+                },
+                error: function () {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                    $(e).prop("disabled", false);
+                    $(e).html('Log in');
+                }
+            });
+        }
+    </script>
+
+
+}
