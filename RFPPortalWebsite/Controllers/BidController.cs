@@ -131,7 +131,11 @@ namespace RFPPortalWebsite.Controllers
             return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
-
+        /// <summary>
+        ///  Edit RFP Bid record in database
+        /// </summary>
+        /// <param name="rfpbidid">RfpBid identity</param>
+        /// <returns></returns>
         [Route("EditBid")]
         [HttpPost]
         [PublicUserAuthorization]

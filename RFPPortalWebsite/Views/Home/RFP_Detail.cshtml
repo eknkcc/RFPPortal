@@ -157,22 +157,22 @@ catch { }
                     }
 
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")"  onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")"  onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")"  onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe"  onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="amount" placeholder="Amount" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" id="amount" placeholder="Amount"  onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
+                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5"  onfocus="this.removeAttribute('readonly');" readonly></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -223,7 +223,7 @@ catch { }
                 <div class="modal-body text-black-50">
                     Are you sure you want to delete the bid?
                 </div>
-                <div id="editButtons" class="modal-footer">
+                <div id="deleteButtons" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-info" onclick="ConfirmDeleteBid(this.id)">Delete Bid</button>
                 </div>
@@ -330,7 +330,7 @@ catch { }
             }
 
             function ConfirmEditBid(id) {
-
+                debugger;
                 var timeframe = $("#EditTimeframe").val();
                 var amount = parseFloat($("#EditAmount").val());
                 var note = $("#EditNote").val();
@@ -340,7 +340,7 @@ catch { }
                      url: '../Bid/EditBid',
                      async: false,
                      contentType: 'application/json',
-                     data: { "RfpBidID": id, "Amount": amount, "Time": timeframe, "Note": note },
+                     data: JSON.stringify({ "RfpBidID": parseInt(id), "Amount": parseFloat(amount), "Time": timeframe, "Note": note }),
                      success: function (result) {
                          if (result.success == true) {
                              toastr.success(result.message, "Success");
@@ -358,11 +358,10 @@ catch { }
 
             function ConfirmDeleteBid(id) {
                 $.ajax({
-                     type: "POST",
-                     url: '../Bid/DeleteBid',
+                     type: "DELETE",
+                    url: '../Bid/DeleteBid?RfpBidID='+id,
                      async: false,
                      contentType: 'application/json',
-                     data: {"RfpBidID": @Model.RfpDeatil.RfpID },
                      success: function (result) {
                          if (result.success == true) {
                              toastr.success(result.message, "Success");
@@ -381,3 +380,6 @@ catch { }
         </script>
     }
 }
+
+
+///////rfp detail

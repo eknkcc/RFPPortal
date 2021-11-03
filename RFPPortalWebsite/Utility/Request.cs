@@ -20,7 +20,7 @@ namespace RFPPortalWebsite.Utility
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Headers.Add("AcceptLanguage", System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
                 if (!String.IsNullOrEmpty(token))
-                    request.Headers.Add("Authorization", token);
+                    request.Headers.Add("Authorization", "Token "+ token);
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {

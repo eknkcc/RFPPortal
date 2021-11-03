@@ -119,13 +119,13 @@ namespace RFPPortalWebsite.Methods
             {
                 using (rfpdb_context db = new rfpdb_context())
                 {
-                    var rfp = db.RfpBids.Find(model.RfpBidID);
+                    var rfp = db.RfpBids.SingleOrDefault(x => x.RfpBidID == model.RfpBidID);
 
                     //Post edited bid to database
                     rfp.Amount = model.Amount;
                     rfp.Note = model.Note;
                     rfp.Time = model.Time;
-                    db.RfpBids.Update(model);
+                   
                     db.SaveChanges();
 
                     //Logging
