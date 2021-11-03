@@ -12,46 +12,43 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/fontawesome-all.min.css" rel="stylesheet" />
-    <link href="~/css/toastr.css" rel="stylesheet" />
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
 </head>
 <body>
+
     @*############ HEADER STARTS ############*@
     <header class="mb-5">
         <div id="headerDiv">
             <div class="topnav">
-                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfps" ? "active" : "" )" href="../Rfps">RFPs</a>
-                @if (RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() == HttpContextAccessor.HttpContext.Session.GetString("UserType"))
+                <a class="btn btn-outline-primary mr-2" href="../Rfps"><i class="fa fa-list-alt"></i> RFP List</a>
+
+                @* Show RFP post menu for admins *@
+                @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
                 {
-                    <a id="RFPFormLink" href="../Rfp-Form" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "" )">RFP Form</a>
+                    <a class="btn btn-outline-primary mr-2" href="../Rfp-Form"><i class="fa fa-plus-square"></i> New RFP</a>
+                }
+
+                @* Show bids of the user if signed in *@
+                @if (HttpContextAccessor.HttpContext.Session.GetString("UserId") != null)
+                {
+                    <a class="btn btn-outline-primary mr-2" href="../My-Bids"><i class="fa fa-id-card-alt"></i> My Bids</a>
+
+                    <div class="login-container">
+                        <button class="btn btn-primary px-3" type="button" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</button>
+                    </div>
                 }
                 else
                 {
-                    <a id="RFPFormLink" href="../Rfp-Form" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Rfp_Form" ? "active" : "")">RFP Form</a>
-                }
-                @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-                {
-                    <a id="BiddedProposals" href="../Bidded-Rfps" class="d-none @(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
-                }
-                else
-                {
-                    <a id="BiddedProposals" href="../Bidded-Rfps" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Bidded_Rfps" ? "active" : "")">Bidded Proposals</a>
-
+                    <div class="login-container">
+                        <button class="btn btn-success px-3" type="button" href="#signup" data-toggle="modal" data-target=".log-sign"><i class="fa fa-user-alt mr-1"></i> Sign In</button>
+                    </div>
                 }
 
-                <div class="login-container">
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") == null)
-                    {
-                        <button id="LoginButton" type="submit" href="#signup" data-toggle="modal" data-target=".log-sign">Log in</button>
-                    }
-                    else
-                    {
-                        <button id="LogoutButton" type="button" onclick="Logout(this)">Log out</button>
-                    }
-                </div>
             </div>
-            <div id="headerDiv">
-                <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.Message</div>
-            </div>
+
+            <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.PageTitle</div>
+
+        </div>
     </header>
     @*############ HEADER ENDS ############*@
 
@@ -64,7 +61,7 @@
     </div>
     @*############ CONTENT ENDS ############*@
 
-    <!-- Modal -->
+    <!-- Login Modal -->
     <div class="modal fade bs-modal-sm log-sign" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -95,7 +92,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="signin"></label>
                                         <div class="controls">
-                                            <button id="signin" name="signin" class="btn btn-primary btn-block" onclick="Login(this)">Log In</button>
+                                            <button id="signin" name="signin" class="btn btn-primary btn-block" onclick="Login(this)">Sign In</button>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -167,21 +164,24 @@
     @*############ SCRIPTS ############*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/toastr.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/toastr/toastr.js"></script>
+
     <script>
         $(document).ready(function () {
-
+            //Signin modal click event
             $('#tab1').on('click', function () {
                 $('#tab1').addClass('login-shadow');
                 $('#tab2').removeClass('signup-shadow');
             });
 
+            //Signup modal click event
             $('#tab2').on('click', function () {
                 $('#tab2').addClass('signup-shadow');
                 $('#tab1').removeClass('login-shadow');
             });
 
+            //Material inputs trigger
             $('.input').blur(function () {
                 var $this = $(this);
                 if ($this.val())
@@ -207,7 +207,13 @@
             }
         });
 
+        //User sign in method
         function Login(e) {
+            //Disable submit button
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
+
+            //Check if fields empty
             control = true;
             $('#signInForm input').each(function (i, obj) {
                 if ($(obj).val() == "") {
@@ -217,18 +223,16 @@
                     $(obj).removeClass("brdr");
                 }
             });
-            if (control) {
-                $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
+            if (control) {
+                //Ajax post action
                 $.ajax({
                     type: "Post",
                     url: '../SignIn',
                     data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val() },
                     cache: false,
-                    async: true,
+                    async: false,
                     success: function (result) {
-                        debugger;
                         if (result.success == true) {
                             toastr.success("Welcome, " + result.content.user.nameSurname);
                             window.location.reload();
@@ -236,20 +240,26 @@
                         else {
                             toastr.warning(result.message);
                         }
-                        $(e).prop("disabled", false);
-                        $(e).html('Log in');
                     },
                     error: function () {
                         toastr.error("An error occurred during the process. Please try again later. ");
-                        $(e).prop("disabled", false);
-                        $(e).html('Log in');
                     }
                 });
             }
 
+            //Enable submit button
+            $(e).prop("disabled", false);
+            $(e).html('Sign In');
+
         }
 
+        //User sign up method
         function SignUp(e) {
+            //Disable submit button
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+
+            //Check if fields empty
             control = true;
             $('#signUpForm input').each(function (i, obj) {
                 if ($(obj).val() == "") {
@@ -259,29 +269,32 @@
                     $(obj).removeClass("brdr");
                 }
             });
-            if (control) {
-                $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
+            if (control) {
+
+                //Get form data
                 var username = $("#signupusername").val();
                 var namesurname = $("#signupname").val();
                 var email = $("#signupemail").val();
                 var password = $("#signuppassword").val();
                 var password2 = $("#signuppassword2").val();
 
+                //Ajax post action
                 $.ajax({
                     type: "Post",
                     url: '../Auth/RegisterUser',
                     data: JSON.stringify({ "UserName": username, "NameSurname": namesurname, "Email": email, "Password": password, "RePassword": password2 }),
                     contentType: 'application/json',
                     cache: false,
-                    async: true,
+                    async: false,
                     success: function (result) {
                         if (result.success == true) {
+
                             toastr.success(result.message);
                             $('#signUpForm input').each(function (i, obj) {
                                 $(obj).val("");
                             });
+
                             $("#signup").removeClass("active show");
                             $("#signin").addClass("active show");
                             $('#tab1').addClass('login-shadow');
@@ -290,42 +303,24 @@
                         else {
                             toastr.warning(result.message);
                         }
-                        $(e).prop("disabled", false);
-                        $(e).html('Sign Up');
                     },
                     error: function () {
                         toastr.error("An error occurred during the process. Please try again later. ");
-                        $(e).prop("disabled", false);
-                        $(e).html('Sign Up');
                     }
                 });
             }
 
+            //Enable submit button
+            $(e).prop("disabled", false);
+            $(e).html('Sign Up');
         }
 
+        //Logout method
         function Logout(e) {
             $(e).prop("disabled", true);
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>');
 
-            $.ajax({
-                type: "Post",
-                url: '../Logout',
-                cache: false,
-                async: true,
-                success: function (result) {
-                    if (result.success == true) {
-                        setTimeout(function () { location.reload(); }, 1000);
-                    }
-                    else {
-                        toastr.warning(result.message);
-                    }
-                    $(e).prop("disabled", false);
-                },
-                error: function () {
-                    toastr.error("An error occurred during the process. Please try again later. ");
-                    $(e).prop("disabled", false);
-                }
-            });
+            window.location.href = '../Logout';
         }
     </script>
 

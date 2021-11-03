@@ -78,7 +78,7 @@ namespace RFPPortalWebsite.Methods
         /// <summary>
         ///  Returns user information from user's email
         /// </summary>
-        /// <param name="email">User's email</param>
+        /// <param name="email">User's email or username</param>
         /// <returns>AjaxResponse object with user object</returns>
         public static User UserSignIn(string email, string pass)
         {
@@ -87,15 +87,24 @@ namespace RFPPortalWebsite.Methods
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Control with email
-                    if (!string.IsNullOrEmpty(email) && db.Users.Count(x => x.Email == email) > 0)
+                    if (!string.IsNullOrEmpty(email))
                     {
-                        var user = db.Users.First(x => x.Email == email);
+                        //Get user with email
+                        var user = db.Users.FirstOrDefault(x => x.Email == email);
 
-                        if(user == null || user.IsActive == false)
+                        //Email not found, try to find with username
+                        if (user == null)
+                        {
+                            user = db.Users.FirstOrDefault(x => x.UserName == email);
+                        }
+
+                        //User not found
+                        if (user == null || user.IsActive == false)
                         {
                             return new User();
                         }
 
+                        //Password check
                         if(Utility.Encryption.CheckPassword(user.Password, pass))
                         {
                             return user;
@@ -112,7 +121,12 @@ namespace RFPPortalWebsite.Methods
             }
         }
 
-        private static DxDUserModel CheckDxDUser(string email)
+        /// <summary>
+        ///  Check if user is VA in DEVxDAO platform
+        /// </summary>
+        /// <param name="email">User's email</param>
+        /// <returns>User information in DEVxDAO</returns>
+        public static DxDUserModel CheckDxDUser(string email)
         {
             DxDUserModel registerResponse = new DxDUserModel();
             try

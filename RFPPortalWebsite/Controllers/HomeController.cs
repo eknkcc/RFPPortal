@@ -20,19 +20,23 @@ namespace RFPPortalWebsite.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
-        {
-            
+        {         
             return RedirectToAction("Rfps");
+        }
+
+        public IActionResult Unauthorized()
+        {
+            return View();
         }
 
         [Route("Rfps")]
         [Route("Rfps/{Page}")]
         public IActionResult Rfps(int Page = 1)
         {
-           
+
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
 
-            if(HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
+            if (HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
             {
                 model = Methods.RfpMethods.GetRfpsByTypePaged(null, Page, 5);
             }
@@ -41,8 +45,33 @@ namespace RFPPortalWebsite.Controllers
                 model = Methods.RfpMethods.GetRfpsByTypePaged(Models.Constants.Enums.RfpStatusTypes.Public, Page, 5);
             }
 
-            ViewBag.Message = "Request For Proposals";
+            ViewBag.PageTitle = "Request For Proposals";
             return View(model);
+        }
+
+        [AdminUserAuthorization]
+        [Route("Rfp-Form")]
+        public IActionResult Rfp_Form()
+        {
+            ViewBag.PageTitle = "RFP Form";
+            return View();
+        }
+
+        [AdminUserAuthorization]
+        [Route("SubmitForm")]
+        public IActionResult SubmitForm(Rfp model)
+        {
+            model.UserId = (int)HttpContext.Session.GetInt32("UserId");
+            model.CreateDate = DateTime.Now;
+            model.Status = Models.Constants.Enums.RfpStatusTypes.Internal.ToString();
+
+            Rfp usr = Methods.RfpMethods.SubmitRfpForm(model);
+            if (usr.RfpID > 0)
+            {
+                return Json(new AjaxResponse() { Success = true, Message = "Proposal submitted successfully." });
+            }
+
+            return Json(new AjaxResponse() { Success = false, Message = "Submission failed." });
         }
 
         [Route("RFP-Detail/{BidID}")]
@@ -76,12 +105,29 @@ namespace RFPPortalWebsite.Controllers
             {
                 return View(new List<Rfp>());
             }
-            ViewBag.Message = "RFP Detail";
+            ViewBag.PageTitle = "RFP Detail";
             return View(model);
         }
 
+        [UserAuthorization]
+        [Route("My-Bids")]
+        public IActionResult My_Bids()
+        {
+            ViewBag.PageTitle = "User's Bids";
+            return View();
+        }
+
+
+        #region Login & Register Methods
+        /// <summary>
+        ///  User login function
+        /// </summary>
+        /// <param name="email">User's email or username</param>
+        /// <param name="password">User's password</param>
+        /// <param name="usercode">Captcha code (Needed after 3 failed requests)</param>
+        /// <returns></returns>
         [Route("SignIn")]
-        public IActionResult SignIn(string email,string pass)
+        public IActionResult SignIn(string email, string pass)
         {
             User usr = Methods.AuthMethods.UserSignIn(email, pass);
             if (usr.UserId > 0)
@@ -126,72 +172,11 @@ namespace RFPPortalWebsite.Controllers
         [Route("Logout")]
         public IActionResult Logout()
         {
-            AjaxResponse resp = new AjaxResponse();
-            try
-            {
-                HttpContext.Session.Clear();
-                resp.Success = true;
-            }
-            catch
-            {
-                return Json(new AjaxResponse() { Success = false, Message = "Log out failed." });
-            }
-
-            return Json(resp);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
 
-        [AdminUserAuthorization]
-        [Route("Rfp-Form")]
-        public IActionResult Rfp_Form()
-        {
-            ViewBag.Message = "RFP Form";
-            return View();
-        }
-        [UserAuthorization]
-        [Route("Bidded-Rfps")]
-        public IActionResult Bidded_Rfps()
-        {
-            ViewBag.Message = "Bidded RFPs";
-            return View();
-        }
-        [AdminUserAuthorization]
-        [Route("SubmitForm")]
-        public IActionResult SubmitForm(Rfp model)
-        {
-            model.UserId = (int)HttpContext.Session.GetInt32("UserId");
-            model.CreateDate = DateTime.Now;
-            model.Status = Models.Constants.Enums.RfpStatusTypes.Internal.ToString();
-
-            Rfp usr = Methods.RfpMethods.SubmitRfpForm(model);
-            if (usr.RfpID > 0)
-            {
-                return Json(new AjaxResponse() { Success = true, Message = "Proposal submitted successfully." });
-            }
-
-            return Json(new AjaxResponse() { Success = false, Message = "Submission failed." });
-        }
-
-        public IActionResult Unauthorized()
-        {
-            return View();
-        }
-
-        //[HttpPost("SaveBid", Name = "SaveBid")]
-        //[PublicUserAuthorization]
-        //public JsonResult SaveBid([FromBody] NewBidModel NewBid)
-        //{
-        //    try
-        //    {
-        //        RfpBid bid = BidMethods.SubmitBid(new RfpBid() { Amount = NewBid.Amount, CreateDate = DateTime.Now, Note = NewBid.Note, Time = NewBid.TimeFrame, UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), RfpID = NewBid.RfpID });
-        //        return Json(bid);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-        //        return Json(new AjaxResponse() { Success = false, Message = "Unexpected error" });
-        //    }
-        //}
-
+        #endregion
 
     }
 }

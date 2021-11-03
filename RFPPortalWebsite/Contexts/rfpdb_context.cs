@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace RFPPortalWebsite.Contexts
 {
+    /// <summary>
+    ///  RFP Portal main database context 
+    ///  EntityFrameworkCore CodeFirst approach is used.
+    ///  Use Add-Migration <migration_text> command for migration.
+    ///  Use Update-Database command to apply changes into database.
+    /// </summary>
     public class rfpdb_context : DbContext
     {
         public rfpdb_context()

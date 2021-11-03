@@ -103,7 +103,7 @@ a:hover {
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    padding-top: 6.5rem;
+    padding-top: 3.5rem;
     font-size: 3rem;
 }
 
@@ -470,12 +470,15 @@ a:hover {
 }
 
 /* Topbar */
-
+.topnav {
+    height: 60px;
+    padding: 10px;
+}
 
     .topnav a {
         float: left;
         display: block;
-        color: black;
+        color: #82bbf9;
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
@@ -509,7 +512,6 @@ a:hover {
         padding: 6px 10px;
         margin-top: 8px;
         margin-right: 16px;
-        background-color: #555;
         color: white;
         font-size: 17px;
         border: none;
@@ -517,7 +519,7 @@ a:hover {
     }
 
         .topnav .login-container button:hover {
-            background-color: green;
+            background-color: #24c148;
         }
 
 @media screen and (max-width: 600px) {
@@ -552,6 +554,7 @@ a:hover {
     margin-right: 0px;
     color: grey;
 }
+
     .nav-tabs > li > a.active {
         color: #4a89dc;
     }
@@ -710,7 +713,7 @@ a:hover {
 @media screen and (min-width: 768px) {
 
 
-     .modal-body {
+    .modal-body {
         padding-left: 50px;
         padding-right: 50px;
     }

@@ -16,9 +16,6 @@ namespace RFPPortalWebsite.Controllers
 {
     /// <summary>
     ///  AuthController contains user authorization and registration methods.
-    ///  Public users are automatically registered to the system after filling the bidding form. "RegisterPublic" method is triggered after posting bidding form.
-    ///  Internal users should be registered from third party admin(DevxDao) with "RegisterInternal" method before they transferred to the portal.
-    ///  If user already have a registration in the portal "GetUserAuthKey" method can be used to get user's AuthKey
     /// </summary>
     [Route("[controller]")]
     [ApiController]
@@ -67,7 +64,7 @@ namespace RFPPortalWebsite.Controllers
                     //Send email
                     EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
 
-                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User{ Email = usr.Email  } };
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User { Email = usr.Email } };
                 }
             }
             catch (Exception ex)
@@ -85,12 +82,12 @@ namespace RFPPortalWebsite.Controllers
         /// <param name="email">User's email and password</param>
         /// <returns>AjaxResponse object with user object</returns>
         [HttpPost("GetUserInfo", Name = "GetUserInfo")]
-        public AjaxResponse GetUserInfo(string email,string pass)
+        public AjaxResponse GetUserInfo(string email, string pass)
         {
             try
             {
-                User user = Methods.AuthMethods.UserSignIn(email,pass);
-                if(user.UserId > 0)
+                User user = Methods.AuthMethods.UserSignIn(email, pass);
+                if (user.UserId > 0)
                 {
                     return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
                 }

@@ -8,6 +8,15 @@ namespace RFPPortalWebsite.Utility
 {
     public class EmailHelper
     {
+        /// <summary>
+        ///  Sends email using SMTP
+        /// </summary>
+        /// <param name="Subject">Email subject</param>
+        /// <param name="Content">Email content</param>
+        /// <param name="To">To list</param>
+        /// <param name="Cc">Cc list</param>
+        /// <param name="Bcc">Bcc list</param>
+        /// <returns></returns>
         public static string SendEmail(string Subject, string Content, List<string> To, List<string> Cc, List<string> Bcc)
         {
             try
@@ -52,6 +61,11 @@ namespace RFPPortalWebsite.Utility
             }
         }
 
+        /// <summary>
+        ///  Wraps email content into html template
+        /// </summary>
+        /// <param name="content">Email content</param>
+        /// <returns></returns>
         public static string WrapToMailTemplate(string content)
         {
             string all =
