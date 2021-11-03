@@ -68,24 +68,26 @@
 
                 <div class="bs-example bs-example-tabs">
                     <ul id="myTab" class="nav nav-tabs">
-                        <li id="tab1" class="active tab-style login-shadow"><a class="active" href="#signin" data-toggle="tab">Log In</a></li>
+                        <li id="tab1" class="active tab-style login-shadow"><a class="active" href="#signin" data-toggle="tab">Sign In</a></li>
                         <li id="tab2" class="tab-style"><a href="#signup" data-toggle="tab">Sign Up</a></li>
 
                     </ul>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="signModal">
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in show" id="signin">
                             <div class="form-horizontal">
                                 <fieldset id="signInForm">
                                     <!-- Sign In Form -->
+                                    <h4 class="text-dark text-center mt-3">Sign In to RFP Portal</h4>
+                                    <p class="text-dark text-center">Sign in with your registered username or email</p>
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input id="LoginEmail" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                                        <label class="label" for="date">Email address</label>
+                                        <input id="LoginEmail" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Email or username</label>
                                     </div>
                                     <div class="group">
-                                        <input id="LoginPass" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="LoginPass" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Password</label>
                                     </div>
                                     <!-- Button -->
@@ -103,32 +105,36 @@
                             <div class="form-horizontal">
                                 <fieldset id="signUpForm">
                                     <!-- Sign Up Form -->
+                                    <h4 class="text-dark text-center mt-3">Sign Up to RFP Portal</h4>
+                                    <p class="text-dark text-center">New user registration</p>
+
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input id="signupname" name="NameSurname" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                                        <label class="label" for="date">Name</label>
+                                        <input id="signupemail" name="Email" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Email</label>
+                                    </div>
+                                    <small style="color: red !important;">Use your DEVxDAO email to become an internal member.</small>
+
+                                    <!-- Text input-->
+                                    <div class="group">
+                                        <input id="signupusername" name="UserName" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Username</label>
                                     </div>
 
                                     <!-- Text input-->
                                     <div class="group">
-                                        <input id="signupusername" name="UserName" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                                        <label class="label" for="date">User Name</label>
+                                        <input id="signupname" name="NameSurname" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                                        <label class="label" for="date">Name Surname</label>
                                     </div>
 
                                     <!-- Password input-->
                                     <div class="group">
-                                        <input id="signupemail" name="Email" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                                        <label class="label" for="date">Email</label>
-                                    </div>
-
-                                    <!-- Text input-->
-                                    <div class="group">
-                                        <input id="signuppassword" name="Password" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signuppassword" name="Password" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Password</label>
                                     </div>
 
                                     <div class="group">
-                                        <input id="signuppassword2" name="RePassword" required="" class="input" type="password"><span class="highlight"></span><span class="bar"></span>
+                                        <input id="signuppassword2" name="RePassword" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Confirm Password</label>
                                     </div>
 

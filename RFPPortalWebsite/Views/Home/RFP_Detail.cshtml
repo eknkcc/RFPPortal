@@ -157,22 +157,22 @@ catch { }
                     }
 
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")">
+                        <input type="text" class="form-control" @disabled id="name" placeholder="Name Surname" value="@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")">
+                        <input type="text" class="form-control" @disabled id="username" placeholder="Username" value="@HttpContextAccessor.HttpContext.Session.GetString("Username")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")">
+                        <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe">
+                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="amount" placeholder="Amount">
+                        <input type="text" class="form-control" id="amount" placeholder="Amount" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5"></textarea>
+                        <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -429,6 +429,10 @@ a:hover {
     color: rgb(0, 249, 62);
 }
 
+.dot_red {
+    color: #ff5959;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -548,6 +552,8 @@ a:hover {
     width: 50%;
     background-color: #f2f2f2;
     text-align: center;
+    border-bottom: 3px solid #0080ff;
+    padding: 10px;
 }
 
 .nav-tabs > li > a {
@@ -627,7 +633,7 @@ a:hover {
     position: absolute;
     pointer-events: none;
     left: 0px;
-    top: 22px;
+    top: 10px;
     transition: all 0.2s ease;
 }
 

@@ -25,30 +25,27 @@
         {
             foreach (var item in Model)
             {
-                string biddingType = "";
                 string remainingTime = "";
                 if (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
                 {
-                    biddingType = "Internal Bidding";
                     remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) - DateTime.Now).Days + " days remaining";
                 }
                 else if (DateTime.Now >= item.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
                          DateTime.Now <= item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
                 {
-                    biddingType = "Public Bidding";
                     remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays) - DateTime.Now).Days + " days remaining";
-                }
-                else
-                {
-                    biddingType = "Bidding Ended";
                 }
 
                 string clr = "";
-                if (item.Status.ToLower() == "active")
+                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
                     clr = "green";
                 }
-                else
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
+                {
+                    clr = "red";
+                }
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
                 {
                     clr = "blue";
                 }
@@ -66,7 +63,7 @@
                         </div>
                         <div class="postcard__bar"></div>
                         <div class="postcard__preview-txt">
-                            @if (@item.Description.Length > 50)
+                            @if (item.Description.Length > 50)
                             {
                                 @item.Description.Substring(0, Math.Min(item.Description.Length, 50)) <span>..</span>
                             }
@@ -76,15 +73,15 @@
                             }
                         </div>
                         <ul class="postcard__tagbox">
-                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status</li>
+                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
                             @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                             {
                                 <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
-                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> @biddingType</li>
+                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
                             }
                             else
                             {
-                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> @biddingType</li>
+                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> Bidding Ended</li>
                             }
                         </ul>
                     </div>
