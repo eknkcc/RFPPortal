@@ -32,6 +32,9 @@ namespace RFPPortalWebsite.Methods
                     db.RfpBids.Add(model);
                     db.SaveChanges();
 
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "User post bid successful. Bid: "+ Utility.Serializers.SerializeJson(model));
+
                     return model;
                 }
             }
@@ -58,6 +61,9 @@ namespace RFPPortalWebsite.Methods
                     //Delete bid from database
                     db.RfpBids.Remove(rfpbid);
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(rfpbid.UserId, Models.Constants.Enums.UserLogType.Auth, "User delete bid successful. Bid: " + Utility.Serializers.SerializeJson(rfpbid));
 
                     return true;
                 }
@@ -89,6 +95,9 @@ namespace RFPPortalWebsite.Methods
                     db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
 
+                    //Logging
+                    Program.monitizer.AddUserLog(rfpbid.UserId, Models.Constants.Enums.UserLogType.Auth, "Admin choose winning bid successful. BidID: " + rfpbid.RfpBidID);
+
                     return true;
                 }
             }
@@ -98,8 +107,6 @@ namespace RFPPortalWebsite.Methods
                 return false;
             }
         }
-
-
 
         /// <summary>
         ///  Edits RFP Bid to database
@@ -114,13 +121,15 @@ namespace RFPPortalWebsite.Methods
                 {
                     var rfp = db.RfpBids.Find(model.RfpBidID);
 
-
                     //Post edited bid to database
                     rfp.Amount = model.Amount;
                     rfp.Note = model.Note;
                     rfp.Time = model.Time;
                     db.RfpBids.Update(model);
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Edit bid successful. Bid: " + Utility.Serializers.SerializeJson(model));
 
                     return model;
                 }

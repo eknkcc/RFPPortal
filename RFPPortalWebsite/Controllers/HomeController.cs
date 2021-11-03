@@ -119,6 +119,7 @@ namespace RFPPortalWebsite.Controllers
 
 
         #region Login & Register Methods
+
         /// <summary>
         ///  User login function
         /// </summary>
@@ -169,6 +170,10 @@ namespace RFPPortalWebsite.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// User logout function
+        /// </summary>
+        /// <returns></returns>
         [Route("Logout")]
         public IActionResult Logout()
         {

@@ -191,6 +191,9 @@ namespace RFPPortalWebsite.Methods
                     db.Rfps.Add(model);
                     db.SaveChanges();
 
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Post RFP successful. RfpID: " + model.RfpID);
+
                     return model;
                 }
             }
@@ -218,6 +221,9 @@ namespace RFPPortalWebsite.Methods
                     rfp.Status = model.Status;
                     db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Change RFP status successful. RfpID: " + model.RfpID+ " New Status: " + model.Status);
 
                     return rfp;
                 }

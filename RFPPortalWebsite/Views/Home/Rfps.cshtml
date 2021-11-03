@@ -1,41 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "RFP Portal";
+    ViewData["Title"] = "RFPs";
 }
+
+@*Pagination reference*@
 @using PagedList.Core.Mvc
 @using PagedList.Core
-
 @model PagedList.Core.IPagedList<RFPPortalWebsite.Models.DbModels.Rfp>
-
+@*User session accessor*@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
 <section>
     <div class="container">
 
-        @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") != null)
-        {
-            <div id="HeaderText" class="text-black-50">
-                Welcome, @HttpContextAccessor.HttpContext.Session.GetString("NameSurname")
-            </div>
-        }
-
         @*############ MAIN CONTENT STARTS ############*@
 
         @try
         {
+            //Loop RFPs
             foreach (var item in Model)
             {
+                //Calculate remaining bid time
                 string remainingTime = "";
-                if (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
+                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
                 {
                     remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) - DateTime.Now).Days + " days remaining";
                 }
-                else if (DateTime.Now >= item.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
-                         DateTime.Now <= item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
                     remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays) - DateTime.Now).Days + " days remaining";
                 }
 
+                //Find status color of the RFP
                 string clr = "";
                 if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
@@ -74,7 +70,8 @@
                         </div>
                         <ul class="postcard__tagbox">
                             <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
-                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
+                               item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                             {
                                 <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
                                 <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>

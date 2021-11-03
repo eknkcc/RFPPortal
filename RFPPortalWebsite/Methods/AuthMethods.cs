@@ -107,6 +107,9 @@ namespace RFPPortalWebsite.Methods
                         //Password check
                         if(Utility.Encryption.CheckPassword(user.Password, pass))
                         {
+                            //Logging
+                            Program.monitizer.AddUserLog(user.UserId, Models.Constants.Enums.UserLogType.Auth, "User sign in successful.");
+
                             return user;
                         }
                     }
@@ -137,6 +140,7 @@ namespace RFPPortalWebsite.Methods
 
                     var checkUserJson = Utility.Request.GetDxD(Program._settings.DxDApiForUser + email, Program._settings.DxDApiToken);
                     registerResponse = Utility.Serializers.DeserializeJson<DxDUserModel>(checkUserJson);
+
 
                     if (registerResponse == null)
                         return new DxDUserModel();
@@ -179,6 +183,9 @@ namespace RFPPortalWebsite.Methods
                             //Change active status of the user and update database
                             modelUser.IsActive = true;
                             db.SaveChanges();
+
+                            //Logging
+                            Program.monitizer.AddUserLog(modelUser.UserId, Models.Constants.Enums.UserLogType.Auth, "User email activation successful.");
 
                             return modelUser;
                         }
