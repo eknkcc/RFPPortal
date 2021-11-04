@@ -58,6 +58,8 @@
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt">
                         @Model.RfpDeatil.Description
+
+                        <div><small><b>Time frame for this RFP:</b> @Model.RfpDeatil.Timeframe</small></div>
                     </div>
                     <ul class="postcard__tagbox">
                         <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status Bidding</li>
@@ -390,6 +392,3 @@ catch { }
         </script>
     }
 }
-
-
-///////rfp detail

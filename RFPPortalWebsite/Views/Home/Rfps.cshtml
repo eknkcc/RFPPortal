@@ -20,11 +20,13 @@
                 string remainingTime = "";
                 if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
                 {
-                    remainingTime = (item.InternalBidEndDate - DateTime.Now).Days + " days remaining";
+                    TimeSpan ts = (item.InternalBidEndDate - DateTime.Now);
+                    remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
                 }
                 else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
-                    remainingTime = (item.PublicBidEndDate - DateTime.Now).Days + " days remaining";
+                    TimeSpan ts = (item.PublicBidEndDate - DateTime.Now);
+                    remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
                 }
 
                 //Find status color of the RFP
@@ -63,6 +65,8 @@
                             {
                                 @item.Description
                             }
+
+                            <div><small><b>Time frame for this RFP:</b> @item.Timeframe</small></div>
                         </div>
                         <ul class="postcard__tagbox">
                             <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
