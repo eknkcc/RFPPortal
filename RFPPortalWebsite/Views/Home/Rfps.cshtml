@@ -57,9 +57,9 @@
                         </div>
                         <div class="postcard__bar"></div>
                         <div class="postcard__preview-txt">
-                            @if (item.Description.Length > 50)
+                            @if (item.Description.Length > 150)
                             {
-                                @item.Description.Substring(0, Math.Min(item.Description.Length, 50)) <span>..</span>
+                                @item.Description.Substring(0, Math.Min(item.Description.Length, 150)) <span>..</span>
                             }
                             else
                             {

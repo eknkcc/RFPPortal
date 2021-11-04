@@ -64,7 +64,7 @@
                     <ul class="postcard__tagbox">
                         <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status Bidding</li>
                         @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
-           Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+         Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                         {
                             <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
                         }
@@ -98,18 +98,27 @@
                                             <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
                                             <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
                                             <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
-                                            <td id="note_@item.Bid.RfpBidID">@item.Bid.Note</td>
+                                            <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">
+                                                @if (item.Bid.Note.Length > 50)
+                                                {
+                                                    @item.Bid.Note.Substring(0, Math.Min(item.Bid.Note.Length, 50)) <span>..</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.Bid.Note
+                                                }
+                                            </td>
                                             <td>
                                                 @if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username") &&
-                                                                 (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString()
-                                                                 || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString()))
+                                                               (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString()
+                                                               || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString()))
                                                 {
                                                     <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
                                                     <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
                                                 }
                                                 @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() &&
-                                                         (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
-                                                         )
+                                                       (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                                                       )
                                                 {
                                                     <button id="@item.Bid.RfpBidID" onclick="WinningBidModal(this.id)" type="button" class="btn btnEdit  btn-sm" title="Choose the winning bid"><i class="far fa-star"></i></button>
                                                 }
@@ -341,7 +350,7 @@ catch { }
             function EditBidModal(id) {
                 $("#EditTimeframe").val($("#timeFrame_" + id).text());
                 $("#EditAmount").val($("#amount_" + id).text());
-                $("#EditNote").val($("#note_" + id).text());
+                $("#EditNote").val($("#note_" + id).attr("title"));
                 $("#editButtons button:nth-of-type(2)").attr("id", id);
                 $("#editBidModal").modal("toggle");
             }
@@ -404,29 +413,29 @@ catch { }
 }
 
 @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString() &&
-                                                         (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
-                                                         )
+                                                       (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                                                       )
 {
 
-<div class="modal fade" id="WinningBidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-body">Winner Bid For RFP #@Model.RfpDeatil.RfpID</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-black-50">
-                Are you sure you want to select the winner bid as <span id="winner"></span>?
-            </div>
-            <div id="winnerButtons" class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-info" onclick="SubmitWinnerBid(this)">Confirm Winner</button>
+    <div class="modal fade" id="WinningBidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Winner Bid For RFP #@Model.RfpDeatil.RfpID</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-black-50">
+                    Are you sure you want to select the winner bid as <span id="winner"></span>?
+                </div>
+                <div id="winnerButtons" class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="SubmitWinnerBid(this)">Confirm Winner</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     @section Scripts2{

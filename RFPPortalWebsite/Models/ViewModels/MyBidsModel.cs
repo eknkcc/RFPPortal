@@ -12,5 +12,6 @@ namespace RFPPortalWebsite.Models.ViewModels
         public string Title { get; set; }
         public string Status { get; set; }
         public RfpBid Bid { get; set; }
+        public int? WinnerRfpBidID { get; set; }
     }
 }

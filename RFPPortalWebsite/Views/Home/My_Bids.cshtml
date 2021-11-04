@@ -28,7 +28,7 @@
                                 <td scope="row">@item.Title</td>
                                 <td scope="row">
                                     @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
-                                         item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                                        item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                                     {
                                         <div class="tag__item play"><i class="fas fa-play mr-2" style="color: #50ff50"></i> Bidding Continues</div>
                                     }
@@ -40,7 +40,13 @@
                                 <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
                                 <td>@item.Bid.Amount</td>
                                 <td>@item.Bid.Time</td>
-                                <td> <button onclick="window.location.href='../Rfp-Detail/@item.RfpID'" type="button" class="btn btnEdit btn-sm"><i class="fas fa-clipboard mr-1"></i>RFP Detail</button></td>
+                                <td>
+                                    <button onclick="window.location.href='../Rfp-Detail/@item.RfpID'" type="button" class="btn btnEdit btn-sm"><i class="fas fa-clipboard mr-1"></i>RFP Detail</button>
+                                    @if (item.WinnerRfpBidID == item.Bid.RfpBidID)
+                                    {
+                                        <i class="fas fa-star" title="Winner Bid" style="color: #b09400"></i>
+                                    }
+                                </td>
                             </tr>
                         }
                         catch

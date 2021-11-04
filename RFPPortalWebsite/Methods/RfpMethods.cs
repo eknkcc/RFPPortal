@@ -85,7 +85,7 @@ namespace RFPPortalWebsite.Methods
                 {
                     if (!string.IsNullOrEmpty(status))
                     {
-                        IPagedList<Rfp> lst = db.Rfps.Where(x => x.Status == status).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
+                        IPagedList<Rfp> lst = db.Rfps.Where(x => x.Status == status || x.Status == Models.Constants.Enums.RfpStatusTypes.Completed.ToString() ).OrderByDescending(x => x.RfpID).ToPagedList(page, pageCount);
                         return lst;
                     }
                     else

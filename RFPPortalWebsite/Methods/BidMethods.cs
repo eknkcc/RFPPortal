@@ -163,7 +163,8 @@ namespace RFPPortalWebsite.Methods
                                Bid = bid,
                                RfpID = rfp.RfpID,
                                Status = rfp.Status,
-                               Title = rfp.Title
+                               Title = rfp.Title,
+                               WinnerRfpBidID =  rfp.WinnerRfpBidID
                            }).ToList();
                 }
             }
