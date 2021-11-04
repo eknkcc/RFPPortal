@@ -6,9 +6,13 @@
 /RFPPortalWebsite/bin
 /RFPPortalWebsite/obj
 /RFPPortalWebsite/Properties/PublishProfiles
+/RFPPortalWebsite/app  
 *.user
 /.vs/ProjectSettings.json
 /.vs/VSWorkspaceState.json
 /bin
 /.vscode
 /obj
+/RFPPortal_Tests/bin
+/RFPPortal_Tests/obj
+/RFPPortalWebsite/appsettings.json

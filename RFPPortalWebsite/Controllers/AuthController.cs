@@ -71,11 +71,11 @@ namespace RFPPortalWebsite.Controllers
         /// <param name="email">User's email and password</param>
         /// <returns>AjaxResponse object with user object</returns>
         [HttpPost("GetUserInfo", Name = "GetUserInfo")]
-        public AjaxResponse GetUserInfo(string email,string pass)
+        public AjaxResponse GetUserInfo(string email, string pass)
         {
             try
             {
-                User user = Methods.AuthMethods.GetUserInfo(email,pass);
+                User user = Methods.AuthMethods.GetUserInfo(email, pass);
                 if(user.UserId > 0)
                 {
                     return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
