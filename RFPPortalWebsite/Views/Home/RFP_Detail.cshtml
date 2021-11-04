@@ -62,7 +62,7 @@
                     <ul class="postcard__tagbox">
                         <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status Bidding</li>
                         @if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
-               Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+              Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                         {
                             <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
                         }
@@ -237,9 +237,16 @@ catch { }
 
     @section Scripts{
         <script>
-
+            @{
+                var dt1 = Model.RfpDeatil.InternalBidEndDate;
+                var dt2 = Model.RfpDeatil.PublicBidEndDate;
+            }
             // Set the date we're counting down to
-            var countDownDate = new Date(@Model.EndDate.Year,@Model.EndDate.Month-1,@Model.EndDate.Day,@Model.EndDate.Hour,@Model.EndDate.Minute,0,0).getTime();
+            var countDownDate = new Date(@dt1.Year,@dt1.Month-1,@dt1.Day,@dt1.Hour,@dt1.Minute,0,0).getTime();
+
+            if ('@RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString()' == "Public") {
+                countDownDate = new Date(@dt2.Year,@dt2.Month-1,@dt2.Day,@dt2.Hour,@dt2.Minute,0,0).getTime();
+            }
 
             $(function () {
                 CountDown();

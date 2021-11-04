@@ -10,8 +10,5 @@ namespace RFPPortalWebsite.Models.ViewModels
     {
         public List<RfpBidWUser> BidList { get; set; } = new List<RfpBidWUser>();
         public Rfp RfpDeatil { get; set; }
-        public DateTime EndDate { get; set; }
-        public string BiddingType { get; set; }
-
     }
 }

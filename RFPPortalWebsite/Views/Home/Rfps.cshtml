@@ -20,11 +20,11 @@
                 string remainingTime = "";
                 if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
                 {
-                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) - DateTime.Now).Days + " days remaining";
+                    remainingTime = (item.InternalBidEndDate - DateTime.Now).Days + " days remaining";
                 }
                 else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
-                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays) - DateTime.Now).Days + " days remaining";
+                    remainingTime = (item.PublicBidEndDate - DateTime.Now).Days + " days remaining";
                 }
 
                 //Find status color of the RFP

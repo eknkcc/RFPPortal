@@ -90,8 +90,7 @@ namespace RFPPortalWebsite
             using (rfpdb_context db = new rfpdb_context())
             {
                 //Check if Rfp internal bidding ended and public bidding started
-                var dt = DateTime.Now.AddDays(-Program._settings.InternalBiddingDays);
-                var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.CreateDate < dt && x.WinnerRfpBidID == null).ToList();
+                var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.InternalBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
                 
                 //Update rfp status
                 foreach (var rfp in publicRfps)
@@ -102,8 +101,7 @@ namespace RFPPortalWebsite
                 }
 
                 //Check if rfp public bidding ended without any winner
-                var dt2 = DateTime.Now.AddDays(-(Program._settings.PublicBiddingDays + Program._settings.InternalBiddingDays));
-                var expiredRfps = db.Rfps.Where(x=> x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.CreateDate < dt2 && x.WinnerRfpBidID == null).ToList();
+                var expiredRfps = db.Rfps.Where(x=> x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
 
                 //Update rfp status
                 foreach (var rfp in expiredRfps)

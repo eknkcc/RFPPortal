@@ -37,11 +37,11 @@ namespace RFPPortalWebsite.Controllers
 
             if (HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
             {
-                model = Methods.RfpMethods.GetRfpsByTypePaged(null, Page, 5);
+                model = Methods.RfpMethods.GetRfpsByStatusPaged(null, Page, 5);
             }
             else
             {
-                model = Methods.RfpMethods.GetRfpsByTypePaged(Models.Constants.Enums.RfpStatusTypes.Public, Page, 5);
+                model = Methods.RfpMethods.GetRfpsByStatusPaged(Models.Constants.Enums.RfpStatusTypes.Public.ToString(), Page, 5);
             }
 
             ViewBag.PageTitle = "Request for Proposals";
@@ -82,23 +82,6 @@ namespace RFPPortalWebsite.Controllers
             {
                 model.RfpDeatil = cont.GetRfpById(BidID);
                 model.BidList = cont.GetRfpBidsByRfpId(BidID);
-
-                if (model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
-                {
-                    model.BiddingType = "Internal Bidding";
-                    model.EndDate = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays);
-                }
-                else if (DateTime.Now >= model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
-                DateTime.Now <= model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
-                {
-                    model.BiddingType = "Public Bidding";
-                    model.EndDate = model.RfpDeatil.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays);
-                }
-                else
-                {
-                    model.BiddingType = "Bidding Ended";
-                }
-
             }
             catch (Exception)
             {
