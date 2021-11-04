@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RFPPortalWebsite", "RFPPortalWebsite\RFPPortalWebsite.csproj", "{BC58EB66-E2FA-4A86-8385-68060A1FBEC1}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6E056AA5-47A7-4F3C-A00C-4BD6D27D9386}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{18C24602-5550-43F5-8F67-0D8E90DC767A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RFPPortal_Tests", "RFPPortal_Tests\RFPPortal_Tests.csproj", "{DD3153B8-AE66-4025-8AAF-885CC6B8B2AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,14 @@ Global
 		{BC58EB66-E2FA-4A86-8385-68060A1FBEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC58EB66-E2FA-4A86-8385-68060A1FBEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC58EB66-E2FA-4A86-8385-68060A1FBEC1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E056AA5-47A7-4F3C-A00C-4BD6D27D9386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E056AA5-47A7-4F3C-A00C-4BD6D27D9386}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E056AA5-47A7-4F3C-A00C-4BD6D27D9386}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E056AA5-47A7-4F3C-A00C-4BD6D27D9386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C24602-5550-43F5-8F67-0D8E90DC767A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C24602-5550-43F5-8F67-0D8E90DC767A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C24602-5550-43F5-8F67-0D8E90DC767A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C24602-5550-43F5-8F67-0D8E90DC767A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD3153B8-AE66-4025-8AAF-885CC6B8B2AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD3153B8-AE66-4025-8AAF-885CC6B8B2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD3153B8-AE66-4025-8AAF-885CC6B8B2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD3153B8-AE66-4025-8AAF-885CC6B8B2AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
