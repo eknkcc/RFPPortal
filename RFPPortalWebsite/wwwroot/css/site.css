@@ -787,7 +787,7 @@ select {
 .select {
     position: relative;
     display: flex;
-    width: 20em;
+    /*width: 20em;*/
     height: 3em;
     border-radius: 0.25em;
     overflow: hidden;

@@ -54,7 +54,7 @@ namespace RFPPortalWebsite.Controllers
                     //}
 
                     //Check if user already has an existing bid
-                    if (db.RfpBids.Count(x => x.UserId == model.UserId && x.RfpID == model.RfpID) > 0)
+                    if (db.RfpBids.Count(x => x.UserId == HttpContext.Session.GetInt32("UserId") && x.RfpID == model.RfpID) > 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
                     }

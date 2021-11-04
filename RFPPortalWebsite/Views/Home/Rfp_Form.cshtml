@@ -1,4 +1,6 @@
-﻿<div class="tab-pane">
+﻿
+<link href="~/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<div class="tab-pane">
     <div class="form-horizontal">
         <fieldset id="RFPform">
             <!-- Sign Up Form -->
@@ -10,31 +12,42 @@
 
             <!-- Text input-->
             <div class="group3">
-                <textarea  name="Description" required="" class="input" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
+                <textarea id="Description" name="Description" required="" class="input" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
                 <span class="highlight"></span><span class="bar"></span>
                 <label class="label" for="Description">Job Description</label>
             </div>
 
             <!-- Text input-->
             <div class="group3 d-flex">
-                <div class="col-md-8 p-0">
+                <div class="col-lg-9 col-md-10 p-0">
                     <input id="Amount" name="Amount" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                     <label class="label" for="Amount">Total Price for Job</label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-3 col-md-2">
                     <div class="select pb-1">
-                        <select name="Currency">
+                        <select id="Currency" name="Currency">
                             <option value="€">€</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <div class="group3">
-                <input id="Timeframe" name="Timeframe" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
-                <label class="label" for="Timeframe">Time Expectations for Job Completion</label>
+            <div class="group3 d-flex">
+                <div class="col-lg-4 col-md-6 col-sm-12 pl-0">
+                    <input id="startDatepicker" name="Timeframe" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                    <label class="label" for="Timeframe">@*Time Expectations for Job Completion*@Job Start Date</label>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <input id="endDatepicker" name="Timeframe" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
+                    <label class="label" for="Timeframe">@*Time Expectations for Job Completion*@Job Completion Date</label>
+                </div>
+                @*<input id="Timeframe" name="Timeframe" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>*@
+                @*<p style="color:#636363">Date: <input type="text" id="startDatepicker" class="input"> End Date : <input type="text" id="endDatepicker" class="input"> </p>*@
+                @*<label class="label" for="Timeframe">Time Expectations for Job Completion</label>*@
             </div>
-
+            <div class="group3 d-flex">
+                <p class="text-dark"><i>*Bidding period is @Program._settings.InternalBiddingDays days for internal biddings and @Program._settings.PublicBiddingDays days for public biddings. Please adjust your timeframe accordingly.</i></p>
+            </div>
             <!-- Button -->
             <div class="control-group d-flex justify-content-center mt-3">
                 <label class="control-label" for="confirmProposal"></label>
@@ -47,23 +60,57 @@
 </div>
 
 @section Scripts{
-
+    <script src="~/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script>
+        $(function () {
+            //console.log(new Date().getDate());
+            //console.log(new Date());
+            $("#startDatepicker").datepicker({
+                dateFormat: 'mm-dd-yy',
+                minDate: @Program._settings.InternalBiddingDays +  @Program._settings.PublicBiddingDays,
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (dateText, inst) {
+                    $("#startDatepicker").focus();
+                }
+            });
+            $("#endDatepicker").datepicker({
+                dateFormat: 'mm-dd-yy',
+                minDate: @Program._settings.InternalBiddingDays +  @Program._settings.PublicBiddingDays,
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (dateText, inst) {
+                    $("#endDatepicker").focus();
+                }
+            });
+        });
+    </script>
     <script>
         function SubmitForm(e) {
             $(e).prop("disabled", true);
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
 
+            var title = $("#Title").val();
+            var description = $("#Description").val();
+            var amount = parseFloat($("#Amount").val());
+            var currency = $("#Currency").val();
+            var timeframe = $("#startDatepicker").val() + " - " + $("#endDatepicker").val();
+
             $.ajax({
                 type: "Post",
                 url: '../SubmitForm',
-                data: $('#RFPform').serialize(),
+                data: { "Title": title, "Description": description, "Amount": amount, "Currency": currency, "Timeframe": timeframe},
                 cache: false,
                 async: true,
                 success: function (result) {
-                
+
                     if (result.success == true) {
                         toastr.success(result.message);
                         $(':input').not(':button, :submit, :reset, :hidden').val('');
+                        setTimeout(function () {
+                            window.location.href = "../Rfps";
+                        }, 1500);
+
                     }
                     else {
                         toastr.warning(result.message);

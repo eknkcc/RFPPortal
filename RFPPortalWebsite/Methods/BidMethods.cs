@@ -90,7 +90,7 @@ namespace RFPPortalWebsite.Methods
                     var rfp = db.Rfps.Find(rfpbid.RfpID);
 
                     //Rfp winner bid database update
-                    //rfp.WinnerRfpBidID = rfpbid.RfpBidID;
+                    rfp.WinnerRfpBidID = rfpbid.RfpBidID;
                     rfp.Status = Enums.RfpStatusTypes.Completed.ToString();
 
                     db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
