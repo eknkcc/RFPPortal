@@ -103,7 +103,7 @@ a:hover {
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    padding-top: 6.5rem;
+    padding-top: 3.5rem;
     font-size: 3rem;
 }
 
@@ -429,6 +429,10 @@ a:hover {
     color: rgb(0, 249, 62);
 }
 
+.dot_red {
+    color: #ff5959;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -470,16 +474,15 @@ a:hover {
 }
 
 /* Topbar */
-
 .topnav {
-    overflow: hidden;
-    background-color: #e9e9e9;
+    height: 60px;
+    padding: 10px;
 }
 
     .topnav a {
         float: left;
         display: block;
-        color: black;
+        color: #82bbf9;
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
@@ -511,17 +514,15 @@ a:hover {
     .topnav .login-container button {
         float: right;
         padding: 6px 10px;
-        margin-top: 8px;
-        margin-right: 16px;
-        background-color: #555;
         color: white;
         font-size: 17px;
         border: none;
         cursor: pointer;
+        height: 45px;
     }
 
         .topnav .login-container button:hover {
-            background-color: green;
+            background-color: #24c148;
         }
 
 @media screen and (max-width: 600px) {
@@ -550,12 +551,15 @@ a:hover {
     width: 50%;
     background-color: #f2f2f2;
     text-align: center;
+    border-bottom: 3px solid #0080ff;
+    padding: 10px;
 }
 
 .nav-tabs > li > a {
     margin-right: 0px;
     color: grey;
 }
+
     .nav-tabs > li > a.active {
         color: #4a89dc;
     }
@@ -628,7 +632,7 @@ a:hover {
     position: absolute;
     pointer-events: none;
     left: 0px;
-    top: 22px;
+    top: 10px;
     transition: all 0.2s ease;
 }
 
@@ -714,7 +718,7 @@ a:hover {
 @media screen and (min-width: 768px) {
 
 
-     .modal-body {
+    .modal-body {
         padding-left: 50px;
         padding-right: 50px;
     }
@@ -765,3 +769,12 @@ select {
         color: #f39c12;
     }
 
+.brdr {
+    border-bottom: 1px solid red;
+}
+
+.emptyIcon {
+    font-size: 55px;
+    color: #a3a3a3;
+    margin-bottom: 22px;
+}

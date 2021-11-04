@@ -1,7 +1,7 @@
 ﻿using RFPPortalWebsite.Models.DbModels;
 using System.Collections.Generic;
 
-namespace Helpers.Models.SharedModels
+namespace RFPPortalWebsite.Models.SharedModels
 {
     /// <summary>
     ///  Microservice info and health check class

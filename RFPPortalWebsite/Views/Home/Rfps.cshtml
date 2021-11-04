@@ -1,59 +1,43 @@
-﻿@{
-    ViewData["Title"] = "RFP Portal";
-}
+﻿@*Pagination reference*@
 @using PagedList.Core.Mvc
 @using PagedList.Core
-
 @model PagedList.Core.IPagedList<RFPPortalWebsite.Models.DbModels.Rfp>
-
+@*User session accessor*@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
 <section>
     <div class="container">
 
-        @if (HttpContextAccessor.HttpContext.Session.GetString("NameSurname") != null)
-        {
-            <div id="HeaderText" class="text-black-50">
-                Welcome, @HttpContextAccessor.HttpContext.Session.GetString("NameSurname")
-            </div>
-        }
-        
-
-        @*############ SEARCH INPUT ############*@
-        <input placeholder="Search by title or description" class="form-control mb-4 p-4" />
-
-
         @*############ MAIN CONTENT STARTS ############*@
 
         @try
         {
+            //Loop RFPs
             foreach (var item in Model)
             {
-                string biddingType = "";
+                //Calculate remaining bid time
                 string remainingTime = "";
-                if (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) >= DateTime.Now)
+                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
                 {
-                    biddingType = "Internal Bidding";
-                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays) - DateTime.Now).Days + " days remaining";
+                    remainingTime = (item.InternalBidEndDate - DateTime.Now).Days + " days remaining";
                 }
-                else if (DateTime.Now >= item.CreateDate.AddDays(Program._settings.InternalBiddingDays) &&
-                         DateTime.Now <= item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays))
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
-                    biddingType = "Public Bidding";
-                    remainingTime = (item.CreateDate.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays) - DateTime.Now).Days + " days remaining";
-                }
-                else
-                {
-                    biddingType = "Bidding Ended";
+                    remainingTime = (item.PublicBidEndDate - DateTime.Now).Days + " days remaining";
                 }
 
+                //Find status color of the RFP
                 string clr = "";
-                if (item.Status.ToLower() == "active")
+                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                 {
                     clr = "green";
                 }
-                else
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
+                {
+                    clr = "red";
+                }
+                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
                 {
                     clr = "blue";
                 }
@@ -71,7 +55,7 @@
                         </div>
                         <div class="postcard__bar"></div>
                         <div class="postcard__preview-txt">
-                            @if (@item.Description.Length > 50)
+                            @if (item.Description.Length > 50)
                             {
                                 @item.Description.Substring(0, Math.Min(item.Description.Length, 50)) <span>..</span>
                             }
@@ -81,15 +65,16 @@
                             }
                         </div>
                         <ul class="postcard__tagbox">
-                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status</li>
-                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Active.ToString())
+                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
+                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
+                               item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
                             {
                                 <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
-                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> @biddingType</li>
+                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
                             }
                             else
                             {
-                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> @biddingType</li>
+                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> Bidding Ended</li>
                             }
                         </ul>
                     </div>
@@ -113,45 +98,3 @@
         </center>
     </div>
 </section>
-
-
-
-<script>
-    function Login(e) {
-        $(e).prop("disabled", true);
-        $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
-
-        $.ajax({
-            type: "Post",
-            url: '../SignIn' ,
-            data: { "email": $("#LoginEmail").val(), "pass": $("#LoginPass").val()},
-            cache: false,
-            async: true,
-            success: function (result) {
-                debugger;
-                if (result.success == true) {
-                    toastr.success("Welcome, " + result.content.user.nameSurname);
-                    $("#HeaderText").text("Welcome, " + result.content.user.nameSurname);
-
-                    if (result.content.user.userType == "Admin"){
-                        $("#RFPFormLink").removeClass("d-none");
-                    }
-                    $("#BiddedProposals").removeClass("d-none");
-                    $("#LoginModal").modal("toggle");
-                    $(".login-container").html('<button id="LogoutButton" onclick="Logout()" type="button">Log out</button>');
-                }
-                else {
-                    toastr.warning(result.message);
-                }
-                $(e).prop("disabled", false);
-                $(e).html('Log in');
-            },
-            error: function () {
-                toastr.error("An error occurred during the process. Please try again later. ");
-                $(e).prop("disabled", false);
-                $(e).html('Log in');
-            }
-        });
-    }
-
-</script>

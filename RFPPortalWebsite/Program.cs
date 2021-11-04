@@ -22,6 +22,14 @@ namespace RFPPortalWebsite
             public string EncryptionKey { get; set; }
             public string DxDApiForUser { get; set; }
             public string DxDApiToken { get; set; }
+
+            //SMTP SETTINGS
+            public string EmailAddress { get; set; }
+            public string EmailDisplayName { get; set; }
+            public string EmailPassword { get; set; }
+            public string EmailHost { get; set; }
+            public string EmailPort { get; set; }
+            public string EmailSSL { get; set; }
         }
 
         public static Settings _settings { get; set; } = new Settings();

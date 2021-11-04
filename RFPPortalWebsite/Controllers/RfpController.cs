@@ -1,5 +1,4 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
 using RFPPortalWebsite.Contexts;

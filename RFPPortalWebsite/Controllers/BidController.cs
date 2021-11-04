@@ -1,5 +1,4 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
 using RFPPortalWebsite.Contexts;
@@ -49,10 +48,10 @@ namespace RFPPortalWebsite.Controllers
                     }
 
                     //Check if Rfp status is active.
-                    if (rfp.Status != Enums.RfpStatusTypes.Active.ToString())
-                    {
-                        return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
-                    }
+                    //if (rfp.Status != Enums.RfpStatusTypes.Active.ToString())
+                    //{
+                    //    return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
+                    //}
 
                     //Check if user already has an existing bid
                     if (db.RfpBids.Count(x => x.UserId == model.UserId && x.RfpID == model.RfpID) > 0)
@@ -122,6 +121,55 @@ namespace RFPPortalWebsite.Controllers
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
                     return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+        }
+
+        /// <summary>
+        ///  Edit RFP Bid record in database
+        /// </summary>
+        /// <param name="rfpbidid">RfpBid identity</param>
+        /// <returns></returns>
+        [Route("EditBid")]
+        [HttpPost]
+        [PublicUserAuthorization]
+        public AjaxResponse EditBid([FromBody] RfpBid model)
+        {
+            try
+            {
+                //Validations
+                RfpBid rfpbid = new RfpBid();
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    rfpbid = db.RfpBids.Find(model.RfpBidID);
+
+                    //Check if user is trying to delete bid for another user
+                    if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
+                    {
+                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
+                    }
+
+                    //Check if bid identity is valid
+                    if (rfpbid == null || rfpbid.RfpBidID <= 0)
+                    {
+                        return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                    }
+                }
+
+                //Delete bid
+                var result = Methods.BidMethods.EditBid(model);
+                if (result.RfpBidID > 0 )
+                {
+                    //Log
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
+
+                    return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully edited." };
                 }
             }
             catch (Exception ex)

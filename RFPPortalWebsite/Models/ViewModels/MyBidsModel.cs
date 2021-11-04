@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace RFPPortalWebsite.Models.ViewModels
 {
-    public class RfpDetailModel
+    public class MyBidsModel
     {
-        public List<RfpBidWUser> BidList { get; set; } = new List<RfpBidWUser>();
-        public Rfp RfpDeatil { get; set; }
+        public int RfpID { get; set; }
+        public string Title { get; set; }
+        public string Status { get; set; }
+        public RfpBid Bid { get; set; }
     }
 }

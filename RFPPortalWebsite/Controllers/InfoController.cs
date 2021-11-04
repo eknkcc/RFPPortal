@@ -1,6 +1,6 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Utility;
 using System;
 using System.Collections.Generic;

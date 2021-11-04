@@ -103,6 +103,7 @@ namespace RFPPortalWebsite.Methods
             return new PagedList<Rfp>(null, 1, 1);
         }
 
+
         /// <summary>
         ///  Returns list of RFP bids for given RFP by identity.
         /// </summary>
@@ -147,8 +148,13 @@ namespace RFPPortalWebsite.Methods
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     model.CreateDate = DateTime.Now;
+                    model.InternalBidEndDate = DateTime.Now.AddDays(Program._settings.InternalBiddingDays);
+                    model.PublicBidEndDate = DateTime.Now.AddDays(Program._settings.InternalBiddingDays + Program._settings.PublicBiddingDays);
                     db.Rfps.Add(model);
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Post RFP successful. RfpID: " + model.RfpID);
 
                     return model;
                 }
@@ -177,6 +183,9 @@ namespace RFPPortalWebsite.Methods
                     rfp.Status = model.Status;
                     db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Change RFP status successful. RfpID: " + model.RfpID+ " New Status: " + model.Status);
 
                     return rfp;
                 }

@@ -1,6 +1,7 @@
 ﻿using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,14 @@ namespace RFPPortalWebsite.Methods
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
-                   
+
                     //Post bid to database
                     model.CreateDate = DateTime.Now;
                     db.RfpBids.Add(model);
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "User post bid successful. Bid: " + Utility.Serializers.SerializeJson(model));
 
                     return model;
                 }
@@ -58,6 +62,9 @@ namespace RFPPortalWebsite.Methods
                     //Delete bid from database
                     db.RfpBids.Remove(rfpbid);
                     db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(rfpbid.UserId, Models.Constants.Enums.UserLogType.Auth, "User delete bid successful. Bid: " + Utility.Serializers.SerializeJson(rfpbid));
 
                     return true;
                 }
@@ -89,6 +96,9 @@ namespace RFPPortalWebsite.Methods
                     db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
 
+                    //Logging
+                    Program.monitizer.AddUserLog(rfpbid.UserId, Models.Constants.Enums.UserLogType.Auth, "Admin choose winning bid successful. BidID: " + rfpbid.RfpBidID);
+
                     return true;
                 }
             }
@@ -97,6 +107,72 @@ namespace RFPPortalWebsite.Methods
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
                 return false;
             }
+        }
+
+        /// <summary>
+        ///  Edits RFP Bid to database
+        /// </summary>
+        /// <param name="model">RfpBid model</param>
+        /// <returns></returns>
+        public static RfpBid EditBid(RfpBid model)
+        {
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    var rfp = db.RfpBids.SingleOrDefault(x => x.RfpBidID == model.RfpBidID);
+
+                    //Post edited bid to database
+                    rfp.Amount = model.Amount;
+                    rfp.Note = model.Note;
+                    rfp.Time = model.Time;
+
+                    db.SaveChanges();
+
+                    //Logging
+                    Program.monitizer.AddUserLog(model.UserId, Models.Constants.Enums.UserLogType.Auth, "Edit bid successful. Bid: " + Utility.Serializers.SerializeJson(model));
+
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+                return new RfpBid();
+            }
+        }
+
+        /// <summary>
+        ///  Get user bids with RFP info
+        /// </summary>
+        /// <param name="userid">User identity</param>
+        /// <returns></returns>
+        public static List<MyBidsModel> GetUserBids(int userid)
+        {
+            List<MyBidsModel> res = new List<MyBidsModel>();
+
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    res = (from bid in db.RfpBids
+                           join rfp in db.Rfps on bid.RfpID equals rfp.RfpID
+                           where bid.UserId == userid
+                           select new MyBidsModel
+                           {
+                               Bid = bid,
+                               RfpID = rfp.RfpID,
+                               Status = rfp.Status,
+                               Title = rfp.Title
+                           }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+            }
+
+            return res;
         }
     }
 }

@@ -16,5 +16,6 @@ namespace RFPPortalWebsite.Models.DbModels
         public string UserType { get; set; }
         public DateTime CreateDate { get; set; }
         public string Password { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using static RFPPortalWebsite.Models.Constants.Enums;
 using static RFPPortalWebsite.Program;
 
@@ -19,6 +20,8 @@ namespace RFPPortalWebsite
 {
     public class Startup
     {
+        public static System.Timers.Timer rfpStatusTimer;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,16 +30,26 @@ namespace RFPPortalWebsite
             InitializeService();
         }
 
+        /// <summary>
+        ///  Loads application config from appsettings.json
+        /// </summary>
+        /// <param name="configuration"></param>
         public static void LoadConfig(IConfiguration configuration)
         {
             var config = configuration.GetSection("PlatformSettings");
             config.Bind(_settings);
         }
 
+        /// <summary>
+        ///  Initializes application (Db migrations, connection check, timer construction)
+        /// </summary>
         public static void InitializeService()
         {
+            Encryption.EncryptionKey = Program._settings.EncryptionKey;
+
             monitizer = new Monitizer();
 
+            //Mysql migration 
             ApplicationStartResult mysqlMigrationcontrol = mysql.Migrate(new rfpdb_context().Database);
             if (!mysqlMigrationcontrol.Success)
             {
@@ -44,6 +57,7 @@ namespace RFPPortalWebsite
                 monitizer.AddException(mysqlMigrationcontrol.Exception, LogTypes.ApplicationError, true);
             }
 
+            //Mysql connection check
             ApplicationStartResult mysqlcontrol = mysql.Connect(_settings.DbConnectionString);
             if (!mysqlcontrol.Success)
             {
@@ -55,6 +69,47 @@ namespace RFPPortalWebsite
             {
                 monitizer.startSuccesful = 1;
                 monitizer.AddApplicationLog(LogTypes.ApplicationLog, monitizer.appName + " application started successfully.");
+            }
+
+            //Rfp status timer
+            rfpStatusTimer = new System.Timers.Timer(10000);
+            rfpStatusTimer.Elapsed += CheckRfpStatus;
+            rfpStatusTimer.AutoReset = true;
+            rfpStatusTimer.Enabled = true;
+        }
+
+        /// <summary>
+        ///  Checks RFP statuses with time interval.
+        ///  If RFP internal bidding is ended, updates RFP status as Public
+        ///  If RFP public bidding is ended without winner, updates status as Expired
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private static void CheckRfpStatus(Object source, ElapsedEventArgs e)
+        {
+            using (rfpdb_context db = new rfpdb_context())
+            {
+                //Check if Rfp internal bidding ended and public bidding started
+                var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.InternalBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+                
+                //Update rfp status
+                foreach (var rfp in publicRfps)
+                {
+                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Public.ToString();
+                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                //Check if rfp public bidding ended without any winner
+                var expiredRfps = db.Rfps.Where(x=> x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+
+                //Update rfp status
+                foreach (var rfp in expiredRfps)
+                {
+                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
+                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -77,7 +132,7 @@ namespace RFPPortalWebsite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,9 +1,9 @@
-﻿using Helpers.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Methods;
 using RFPPortalWebsite.Models.DbModels;
+using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
 using System;
@@ -16,9 +16,6 @@ namespace RFPPortalWebsite.Controllers
 {
     /// <summary>
     ///  AuthController contains user authorization and registration methods.
-    ///  Public users are automatically registered to the system after filling the bidding form. "RegisterPublic" method is triggered after posting bidding form.
-    ///  Internal users should be registered from third party admin(DevxDao) with "RegisterInternal" method before they transferred to the portal.
-    ///  If user already have a registration in the portal "GetUserAuthKey" method can be used to get user's AuthKey
     /// </summary>
     [Route("[controller]")]
     [ApiController]
@@ -50,10 +47,24 @@ namespace RFPPortalWebsite.Controllers
                         return new AjaxResponse() { Success = false, Message = "Username already exists." };
                     }
                 }
+
                 User usr = AuthMethods.UserRegister(registerInput);
+
                 if (usr.UserId > 0)
                 {
-                    return new AjaxResponse() { Success = true, Message = "User registration succesful.", Content = new User{ Email = usr.Email  } };
+                    //Create encrypted activation key for email approval
+                    string enc = Encryption.EncryptString(registerInput.Email + "|" + DateTime.Now.ToString());
+
+                    var baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}";
+
+                    //Set email title and content
+                    string emailTitle = "Welcome to RFP Portal";
+                    string emailContent = "<a href='" + baseUrl + "/RegisterCompleteView?str=" + enc + "'>Click here to complete the registration.</a>";
+
+                    //Send email
+                    EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
+
+                    return new AjaxResponse() { Success = true, Message = "User registration succesful.Please verify your account from your email.", Content = new User{ Email = usr.Email  } };
                 }
             }
             catch (Exception ex)
@@ -75,8 +86,8 @@ namespace RFPPortalWebsite.Controllers
         {
             try
             {
-                User user = Methods.AuthMethods.GetUserInfo(email, pass);
-                if(user.UserId > 0)
+                User user = Methods.AuthMethods.UserSignIn(email, pass);
+                if (user.UserId > 0)
                 {
                     return new AjaxResponse() { Success = true, Message = "User found.", Content = new { User = user } };
                 }
@@ -91,7 +102,6 @@ namespace RFPPortalWebsite.Controllers
                 return new AjaxResponse() { Success = false, Message = "Unexpected error" };
             }
         }
-
 
     }
 }
