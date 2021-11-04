@@ -17,42 +17,49 @@
 </head>
 <body>
 
+
     @*############ HEADER STARTS ############*@
     <header class="mb-5">
+        <div class="topnav" id="menuTopnav">
+
+            @* Show bids of the user if signed in *@
+            @if (HttpContextAccessor.HttpContext.Session.GetString("UserId") != null)
+            {
+                @*MENU - Sign out button*@
+                <a class="btn btn-primary px-3 d-inline-block btnSignOut" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</a>
+
+                @*MENU - User info div*@
+                <div class="d-inline-block mr-3 mt-1 mb-2 btnSignIn">
+                    <p class="mb-0">@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")</p>
+                    <small><b>User Type:</b> @HttpContextAccessor.HttpContext.Session.GetString("UserType")</small>
+                </div>
+
+                @*MENU - User's bids*@
+                <a class="btn btn-outline-primary mr-2" href="../My-Bids"><i class="fa fa-id-card-alt"></i> My Bids</a>
+            }
+            else
+            {
+                @*MENU - Sign in button*@
+                <a class="btn btn-success px-3 btnSignIn" href="#signup" data-toggle="modal" data-target=".log-sign"><i class="fa fa-user-alt mr-1"></i> Sign In</a>
+            }
+
+            @*MENU - RFP List*@
+            <a class="btn btn-outline-primary mr-2" href="../Rfps"><i class="fa fa-list-alt"></i> RFP List</a>
+
+            @* Show RFP post menu for admins *@
+            @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
+            {
+                <a class="btn btn-outline-primary mr-2" href="../Rfp-Form"><i class="fa fa-plus-square"></i> New RFP</a>
+            }
+
+            @*MENU - Mobile menu collapse button *@
+            <a href="javascript:void(0);" class="icon float-right" onclick="menuCollapse()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+
         <div id="headerDiv">
-            <div class="topnav">
-                <a class="btn btn-outline-primary mr-2" href="../Rfps"><i class="fa fa-list-alt"></i> RFP List</a>
-
-                @* Show RFP post menu for admins *@
-                @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
-                {
-                    <a class="btn btn-outline-primary mr-2" href="../Rfp-Form"><i class="fa fa-plus-square"></i> New RFP</a>
-                }
-
-                @* Show bids of the user if signed in *@
-                @if (HttpContextAccessor.HttpContext.Session.GetString("UserId") != null)
-                {
-                    <a class="btn btn-outline-primary mr-2" href="../My-Bids"><i class="fa fa-id-card-alt"></i> My Bids</a>
-
-                    <div class="login-container">
-                        <div class="d-inline-block mr-3">
-                            <p class="mb-0">@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")</p>
-                            <small><b>User Type:</b> @HttpContextAccessor.HttpContext.Session.GetString("UserType")</small>
-                        </div>
-                        <button class="btn btn-primary px-3 d-inline-block" type="button" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</button>
-                    </div>
-                }
-                else
-                {
-                    <div class="login-container">
-                        <button class="btn btn-success px-3" type="button" href="#signup" data-toggle="modal" data-target=".log-sign"><i class="fa fa-user-alt mr-1"></i> Sign In</button>
-                    </div>
-                }
-
-            </div>
-
             <div class="text-center text-light" id="pageHeaderTitle">@ViewBag.PageTitle</div>
-
         </div>
     </header>
     @*############ HEADER ENDS ############*@
@@ -217,14 +224,17 @@
                 }
             }
 
-            //Search signup email in DEVxDAO
-            @*$('#signupemail').keyup(function () {
-                if ($('#signupemail').val().length > 3 && $('#signupemail').val().indexOf('@Html.Raw("@")') > -1 && $('#signupemail').val().indexOf('.') > -1) {
-                    SearchEmail($('#signupemail').val());
-                }
-            });*@
         });
 
+        //Collapse menu
+        function menuCollapse() {
+            var x = document.getElementById("menuTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
 
         //User sign in method
         function Login(e) {
@@ -350,27 +360,6 @@
             window.location.href = '../Logout';
         }
 
-        //Search registration email in DEVxDAO
-        function SearchEmail(email) {
-            $.ajax({
-                type: "GET",
-                url: '../CheckDevxDaoUser?email=' + email,
-                cache: false,
-                async: true,
-                success: function (result) {
-                    if (result.success == true) {
-
-                    }
-                    else {
-
-                    }
-                },
-                error: function () {
-                    toastr.error("An error occurred during the process. Please try again later. ");
-                }
-            });
-
-        }
     </script>
 
     @RenderSection("Scripts", required: false)
