@@ -34,7 +34,8 @@
                 <button type="button" class="btn btn-lg btn-outline-secondary border-0" onclick="window.location.href='./../Rfps'"><i class="fas fa-backward mr-2"></i>RFP's</button>
             </div>
             <div>
-                @if (biddingActive)
+                @* Check if bidding is active and user does not have bidding on the RFP*@
+                @if (biddingActive && Model.BidList.Count(x=>x.Username == HttpContextAccessor.HttpContext.Session.GetString("Username")) == 0)
                 {
                     <button type="button" class="btn btn-lg btn-info" onclick="NewBidModal()"><i class="fas fa-plus mr-2"></i>New Bid</button>
                 }
@@ -314,7 +315,7 @@
 
             //Toggle new bid modal if user signed in, else toggle login modal
             function NewBidModal() {
-                @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("Username")))
+                @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("Username")))
                 {
                     <text>$("#LoginModal").modal("toggle");</text>
                 }
