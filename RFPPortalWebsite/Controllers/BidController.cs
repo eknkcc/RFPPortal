@@ -48,15 +48,21 @@ namespace RFPPortalWebsite.Controllers
                     }
 
                     //Check if Rfp status is active.
-                    //if (rfp.Status != Enums.RfpStatusTypes.Active.ToString())
-                    //{
-                    //    return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
-                    //}
+                    if (rfp.Status != Enums.RfpStatusTypes.Public.ToString() && rfp.Status != Enums.RfpStatusTypes.Internal.ToString())
+                    {
+                        return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
+                    }
 
                     //Check if user already has an existing bid
                     if (db.RfpBids.Count(x => x.UserId == HttpContext.Session.GetInt32("UserId") && x.RfpID == model.RfpID) > 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
+                    }
+
+                    //Check if public user trying to post bid on internal bid
+                    if (rfp.Status == Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Enums.UserIdentityType.Public.ToString())
+                    {
+                        return new AjaxResponse() { Success = false, Message = "Public users can't bid to internal bidding." };
                     }
                 }
 
@@ -96,9 +102,12 @@ namespace RFPPortalWebsite.Controllers
             {
                 //Validations
                 RfpBid rfpbid = new RfpBid();
+                Rfp rfp = new Rfp();
+
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     rfpbid = db.RfpBids.Find(RfpBidID);
+                    rfp = db.Rfps.Find(rfpbid.RfpID);
 
                     //Check if user is trying to delete bid for another user
                     if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
@@ -110,6 +119,12 @@ namespace RFPPortalWebsite.Controllers
                     if (rfpbid == null || rfpbid.RfpBidID <= 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                    }
+
+                    //Check if user trying to delete a bid in an completed bidding.
+                    if (rfp.Status != Enums.RfpStatusTypes.Internal.ToString() && rfp.Status != Enums.RfpStatusTypes.Public.ToString())
+                    {
+                        return new AjaxResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
                     }
                 }
 
@@ -145,11 +160,14 @@ namespace RFPPortalWebsite.Controllers
             {
                 //Validations
                 RfpBid rfpbid = new RfpBid();
+                Rfp rfp = new Rfp();
+
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     rfpbid = db.RfpBids.Find(model.RfpBidID);
+                    rfp = db.Rfps.Find(rfpbid.RfpID);
 
-                    //Check if user is trying to delete bid for another user
+                    //Check if user is trying to edit bid for another user
                     if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
                     {
                         return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
@@ -159,6 +177,12 @@ namespace RFPPortalWebsite.Controllers
                     if (rfpbid == null || rfpbid.RfpBidID <= 0)
                     {
                         return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                    }
+
+                    //Check if user trying to delete a bid in an completed bidding.
+                    if (rfp.Status != Enums.RfpStatusTypes.Internal.ToString() && rfp.Status != Enums.RfpStatusTypes.Public.ToString())
+                    {
+                        return new AjaxResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
                     }
                 }
 

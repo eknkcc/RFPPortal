@@ -41,10 +41,13 @@
                                 <td>@item.Bid.Amount</td>
                                 <td>@item.Bid.Time</td>
                                 <td>
+                                    @*Go To Detail button*@
                                     <button onclick="window.location.href='../Rfp-Detail/@item.RfpID'" type="button" class="btn btnEdit btn-sm"><i class="fas fa-clipboard mr-1"></i>RFP Detail</button>
+
+                                    @*Winner bid icon*@
                                     @if (item.WinnerRfpBidID == item.Bid.RfpBidID)
                                     {
-                                        <i class="fas fa-star" title="Winner Bid" style="color: #b09400"></i>
+                                        <i class="fas fa-star" title="Winner Bid" style="color: #ffe03c"></i>
                                     }
                                 </td>
                             </tr>
@@ -61,6 +64,7 @@
         }
         else
         {
+            //EMPTY TABLE ICON
             <div class="mt-5 pt-5">
                 <center>
                     <i class="fas fa-frown-open emptyIcon"></i>

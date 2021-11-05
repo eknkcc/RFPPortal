@@ -101,10 +101,9 @@ a:hover {
 
 #pageHeaderTitle {
     font-weight: bold;
-    text-transform: uppercase;
     text-align: center;
     padding-top: 5.5rem;
-    font-size: 3rem;
+    font-size: 2.8rem;
 }
 
 /* Cards */

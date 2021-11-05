@@ -44,7 +44,7 @@ namespace RFPPortalWebsite.Controllers
                 model = Methods.RfpMethods.GetRfpsByStatusPaged(Models.Constants.Enums.RfpStatusTypes.Public.ToString(), Page, 5);
             }
 
-            ViewBag.PageTitle = "Request for Proposals";
+            ViewBag.PageTitle = "DEVxDAO - Request for Proposals Portal";
             return View(model);
         }
 
@@ -82,6 +82,11 @@ namespace RFPPortalWebsite.Controllers
             {
                 model.RfpDeatil = cont.GetRfpById(BidID);
                 model.BidList = cont.GetRfpBidsByRfpId(BidID);
+
+                if(model.RfpDeatil.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Public.ToString())
+                {
+                    return RedirectToAction("Unauthorized");
+                }
             }
             catch (Exception)
             {

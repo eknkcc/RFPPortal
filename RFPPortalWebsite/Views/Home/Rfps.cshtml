@@ -11,81 +11,84 @@
 
         @*############ MAIN CONTENT STARTS ############*@
 
-        @try
+        @*Loop RFPs*@
+        @foreach (var item in Model)
         {
-            //Loop RFPs
-            foreach (var item in Model)
+            //Calculate remaining bid time
+            string remainingTime = "";
+            if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
             {
-                //Calculate remaining bid time
-                string remainingTime = "";
-                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString())
-                {
-                    TimeSpan ts = (item.InternalBidEndDate - DateTime.Now);
-                    remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
-                }
-                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
-                {
-                    TimeSpan ts = (item.PublicBidEndDate - DateTime.Now);
-                    remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
-                }
-
-                //Find status color of the RFP
-                string clr = "";
-                if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
-                {
-                    clr = "green";
-                }
-                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
-                {
-                    clr = "red";
-                }
-                else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
-                {
-                    clr = "blue";
-                }
-
-                <article class="postcard light cursor-pointer @clr">
-                    <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
-                        <img class="postcard__img" src="~/images/casper.png" alt="Casper" />
-                    </a>
-                    <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='../RFP-Detail/'+@item.RfpID">
-                        <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
-                        <div class="postcard__subtitle small">
-                            <time datetime="@item.CreateDate">
-                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
-                            </time>
-                        </div>
-                        <div class="postcard__bar"></div>
-                        <div class="postcard__preview-txt">
-                            @if (item.Description.Length > 150)
-                            {
-                                @item.Description.Substring(0, Math.Min(item.Description.Length, 150)) <span>..</span>
-                            }
-                            else
-                            {
-                                @item.Description
-                            }
-
-                            <div><small><b>Time frame for this RFP:</b> @item.Timeframe</small></div>
-                        </div>
-                        <ul class="postcard__tagbox">
-                            <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
-                            @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
-                               item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
-                            {
-                                <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
-                                <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
-                            }
-                            else
-                            {
-                                <li class="tag__item play"><i class="fas fa-stop mr-2"></i> Bidding Ended</li>
-                            }
-                        </ul>
-                    </div>
-                </article>
+                TimeSpan ts = (item.InternalBidEndDate - DateTime.Now);
+                remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
             }
+            else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+            {
+                TimeSpan ts = (item.PublicBidEndDate - DateTime.Now);
+                remainingTime = string.Format("{0} days {1} hours remaining", ts.Days, ts.Hours);
+            }
+
+            //Find status color of the RFP
+            string clr = "";
+            if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() || item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+            {
+                //Rfp active
+                clr = "green";
+            }
+            else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
+            {
+                //Rfp expired
+                clr = "red";
+            }
+            else if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
+            {
+                //Rfp completed
+                clr = "blue";
+            }
+
+            <article class="postcard light cursor-pointer @clr">
+
+                @* Item image *@
+                <a class="postcard__img_link" href="./RFP-Detail/@item.RfpID">
+                    <img class="postcard__img" src="~/images/casper.png" alt="Casper" />
+                </a>
+
+                @* Item body *@
+                <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='../RFP-Detail/'+@item.RfpID">
+                    <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
+                    <div class="postcard__subtitle small">
+                        <time datetime="@item.CreateDate">
+                            <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
+                        </time>
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">
+                        @if (item.Description.Length > 150)
+                        {
+                            @item.Description.Substring(0, Math.Min(item.Description.Length, 150)) <span>..</span>
+                        }
+                        else
+                        {
+                            @item.Description
+                        }
+
+                        <div><small><b>Time frame for this RFP:</b> @item.Timeframe</small></div>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@item.Status Bidding</li>
+                        @if (item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Internal.ToString() ||
+                       item.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Public.ToString())
+                        {
+                            <li class="tag__item"><i class="fas fa-clock mr-2" title="Time Remaining"></i>@remainingTime</li>
+                            <li class="tag__item play"><i class="fas fa-play mr-2"></i> Bidding Continues</li>
+                        }
+                        else
+                        {
+                            <li class="tag__item play"><i class="fas fa-stop mr-2"></i> Bidding Ended</li>
+                        }
+                    </ul>
+                </div>
+            </article>
         }
-        catch { }
 
         @*############ MAIN CONTENT ENDS ############*@
 
