@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using PagedList.Core;
 using RFPPortalWebsite.Contexts;
 using RFPPortalWebsite.Models.Constants;
@@ -22,6 +23,7 @@ namespace RFPPortalWebsite.Controllers
     [ApiController]
     public class RfpController : ControllerBase
     {
+
         /// <summary>
         ///  Returns list of RFPs in the database by status.
         ///  Returns all records in the database if status parameter is null or empty
@@ -125,14 +127,14 @@ namespace RFPPortalWebsite.Controllers
         /// <returns>Submitted RFP</returns>
         [Route("SubmitRfpForm")]
         [HttpPost]
-        [IpWhitelistAuthorization]
+        [AdminUserAuthorization]
         public AjaxResponse SubmitRfpForm(Rfp model)
         {
             try
             {
                 using (rfpdb_context db = new rfpdb_context())
                 {
-                    model.CreateDate = DateTime.Now;
+                    model.CreateDate = DateTime.Now;                    
                     model = Methods.RfpMethods.SubmitRfpForm(model);
 
                     if (model.RfpID > 0)
@@ -142,6 +144,7 @@ namespace RFPPortalWebsite.Controllers
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
+                
             }
 
             return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
@@ -155,7 +158,7 @@ namespace RFPPortalWebsite.Controllers
         /// <returns>Updated RFP</returns>
         [Route("ChangeRfpStatus")]
         [HttpPut]
-        [IpWhitelistAuthorization]
+        [AdminUserAuthorization]
         public AjaxResponse ChangeRfpStatus(Rfp model)
         {
             try

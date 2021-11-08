@@ -21,8 +21,12 @@ namespace RFPPortal_Tests
             RFPPortalWebsite.Startup.InitializeService();
 
             authController = new AuthController();
-            rfpController = new RfpController();
+            rfpController  = new RfpController();
         }
+
+        // public void Seed_Users(){
+        //     TestDbInitializer.SeedUsers(new rfpdb_context());
+        // }
         
     }
 }

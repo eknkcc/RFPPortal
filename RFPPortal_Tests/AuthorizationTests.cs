@@ -1,8 +1,6 @@
 using System;
 using Xunit;
-using Xunit.Abstractions;
 using RFPPortalWebsite.Models.ViewModels;
-using RFPPortalWebsite.Models.SharedModels;
 using FluentAssertions;
 using System.Collections.Generic;
 
@@ -106,30 +104,23 @@ namespace RFPPortal_Tests
             var t = controllers.authController.RegisterUser(model);            
 
             //Arrange Act Assert
-            Assert.True(controllers.authController.RegisterUser(model).Success);
+            Assert.False(controllers.authController.RegisterUser(model).Success);
         }
 
         [Theory]
-        [InlineData("taylan", "")]
-        [InlineData("", "taylan@ekonteknoloji.com")]
-        [InlineData("regular@user1.com", "Password1")]
+        // [InlineData("taylan", "")]
+        // [InlineData("", "taylan@ekonteknoloji.com")]
+        [InlineData("User1", "PassW0rd")]
         public void Get_User_Info_Test(string email, string pass){
 
             //Arrange
-            RegisterModel regular_user_register = new RegisterModel{
-                UserName    = "Regular_User1",
-                NameSurname = "Regular User1",
-                Email       = "regular@user1.com",
-                Password    = "Password1",
-                RePassword  = "Password1"
-            };
-            controllers.authController.RegisterUser(regular_user_register);
+            TestDbInitializer.SeedUsers();
 
             //Act
             var t = controllers.authController.GetUserInfo(email, pass);
 
             //Assert
-            Assert.True(t.Success);
+            Assert.True(!t.Success);
         }
 
         [Fact]
@@ -158,27 +149,6 @@ namespace RFPPortal_Tests
 
             t.Success.Should().Be(true);
             t2.Success.Should().Be(false);
-
-            
-
-
-
-
         }
-
-
-
-        
     }
-
-    public class RfpPostTests
-    {
-        public void PostRfp_test(){
-            //Arrange
-
-
-        }
-
-    }
-
 }

@@ -52,17 +52,20 @@ namespace RFPPortalWebsite.Controllers
 
                 if (usr.UserId > 0)
                 {
-                    //Create encrypted activation key for email approval
-                    string enc = Encryption.EncryptString(registerInput.Email + "|" + DateTime.Now.ToString());
 
-                    var baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}";
+                    if (this.Request != null){
+                        //Create encrypted activation key for email approval
+                        string enc = Encryption.EncryptString(registerInput.Email + "|" + DateTime.Now.ToString());
 
-                    //Set email title and content
-                    string emailTitle = "Welcome to RFP Portal";
-                    string emailContent = "<a href='" + baseUrl + "/RegisterCompleteView?str=" + enc + "'>Click here to complete the registration.</a>";
+                        var baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}";
 
-                    //Send email
-                    EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
+                        //Set email title and content
+                        string emailTitle = "Welcome to RFP Portal";
+                        string emailContent = "<a href='" + baseUrl + "/RegisterCompleteView?str=" + enc + "'>Click here to complete the registration.</a>";
+
+                        //Send email
+                        EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
+                    }
 
                     return new AjaxResponse() { Success = true, Message = "User registration succesful.Please verify your account from your email.", Content = new User{ Email = usr.Email  } };
                 }
