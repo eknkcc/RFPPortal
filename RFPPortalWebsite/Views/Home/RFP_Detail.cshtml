@@ -35,7 +35,7 @@
             </div>
             <div>
                 @* Check if bidding is active and user does not have bidding on the RFP*@
-                @if (biddingActive && Model.BidList.Count(x=>x.Username == HttpContextAccessor.HttpContext.Session.GetString("Username")) == 0)
+                @if (biddingActive && Model.BidList.Count(x => x.Username == HttpContextAccessor.HttpContext.Session.GetString("Username")) == 0)
                 {
                     <button type="button" class="btn btn-lg btn-info" onclick="NewBidModal()"><i class="fas fa-plus mr-2"></i>New Bid</button>
                 }
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div>
-                        <p id="demo"></p>
+                        <p id="countDownDiv" class="d-none d-sm-block"></p>
                     </div>
                 </div>
                 <div class="postcard__bar"></div>
@@ -83,74 +83,76 @@
                 @* Bids Table *@
                 @if (Model.BidList.Count() > 0)
                 {
-                    <table class="table table-striped table-hover mt-4">
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Bid Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Additional Note</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="bidBody">
-                            @foreach (var item in Model.BidList)
-                            {
-                                try
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Bid Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Additional Note</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="bidBody">
+                                @foreach (var item in Model.BidList)
                                 {
+                                    try
+                                    {
 
-                                    <tr>
-                                        <td id="name_@item.Bid.RfpBidID" scope="row">@item.Username</td>
-                                        <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
-                                        <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
-                                        <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
-                                        <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">
-                                            @if (item.Bid.Note.Length > 50)
-                                            {
-                                                @item.Bid.Note.Substring(0, Math.Min(item.Bid.Note.Length, 50)) <span>..</span>
-                                            }
-                                            else
-                                            {
-                                                @item.Bid.Note
-                                            }
-                                        </td>
-                                        <td>
-
-                                            @* Check if bidding is still active *@
-                                            @if (biddingActive)
-                                            {
-                                                @* Check if this bid belongs to user *@
-                                                if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
+                                        <tr>
+                                            <td id="name_@item.Bid.RfpBidID" scope="row">@item.Username</td>
+                                            <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                            <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
+                                            <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
+                                            <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">
+                                                @if (item.Bid.Note != null && item.Bid.Note.Length > 50)
                                                 {
-                                                    <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
-                                                    <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                    @item.Bid.Note.Substring(0, Math.Min(item.Bid.Note.Length, 50)) <span>..</span>
+                                                }
+                                                else
+                                                {
+                                                    @item.Bid.Note
+                                                }
+                                            </td>
+                                            <td>
+
+                                                @* Check if bidding is still active (Displays bidding controls) *@
+                                                @if (biddingActive)
+                                                {
+                                                    @* Check if this bid belongs to user (Displays bid delete and edit buttons) *@
+                                                    if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
+                                                    {
+                                                        <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
+                                                        <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                    }
+
+                                                    @* Check if user is admin (Displays 'Choose Winning Bid' button) *@
+                                                    if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
+                                                    {
+                                                        <button id="@item.Bid.RfpBidID" onclick="WinningBidModal(this.id)" type="button" class="btn btnEdit  btn-sm" title="Choose the winning bid"><i class="far fa-star"></i></button>
+                                                    }
                                                 }
 
-                                                @* Check if user is admin *@
-                                                if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
+                                                @* Check if this bid is the winner bid (Displays star icon)  *@
+                                                @if (item.Bid.RfpBidID == Model.RfpDeatil.WinnerRfpBidID)
                                                 {
-                                                    <button id="@item.Bid.RfpBidID" onclick="WinningBidModal(this.id)" type="button" class="btn btnEdit  btn-sm" title="Choose the winning bid"><i class="far fa-star"></i></button>
+                                                    <i class="fas fa-star" title="Winner Bid" style="color: #ffe03c"></i>
                                                 }
-                                            }
+                                            </td>
+                                        </tr>
+                                    }
+                                    catch
+                                    {
 
-                                            @* Check if this bid is the winner bid *@
-                                            @if (item.Bid.RfpBidID == Model.RfpDeatil.WinnerRfpBidID)
-                                            {
-                                                <i class="fas fa-star" title="Winner Bid" style="color: #ffe03c"></i>
-                                            }
-                                        </td>
-                                    </tr>
+                                    }
                                 }
-                                catch
-                                {
 
-                                }
-                            }
+                            </tbody>
 
-                        </tbody>
-
-                    </table>
+                        </table>
+                    </div>
                 }
                 else
                 {
@@ -301,14 +303,14 @@
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = "<span style='font-size:2rem'>" + days + "</span>" + "days <span style='font-size:2rem'>" + hours + "</span>hours<span style='font-size:2rem'> "
+                // Output the result in an element with id="countDownDiv"
+                document.getElementById("countDownDiv").innerHTML = "<span style='font-size:2rem'>" + days + "</span>" + "days <span style='font-size:2rem'>" + hours + "</span>hours<span style='font-size:2rem'> "
                     + minutes + "</span>min <span style='font-size:2rem'>" + seconds + "</span>sec ";
 
                 // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("demo").innerHTML = "Bidding Ended";
+                    document.getElementById("countDownDiv").innerHTML = "Bidding Ended";
                 }
 
             }
@@ -317,7 +319,7 @@
             function NewBidModal() {
                 @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("Username")))
                 {
-                    <text>$("#LoginModal").modal("toggle");</text>
+                    <text>$("#modal-login").modal("toggle");</text>
                 }
                 else
                 {
@@ -463,7 +465,7 @@
             //Submit bid confirmation
             function SubmitWinnerBid(e) {
                 $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
 
                 $.ajax({
                     type: "Put",

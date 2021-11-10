@@ -32,7 +32,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("SubmitBid")]
         [HttpPost]
         [PublicUserAuthorization]
-        public AjaxResponse SubmitBid([FromBody] RfpBid model)
+        public SimpleResponse SubmitBid([FromBody] RfpBid model)
         {
             try
             {
@@ -44,25 +44,25 @@ namespace RFPPortalWebsite.Controllers
                     //Check if RfpID is a valid identity.
                     if (rfp == null || rfp.RfpID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
                     }
 
                     //Check if Rfp status is active.
                     if (rfp.Status != Enums.RfpStatusTypes.Public.ToString() && rfp.Status != Enums.RfpStatusTypes.Internal.ToString())
                     {
-                        return new AjaxResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
+                        return new SimpleResponse() { Success = false, Message = "Rfp status must be 'Active' in order to post bid. Current Rfp status: " + rfp.Status };
                     }
 
                     //Check if user already has an existing bid
                     if (db.RfpBids.Count(x => x.UserId == HttpContext.Session.GetInt32("UserId") && x.RfpID == model.RfpID) > 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
+                        return new SimpleResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
                     }
 
                     //Check if public user trying to post bid on internal bid
                     if (rfp.Status == Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Enums.UserIdentityType.Public.ToString())
                     {
-                        return new AjaxResponse() { Success = false, Message = "Public users can't bid to internal bidding." };
+                        return new SimpleResponse() { Success = false, Message = "Public users can't bid to internal bidding." };
                     }
                 }
 
@@ -74,17 +74,17 @@ namespace RFPPortalWebsite.Controllers
                     //Log
                     Program.monitizer.AddUserLog(model.UserId, UserLogType.Request, "User submitted a new bid for RFP: " + model.RfpID);
 
-                    return new AjaxResponse() { Success = true, Message = "Bid submitted successfully.", Content = bidResult };
+                    return new SimpleResponse() { Success = true, Message = "Bid submitted successfully.", Content = bidResult };
                 }
                 else
                 {
-                    return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+                    return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
                 }
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
-                return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+                return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
             }
         }
 
@@ -96,7 +96,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("DeleteBid")]
         [HttpDelete]
         [PublicUserAuthorization]
-        public AjaxResponse DeleteBid([FromQuery] int RfpBidID)
+        public SimpleResponse DeleteBid([FromQuery] int RfpBidID)
         {
             try
             {
@@ -112,19 +112,19 @@ namespace RFPPortalWebsite.Controllers
                     //Check if user is trying to delete bid for another user
                     if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
                     {
-                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
+                        return new SimpleResponse() { Success = false, Message = "User identity mismatch in the request." };
                     }
 
                     //Check if bid identity is valid
                     if (rfpbid == null || rfpbid.RfpBidID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
                     }
 
                     //Check if user trying to delete a bid in an completed bidding.
                     if (rfp.Status != Enums.RfpStatusTypes.Internal.ToString() && rfp.Status != Enums.RfpStatusTypes.Public.ToString())
                     {
-                        return new AjaxResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
+                        return new SimpleResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
                     }
                 }
 
@@ -135,7 +135,7 @@ namespace RFPPortalWebsite.Controllers
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
+                    return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
                 }
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("EditBid")]
         [HttpPost]
         [PublicUserAuthorization]
-        public AjaxResponse EditBid([FromBody] RfpBid model)
+        public SimpleResponse EditBid([FromBody] RfpBid model)
         {
             try
             {
@@ -170,19 +170,19 @@ namespace RFPPortalWebsite.Controllers
                     //Check if user is trying to edit bid for another user
                     if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)
                     {
-                        return new AjaxResponse() { Success = false, Message = "User identity mismatch in the request." };
+                        return new SimpleResponse() { Success = false, Message = "User identity mismatch in the request." };
                     }
 
                     //Check if bid identity is valid
                     if (rfpbid == null || rfpbid.RfpBidID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfoBidID." };
                     }
 
                     //Check if user trying to delete a bid in an completed bidding.
                     if (rfp.Status != Enums.RfpStatusTypes.Internal.ToString() && rfp.Status != Enums.RfpStatusTypes.Public.ToString())
                     {
-                        return new AjaxResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
+                        return new SimpleResponse() { Success = false, Message = "You can't delete the bid from completed bidding." };
                     }
                 }
 
@@ -193,7 +193,7 @@ namespace RFPPortalWebsite.Controllers
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp bid succesfully edited." };
+                    return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully edited." };
                 }
             }
             catch (Exception ex)
@@ -201,7 +201,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("ChooseWinningBid")]
         [HttpPut]
         [IpWhitelistAuthorization]
-        public AjaxResponse ChooseWinningBid([FromQuery] int RfpBidID)
+        public SimpleResponse ChooseWinningBid([FromQuery] int RfpBidID)
         {
             try
             {
@@ -224,14 +224,14 @@ namespace RFPPortalWebsite.Controllers
                     rfpbid = db.RfpBids.Find(RfpBidID);
                     if (rfpbid == null || rfpbid.RfpID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfpBidID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpBidID. Please post an existing RfpBidID." };
                     }
 
                     //Check if RFP identity is valid
                     var rfp = db.Rfps.Find(rfpbid.RfpID);
                     if (rfp == null || rfp.RfpID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
                     }
                 }
 
@@ -242,7 +242,7 @@ namespace RFPPortalWebsite.Controllers
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
 
-                    return new AjaxResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
+                    return new SimpleResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
                 }
 
             }
@@ -251,7 +251,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
     }

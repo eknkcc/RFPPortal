@@ -128,7 +128,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("SubmitRfpForm")]
         [HttpPost]
         [AdminUserAuthorization]
-        public AjaxResponse SubmitRfpForm(Rfp model)
+        public SimpleResponse SubmitRfpForm(Rfp model)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace RFPPortalWebsite.Controllers
                     model = Methods.RfpMethods.SubmitRfpForm(model);
 
                     if (model.RfpID > 0)
-                        return new AjaxResponse() { Success = true, Message = "Rfp form succesfully posted.", Content = model };
+                        return new SimpleResponse() { Success = true, Message = "Rfp form succesfully posted.", Content = model };
                 }
             }
             catch (Exception ex)
@@ -147,7 +147,7 @@ namespace RFPPortalWebsite.Controllers
                 
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace RFPPortalWebsite.Controllers
         [Route("ChangeRfpStatus")]
         [HttpPut]
         [AdminUserAuthorization]
-        public AjaxResponse ChangeRfpStatus(Rfp model)
+        public SimpleResponse ChangeRfpStatus(Rfp model)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace RFPPortalWebsite.Controllers
 
                     if (rfp == null || rfp.RfpID <= 0)
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
+                        return new SimpleResponse() { Success = false, Message = "Invalid RfpID. Please post an existing RfpID." };
                     }
 
                     try
@@ -179,13 +179,13 @@ namespace RFPPortalWebsite.Controllers
                     }
                     catch
                     {
-                        return new AjaxResponse() { Success = false, Message = "Invalid status. Please post a valid status. Valid status codes: Pending, Active, Waiting, Completed" };
+                        return new SimpleResponse() { Success = false, Message = "Invalid status. Please post a valid status. Valid status codes: Pending, Active, Waiting, Completed" };
                     }
                 }
 
                 model = Methods.RfpMethods.ChangeRfpStatus(model);
 
-                return new AjaxResponse() { Success = true, Message = "Rfp status succesfully updated.", Content = model };
+                return new SimpleResponse() { Success = true, Message = "Rfp status succesfully updated.", Content = model };
 
             }
             catch (Exception ex)
@@ -193,7 +193,7 @@ namespace RFPPortalWebsite.Controllers
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
             }
 
-            return new AjaxResponse() { Success = false, Message = "An error occured while proccesing your request." };
+            return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };
         }
 
     }

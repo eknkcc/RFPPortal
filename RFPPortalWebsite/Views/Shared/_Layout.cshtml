@@ -74,7 +74,7 @@
     @*############ CONTENT ENDS ############*@
 
     <!-- Login Modal -->
-    <div class="modal fade bs-modal-sm log-sign" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal fade bs-modal-sm log-sign" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -93,14 +93,24 @@
                                     <!-- Sign In Form -->
                                     <h4 class="text-dark text-center mt-3">Sign In to DEVxDAO RFP Portal</h4>
                                     <p class="text-dark text-center">Sign in with your registered username or email</p>
-                                    <!-- Text input-->
+                                    <!-- Email input-->
                                     <div class="group">
                                         <input id="LoginEmail" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Email or username</label>
                                     </div>
+                                    <!-- Password input-->
                                     <div class="group">
                                         <input id="LoginPass" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                                         <label class="label" for="date">Password</label>
+                                    </div>
+                                    <!-- Remember me, forgot password -->
+                                    <div class="field-item d-flex justify-content-between align-items-center text-secondary mt-3">
+                                        <div class="field-item pb-0">
+                                        
+                                        </div>
+                                        <div class="forget-link fz-6">
+                                            <a class="cursorp fp forgotPass">Forgot Password</a>
+                                        </div>
                                     </div>
                                     <!-- Button -->
                                     <div class="control-group">
@@ -167,6 +177,70 @@
         </div>
     </div>
 
+    <!-- Modal Forgot Pass -->
+    <div class="modal fade bs-modal-sm log-sign" id="modal-forgotpass">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body p-md-4 p-lg-5">
+                    <div class="row">
+
+                        <p class="tc-default">Get password reset link to your registered email</p>
+
+                        <div class="group w-100">
+                            <input id="emailforgot" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                            <label class="label" for="date">Registered email</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="ResetPassword(this)">Reset Password</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Reset Pass -->
+    <div class="modal fade" id="modal-resetpass">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Set New Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body p-md-4 p-lg-5">
+                    <div class="row">
+                        <p class="tc-default">Set a new password for your account</p>
+
+                        <div class="group w-100">
+                            <input id="passreset" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                            <label class="label" for="date">New password</label>
+                        </div>
+
+                        <div class="group w-100">
+                            <input id="passreset2" required="" class="input" type="password" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                            <label class="label" for="date">New password confirmation</label>
+                        </div>
+
+                        <button type="button" onclick="ResetPasswordComplete();" class="btn btn-primary btn-block btn-md float-right submitFormButton mt-3">Set New Password</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @*############ FOOTER STARTS ############*@
     <footer class="footer text-muted">
@@ -187,6 +261,7 @@
 
     <script>
         $(document).ready(function () {
+
             //Signin modal click event
             $('#tab1').on('click', function () {
                 $('#tab1').addClass('login-shadow');
@@ -198,6 +273,14 @@
                 $('#tab2').addClass('signup-shadow');
                 $('#tab1').removeClass('login-shadow');
             });
+
+            //Display forget pass modal event
+            $(".forgotPass").on("click", function () {
+                $("#modal-login").modal("toggle");
+                setTimeout(function () {
+                    $("#modal-forgotpass").modal("toggle");
+                }, 500);
+            })
 
             //Material inputs trigger
             $('.input').blur(function () {
@@ -222,6 +305,11 @@
                 else if (toastrType == "success") {
                     toastr.success(toastrMessage);
                 }
+            }
+
+            //Open password renewal modal if user redirected from renewal email
+            if ('@TempData["action"]' == "resetpassword") {
+                $("#modal-resetpass").modal("toggle");
             }
 
         });
@@ -263,7 +351,7 @@
                     async: true,
                     success: function (result) {
                         if (result.success == true) {
-                            toastr.success("Welcome, " + result.content.user.nameSurname);
+                            toastr.success("Welcome, " + result.content.nameSurname);
                             window.location.reload();
                         }
                         else {
@@ -290,7 +378,7 @@
         function SignUp(e) {
             //Disable submit button
             $(e).prop("disabled", true);
-            $(e).html('<i class="fas fa-circle-notch fa-spin"></i>Please wait..');
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
 
             //Check if fields empty
             control = true;
@@ -350,6 +438,79 @@
                     }
                 });
             }
+        }
+
+        //Reset password function
+        function ResetPassword(e) {
+            //Disable submit button
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
+
+            //Create reset password model
+            var email = $('#emailforgot').val()
+
+            //Ajax post action
+            $.ajax({
+                type: "POST",
+                url: "../ResetPassword",
+                async: true,
+                data: { "email": email },
+                success: function (result) {
+                    if (result.success) {
+                        toastr.success(result.message);
+                    }
+                    else {
+                        toastr.error(result.message);
+                    }
+                },
+                error: function (response) {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                }
+            }).done(function () {
+                //Enable submit button
+                $(e).prop("disabled", false);
+                $(e).html('Reset Password');
+            });
+
+        }
+
+        //Reset password complete function
+        function ResetPasswordComplete(e) {
+            //Disable submit button
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
+
+            //Create new password model
+            var pass1 = $('#passreset').val()
+            var pass2 = $('#passreset2').val()
+
+            //Ajax post action
+            $.ajax({
+                type: "POST",
+                url: "../ResetPasswordComplete",
+                async: true,
+                data: { "newpass": pass1, "newpassagain": pass2 },
+                success: function (result) {
+                    if (result.success) {
+                        toastr.success(result.message);
+                        $("#modal-resetpass").modal("toggle");
+                        setTimeout(function () {
+                            $("#modal-login").modal("toggle");
+                        }, 500);
+                    }
+                    else {
+                        toastr.error(result.message);
+                    }
+                },
+                error: function (response) {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                }
+            }).done(function () {
+                //Enable submit button
+                $(e).prop("disabled", false);
+                $(e).html('Set New Password');
+
+            });
         }
 
         //Logout method

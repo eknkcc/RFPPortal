@@ -80,7 +80,6 @@ body {
 /* This pen */
 body {
     font-family: "Cairo", sans-serif;
-    color: #ffffff;
     text-rendering: optimizeLegibility;
     font-weight: initial;
 }
@@ -174,13 +173,14 @@ a:hover {
         position: relative;
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     .postcard .postcard__preview-txt {
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: justify;
-        height: 100%;
+
     }
 
     .postcard .postcard__tagbox {
@@ -610,7 +610,6 @@ header {
 }
 
 .btn-block {
-    margin-top: 20px;
     margin-bottom: 20px;
     font-size: 18px;
 }
@@ -816,4 +815,26 @@ select {
     font-size: 55px;
     color: #a3a3a3;
     margin-bottom: 22px;
+}
+
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height:5px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+}
+
+.cursorp{
+    cursor:pointer;
 }

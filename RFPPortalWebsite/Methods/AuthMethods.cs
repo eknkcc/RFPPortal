@@ -80,7 +80,7 @@ namespace RFPPortalWebsite.Methods
         /// </summary>
         /// <param name="email">User's email or username</param>
         /// <returns>AjaxResponse object with user object</returns>
-        public static User UserSignIn(string email, string pass)
+        public static SimpleResponse UserSignIn(string email, string pass)
         {
             try
             {
@@ -101,26 +101,33 @@ namespace RFPPortalWebsite.Methods
                         //User not found
                         if (user == null || user.IsActive == false)
                         {
-                            return new User();
+                            return new SimpleResponse() { Success= false, Message = "Incorrect username or password" };
+                        }
+
+                        //User not active (email confirmation)
+                        if (user == null || user.IsActive == false)
+                        {
+                            return new SimpleResponse() { Success = false, Message = "Please activate your account from registration email." };
                         }
 
                         //Password check
-                        if(Utility.Encryption.CheckPassword(user.Password, pass))
+                        if (Utility.Encryption.CheckPassword(user.Password, pass))
                         {
                             //Logging
                             Program.monitizer.AddUserLog(user.UserId, Models.Constants.Enums.UserLogType.Auth, "User sign in successful.");
 
-                            return user;
+                            return new SimpleResponse() { Success = true, Message = "User sign in successful.", Content = user };
                         }
                     }
 
-                    return new User();
+                    return new SimpleResponse() { Success = false, Message = "Sign in failed." };
                 }
             }
+            
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError);
-                return new User();
+                return new SimpleResponse() { Success = false, Message = "Sign in failed." };
             }
         }
 
@@ -198,6 +205,52 @@ namespace RFPPortalWebsite.Methods
             }
 
             return new User();
+        }
+
+        /// <summary>
+        ///  Change password method after reset password request
+        /// </summary>
+        /// <param name="model">passwordChangeToken: Token generated from ResetPassword method</param>
+        /// <returns>Generic SimpleResponse class</returns>
+        public static SimpleResponse ResetPasswordComplete(string newPass, string passwordChangeToken)
+        {
+            try
+            {
+                using (rfpdb_context db = new rfpdb_context())
+                {
+                    //Decrypt token in password renewal email
+                    string tokendec = Utility.Encryption.DecryptString(passwordChangeToken);
+                    string email = tokendec.Split('|')[0];
+
+                    //Find user in database
+                    var usr = db.Users.FirstOrDefault(x => x.Email == email);
+
+                    DateTime emaildate = Convert.ToDateTime(tokendec.Split('|')[1]);
+                    emaildate = emaildate.AddMinutes(60);
+
+                    //Check if user is valid and password renewal is expired
+                    if (usr != null && usr.Email == email && emaildate > DateTime.Now)
+                    {
+                        //Reset password
+                        usr.Password = Utility.Encryption.EncryptPassword(newPass);
+                        db.SaveChanges();
+
+                        //Logging
+                        Program.monitizer.AddUserLog(usr.UserId, Models.Constants.Enums.UserLogType.Auth, "Password reset completed.");
+
+                        return new SimpleResponse { Success = true, Message = "Password reset completed." };
+                    }
+                    else
+                    {
+                        return new SimpleResponse { Success = false, Message = "Renew expired" };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
+                return new SimpleResponse() { Success = false };
+            }
         }
     }
 }

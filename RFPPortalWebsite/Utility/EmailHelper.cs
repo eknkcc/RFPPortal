@@ -73,7 +73,7 @@ namespace RFPPortalWebsite.Utility
 
             "<div style=\"width:100%;height:100px;background:#353847 !important;border-bottom: 5px solid #334d80;\">" +
                 "<center>" +
-                    "<h3 style=\"color:#ffffff;margin-top:20px\">RFP PORTAL</h3>" +
+                    "<h3 style=\"color:#ffffff;padding-top: 40px;\" > DEVxDAO Request For Proposal Portal</h3>" +
                 "</center>" +
             "</div>" +
 
