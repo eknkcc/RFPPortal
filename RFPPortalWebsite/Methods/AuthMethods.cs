@@ -233,6 +233,7 @@ namespace RFPPortalWebsite.Methods
                     {
                         //Reset password
                         usr.Password = Utility.Encryption.EncryptPassword(newPass);
+                        usr.IsActive = true;
                         db.SaveChanges();
 
                         //Logging

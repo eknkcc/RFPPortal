@@ -403,7 +403,7 @@
                 //Ajax post action
                 $.ajax({
                     type: "Post",
-                    url: '../Auth/RegisterUser',
+                    url: '../RegisterUser',
                     data: JSON.stringify({ "UserName": username, "NameSurname": namesurname, "Email": email, "Password": password, "RePassword": password2 }),
                     contentType: 'application/json',
                     cache: false,
