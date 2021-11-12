@@ -105,7 +105,7 @@ namespace RFPPortalWebsite.Methods
                         }
 
                         //User not active (email confirmation)
-                        if (user == null || user.IsActive == false)
+                        if (user != null && user.IsActive == false)
                         {
                             return new SimpleResponse() { Success = false, Message = "Please activate your account from registration email." };
                         }

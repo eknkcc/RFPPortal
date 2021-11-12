@@ -16,6 +16,7 @@ using System.Linq;
 
 namespace RFPPortal_Tests
 {
+ 
     public class RfpController_Tests
     {
         PostTestController controllers;
@@ -23,105 +24,69 @@ namespace RFPPortal_Tests
             controllers = new PostTestController();
             TestDbInitializer.SeedRfp();
         }
-        public class MockHttpSession : ISession{
-            readonly Dictionary<string, object> _sessionStorage = new Dictionary<string, object>();
-            //public string Id => throw new NotImplementedException();
 
-            string ISession.Id=> throw new NotImplementedException();
-            bool ISession.IsAvailable=>throw new NotImplementedException();
-            IEnumerable<string> ISession.Keys=>_sessionStorage.Keys;
-
-            public void Set(string key, byte[] value)
-            {
-                _sessionStorage[key] = Encoding.UTF8.GetString(value);
-            }
-
-            public bool TryGetValue(string key, out byte[] value)
-            {
-                if (_sessionStorage[key] != null){
-                    value = Encoding.ASCII.GetBytes(_sessionStorage[key].ToString());
-                    return true;
-                }
-                value = null;
-                return false;
-            }
-            void ISession.Clear(){
-                _sessionStorage.Clear();
-            }
-            Task ISession.CommitAsync(System.Threading.CancellationToken cancellationToken){
-                throw new NotImplementedException();
-            }
-            Task ISession.LoadAsync(System.Threading.CancellationToken cancellationToken){
-                throw new NotImplementedException();
-            }
-            void ISession.Remove(string key){
-                _sessionStorage.Remove(key);
-            }
-        }
-        
         public class RFPData : IEnumerable<object[]>
-    {
-        public readonly List<object[]> _data = new List<object[]>{
-            
-            new object[]{
-                new RegisterModel{
-                    UserName    = "A_B",
-                    NameSurname = "Regular User",
-                    Email       = "regular@user.com",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-            
-            new object[]{
-                new RegisterModel{
-                    UserName    = "",
-                    NameSurname = "Regular User",
-                    Email       = "regular@user.com",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "regular_user",
-                    NameSurname = "",
-                    Email       = "regular@user.com",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "regular_user",
-                    NameSurname = "Regular User",
-                    Email       = "",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "regular_user",
-                    NameSurname = "Regular User",
-                    Email       = "regular@user.com",
-                    Password    = "Password",
-                    RePassword  = "Password1"
-                }
-            }    
-        };
-
-        IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator() => _data.GetEnumerator();
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-    }
+        {   
+            public readonly List<object[]> _data = new List<object[]>{
                 
+                new object[]{
+                    new RegisterModel{
+                        UserName    = "A_B",
+                        NameSurname = "Regular User",
+                        Email       = "regular@user.com",
+                        Password    = "Password",
+                        RePassword  = "Password"
+                    }
+                },
+                
+                new object[]{
+                    new RegisterModel{
+                        UserName    = "",
+                        NameSurname = "Regular User",
+                        Email       = "regular@user.com",
+                        Password    = "Password",
+                        RePassword  = "Password"
+                    }
+                },
+
+                new object[]{
+                    new RegisterModel{
+                        UserName    = "regular_user",
+                        NameSurname = "",
+                        Email       = "regular@user.com",
+                        Password    = "Password",
+                        RePassword  = "Password"
+                    }
+                },
+
+                new object[]{
+                    new RegisterModel{
+                        UserName    = "regular_user",
+                        NameSurname = "Regular User",
+                        Email       = "",
+                        Password    = "Password",
+                        RePassword  = "Password"
+                    }
+                },
+
+                new object[]{
+                    new RegisterModel{
+                        UserName    = "regular_user",
+                        NameSurname = "Regular User",
+                        Email       = "regular@user.com",
+                        Password    = "Password",
+                        RePassword  = "Password1"
+                    }
+                }    
+            };
+
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator() => _data.GetEnumerator();
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }                
 
         [Fact]
         public void SubmitRfpForm(){
@@ -206,6 +171,7 @@ namespace RFPPortal_Tests
         [Fact]
         public void GetRfpBidsByRfpId_Test(){
             //Set Users, RFPs, Bids and returns bid count of RFPs
+            TestDbInitializer.ClearDatabase();
             IQueryable<Tuple<int,int>> correct_result = TestDbInitializer.SeedRfpBids();
             
             int RfpId = correct_result.FirstOrDefault().Item1;

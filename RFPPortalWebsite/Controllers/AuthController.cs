@@ -31,11 +31,15 @@ namespace RFPPortalWebsite.Controllers
             if (res.Success)
             {
                 var usr = res.Content as User;
-                HttpContext.Session.SetInt32("UserId", usr.UserId);
-                HttpContext.Session.SetString("UserType", usr.UserType);
-                HttpContext.Session.SetString("NameSurname", usr.NameSurname);
-                HttpContext.Session.SetString("Email", usr.Email);
-                HttpContext.Session.SetString("Username", usr.UserName);
+                try
+                {
+                    HttpContext.Session.SetInt32("UserId", usr.UserId);
+                    HttpContext.Session.SetString("UserType", usr.UserType);
+                    HttpContext.Session.SetString("NameSurname", usr.NameSurname);
+                    HttpContext.Session.SetString("Email", usr.Email);
+                    HttpContext.Session.SetString("Username", usr.UserName);
+                }
+                catch(Exception){}
             }
 
             return res;
@@ -66,6 +70,12 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new SimpleResponse() { Success = false, Message = "Username already exists." };
                     }
+
+                    //Password match control
+                    if (!String.Equals(registerInput.Password, registerInput.RePassword))
+                    {
+                        return new SimpleResponse() { Success = false, Message = "Passwords does not match." };
+                    }
                 }
 
                 User usr = AuthMethods.UserRegister(registerInput);
@@ -88,7 +98,7 @@ namespace RFPPortalWebsite.Controllers
                         EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());
                     }
 
-                    return new SimpleResponse() { Success = true, Message = "User registration succesful.Please verify your account from your email.", Content = new User { Email = usr.Email } };
+                    return new SimpleResponse() { Success = true, Message = "User registration succesful.Please verify your account from your email.", Content = usr };
                 }
             }
             catch (Exception ex)
@@ -111,16 +121,21 @@ namespace RFPPortalWebsite.Controllers
 
             User usr = AuthMethods.RegisterComplete(str);
 
-            if (usr.UserId > 0)
+            try
             {
-                TempData["toastr-type"] = "success";
-                TempData["toastr-message"] = "User activation successful.";
+                if (usr.UserId > 0)
+                {
+                    TempData["toastr-type"] = "success";
+                    TempData["toastr-message"] = "User activation successful.";
+                }
+                else
+                {
+                    TempData["toastr-type"] = "error";
+                    TempData["toastr-message"] = "Invalid user activation request.";
+                }
+
             }
-            else
-            {
-                TempData["toastr-type"] = "error";
-                TempData["toastr-message"] = "Invalid user activation request.";
-            }
+            catch(Exception){}            
 
             return RedirectToAction("Index", "Home");
         }

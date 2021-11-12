@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using static RFPPortalWebsite.Models.Constants.Enums;
 using static RFPPortalWebsite.Program;
+using Stripe;
 
 namespace RFPPortalWebsite
 {
@@ -36,6 +37,7 @@ namespace RFPPortalWebsite
         /// <param name="configuration"></param>
         public static void LoadConfig(IConfiguration configuration)
         {
+            StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
             var config = configuration.GetSection("PlatformSettings");
             config.Bind(_settings);
         }
@@ -132,7 +134,6 @@ namespace RFPPortalWebsite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

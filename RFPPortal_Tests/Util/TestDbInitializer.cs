@@ -10,12 +10,22 @@ using Castle.Components.DictionaryAdapter;
 using PagedList.Core;
 using System.ComponentModel;
 using System.Collections.Immutable;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Stripe;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using RFPPortalWebsite.Models.ViewModels;
 
 namespace RFPPortal_Tests
 {
-    public class RFPBidCounts{
-        int RfpId { get; set; }
-        int BidderCount { get; set; }
+    public class BidInitializeModel{
+        public int AdminUserId { get; set; } = 0;
+        public string AdminUserName {get; set; }
+        public int PublicUserId { get;set; } = 0;
+        public string PublicUserName { get; set; }
+        public int InternalUserId { get; set; } = 0;
+        public string InternalUserName { get; set; }
+        public int RfpId { get; set; } = 0;
     }
     
     public static class TestDbInitializer
@@ -29,7 +39,15 @@ namespace RFPPortal_Tests
             context = new rfpdb_context();
             context.Database.EnsureDeleted();
             RFPPortalWebsite.Startup.InitializeService();
+        }
 
+        static string Encrypt(string password){
+            return RFPPortalWebsite.Utility.Encryption.EncryptPassword(password);
+        }
+
+        public static int ActivateUserMock(User usr){
+            context.Users.Where(u=>u.UserId == usr.UserId).FirstOrDefault().IsActive = true;            
+            return context.SaveChanges();
         }
         public static void SeedUsers(){
 
@@ -40,7 +58,8 @@ namespace RFPPortal_Tests
                     Email       = "public@user1.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
+                    // Password    = "m8pz2xVkmv9xd1gBoczRTjUALudqlwDqWk42h0KGDr6Ui4Ny",
                     IsActive    = true
 
                 },
@@ -50,7 +69,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user2.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -60,7 +79,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user1.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -70,7 +89,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user2.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -80,7 +99,7 @@ namespace RFPPortal_Tests
                     Email       = "admin@user.com",
                     UserType    = Enums.UserIdentityType.Admin.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -90,7 +109,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user3.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -100,7 +119,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user4.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -110,7 +129,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user3.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 },
@@ -120,7 +139,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user4.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = Encrypt("PassW0rd"),
                     IsActive    = true
 
                 }
@@ -130,21 +149,28 @@ namespace RFPPortal_Tests
         }
         
         public static void SeedRfp(){
-            context.Users.Add(
-                new User{
-                    UserName    = "AdminUsr",
-                    NameSurname = "Admin User",
-                    Email       = "admin@user.com",
-                    UserType    = Enums.UserIdentityType.Admin.ToString(),
-                    CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
-                    IsActive    = true
-                }
-            );            
+
+            User AdminUser;
+            if (context.Users.Where(a => a.UserType == "Admin").Count() == 0){            
+                context.Users.Add(AdminUser = 
+                    new User{
+                        UserName    = "AdminUsr",
+                        NameSurname = "Admin User",
+                        Email       = "admin@user.com",
+                        UserType    = Enums.UserIdentityType.Admin.ToString(),
+                        CreateDate  = DateTime.Now,
+                        Password    = Encrypt("PassW0rd"),
+                        IsActive    = true
+                    }
+                );
+            } else {
+                AdminUser = context.Users.Where(a => a.UserType == "Admin").FirstOrDefault();
+            }
+                            
 
             context.Rfps.AddRange(
                 new Rfp{
-                    UserId = 1,
+                    UserId = AdminUser.UserId,
                     CreateDate = Convert.ToDateTime("2021-10-05 15:39:25"), 
                     Status = "Public",
                     Currency = "€",
@@ -157,7 +183,7 @@ namespace RFPPortal_Tests
                     InternalBidEndDate = Convert.ToDateTime("2021-10-26 15:39:25")
                 },
                 new Rfp{
-                    UserId = 1,
+                    UserId = AdminUser.UserId,
                     CreateDate = Convert.ToDateTime("2021-11-05 15:41:25"), 
                     Status = "Internal",
                     Currency = "€",
@@ -170,7 +196,7 @@ namespace RFPPortal_Tests
                     InternalBidEndDate = Convert.ToDateTime("2021-11-17 15:39:25")
                 },
                 new Rfp{
-                    UserId = 1,
+                    UserId = AdminUser.UserId,
                     CreateDate = Convert.ToDateTime("2021-05-05 15:47:56"), 
                     Status = "Completed",
                     Currency = "€",
@@ -183,7 +209,7 @@ namespace RFPPortal_Tests
                     InternalBidEndDate = Convert.ToDateTime("2021-11-26 15:49:46")
                 },
                 new Rfp{
-                    UserId = 1,
+                    UserId = AdminUser.UserId,
                     CreateDate = Convert.ToDateTime("2021-11-05 15:49:46"), 
                     Status = "Internal",
                     Currency = "€",
@@ -195,31 +221,11 @@ namespace RFPPortal_Tests
                     PublicBidEndDate = Convert.ToDateTime("2021-12-17 15:49:46"),
                     InternalBidEndDate = Convert.ToDateTime("2021-11-26 15:49:46")
                 }
-            );
-
-
-            context.RfpBids.AddRange(
-                // new RfpBid{
-                //     UserId = "",
-                //     CreateDate = "",
-                //     RfpID = "",
-                //     Amount = "",
-                //     Note = "",
-                //     Time = "" 
-                    
-                // }
-                
-            );
-
-
-            
+            );            
             context.SaveChanges();
         }
-    
-        
-        public static IQueryable<Tuple<int,int>> SeedRfpBids(){
-            //context.Database.ExecuteSqlRaw("truncate table Users");  
 
+        public static void ClearDatabase(){
             foreach(var user in context.Users){
                 context.Remove(user);
             }
@@ -229,41 +235,43 @@ namespace RFPPortal_Tests
             foreach(var rfp in context.Rfps){
                 context.Remove(rfp);
             }
-            context.SaveChanges();            
+            context.SaveChanges(); 
+        }
+        
+        public static IQueryable<Tuple<int,int>> SeedRfpBids(){
+            
             SeedUsers();
             SeedRfp();
             List<int> public_user_ids = new List<int>();
             List<int> internal_user_ids = new List<int>();
-            public_user_ids = context.Users.Where(u => u.UserType == "Public").Select(a => a.UserId).ToList();
-            internal_user_ids = context.Users.Where(u => u.UserType == "Internal").Select(a => a.UserId).ToList();
+            public_user_ids = context.Users.AsNoTracking().Where(u => u.UserType == "Public").Select(a => a.UserId).ToList();
+            internal_user_ids = context.Users.AsNoTracking().Where(u => u.UserType == "Internal").Select(a => a.UserId).ToList();
 
             List<int> public_Rfp_ids = new List<int>();
             List<int> internal_Rfp_ids = new List<int>();
-            public_Rfp_ids = context.Rfps.Where(u => u.Status == "Public").Select(a => a.RfpID).ToList();
-            internal_Rfp_ids = context.Rfps.Where(u => u.Status == "Internal").Select(a => a.RfpID).ToList();
-            int t = public_user_ids.IndexOf(0);
-            int t1 = public_user_ids.ElementAt(0);
+            public_Rfp_ids = context.Rfps.AsNoTracking().Where(u => u.Status == "Public").Select(a => a.RfpID).ToList();
+            internal_Rfp_ids = context.Rfps.AsNoTracking().Where(u => u.Status == "Internal").Select(a => a.RfpID).ToList();
 
             context.RfpBids.AddRange(
-                //Public RFP #1               
+                //Bidding on Public RFP public user #1               
                 new RfpBid{
                     UserId = public_user_ids.ElementAt(0),
                     CreateDate = DateTime.Now,
                     RfpID = public_Rfp_ids.ElementAt(0),
                     Amount = 500000,
-                    Note = "Bid notes from User input",
+                    Note = "Public RFP Bid -1- notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Public RFP #2                
+                //Bidding on Public RFP public user #2                
                 new RfpBid{
                     UserId = public_user_ids.ElementAt(1),
                     CreateDate = DateTime.Now,
                     RfpID = public_Rfp_ids.ElementAt(0),
                     Amount = 500000,
-                    Note = "Bid notes from User input",
+                    Note = "Public RFP Bid -2- notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Public RFP #4
+                //Bidding on Public RFP public user #3
                 new RfpBid{
                     UserId = public_user_ids.ElementAt(2),
                     CreateDate = DateTime.Now,
@@ -272,7 +280,7 @@ namespace RFPPortal_Tests
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Public RFP #5
+                //Bidding on Public RFP public user #4
                 new RfpBid{
                     UserId = public_user_ids.ElementAt(3),
                     CreateDate = DateTime.Now,
@@ -281,7 +289,7 @@ namespace RFPPortal_Tests
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Internal RFP #1
+                //Bidding on Internal RFP -1- internal user #1
                 new RfpBid{
                     UserId = internal_user_ids.ElementAt(0),
                     CreateDate = DateTime.Now,
@@ -290,7 +298,7 @@ namespace RFPPortal_Tests
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Internal RFP #2
+                //Bidding on Internal RFP -1- internal user #2
                 new RfpBid{
                     UserId = internal_user_ids.ElementAt(1),
                     CreateDate = DateTime.Now,
@@ -299,7 +307,7 @@ namespace RFPPortal_Tests
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Internal RFP #3
+                //Bidding on Internal RFP -2- internal user #3
                 new RfpBid{
                     UserId = internal_user_ids.ElementAt(2),
                     CreateDate = DateTime.Now,
@@ -308,7 +316,7 @@ namespace RFPPortal_Tests
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
                 },
-                //Internal RFP #4
+                //Bidding on Internal RFP -2- internal user #4
                 new RfpBid{
                     UserId = internal_user_ids.ElementAt(3),
                     CreateDate = DateTime.Now,
@@ -316,8 +324,7 @@ namespace RFPPortal_Tests
                     Amount = 500000,
                     Note = "Bid notes from User input",
                     Time = "Time frame from User input", 
-                 }
-                
+                }                
             );
             context.SaveChanges();
 
@@ -326,10 +333,92 @@ namespace RFPPortal_Tests
                 .Select(group => Tuple.Create(group.Key, group.Count()));            
 
             return counts;
+        }
 
 
-                
-                
+        public static BidInitializeModel BidInitializer(){
+
+            User public_user = new User{
+                    UserName    = "PublicUser",
+                    NameSurname = "Public User",
+                    Email       = "public@user.com",
+                    UserType    = Enums.UserIdentityType.Public.ToString(),
+                    CreateDate  = DateTime.Now,
+                    Password    = "PassW0rd",
+                    IsActive    = true
+                    };
+            User admin_user = new User{
+                    UserName    = "AdminUser",
+                    NameSurname = "Admin User",
+                    Email       = "admin@user.com",
+                    UserType    = Enums.UserIdentityType.Admin.ToString(),
+                    CreateDate  = DateTime.Now,
+                    Password    = "PassW0rd",
+                    IsActive    = true
+                };
+            User internal_user = new User{
+                    UserName    = "InternalUser",
+                    NameSurname = "Internal User",
+                    Email       = "internal@user.com",
+                    UserType    = Enums.UserIdentityType.Internal.ToString(),
+                    CreateDate  = DateTime.Now,
+                    Password    = "PassW0rd",
+                    IsActive    = true
+                };
+            context.Users.AddRange(
+                public_user, admin_user, internal_user
+            );
+            context.SaveChanges();
+
+            Rfp rfp = new Rfp{
+                    UserId = admin_user.UserId,
+                    CreateDate = Convert.ToDateTime("2021-10-05 15:39:25"), 
+                    Status = "Public",
+                    Currency = "€",
+                    Amount = 500000,
+                    Timeframe = "12-17-2021 - 12-31-2021",
+                    Title = "This is the first RFP of DEVxDAO RFP Platform",
+                    Description = "Description of this job",
+                    WinnerRfpBidID = null, 
+                    PublicBidEndDate = Convert.ToDateTime("2021-11-17 15:39:25"),
+                    InternalBidEndDate = Convert.ToDateTime("2021-10-26 15:39:25")
+                };
+            context.Rfps.Add(rfp);
+            context.SaveChanges();
+
+            BidInitializeModel initialBidEnvironment = new BidInitializeModel{
+                PublicUserId       = public_user.UserId
+                , PublicUserName   = public_user.UserName
+                , AdminUserId      = admin_user.UserId
+                , AdminUserName    = admin_user.UserName
+                , InternalUserId   = internal_user.UserId
+                , InternalUserName = internal_user.UserName
+                , RfpId            = rfp.RfpID
+            };
+
+            return initialBidEnvironment;
+
+        }
+
+        public static List<RfpBid> GetBids(){
+            return context.RfpBids.ToList();
+        }
+        public static RfpBid GetBid(int bidId){
+            return context.RfpBids.Where(a=>a.RfpBidID == bidId).FirstOrDefault();
+        }
+
+        public static List<User> GetUsers(){
+            return context.Users.ToList();
+        }        
+        public static User GetUser(int userId){
+            return context.Users.Where(u => u.UserId == userId).FirstOrDefault();
+        }
+
+        public static List<Rfp> GetRfps(){
+            return context.Rfps.ToList();
+        }
+        public static Rfp GetRfp(int rfpId){
+            return context.Rfps.Where(z => z.RfpID == rfpId).FirstOrDefault();
         }
 
 

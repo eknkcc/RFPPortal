@@ -8,6 +8,7 @@ namespace RFPPortal_Tests
     {
         public AuthController authController;
         public RfpController rfpController;
+        public BidController bidController;
         static PostTestController()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -22,6 +23,8 @@ namespace RFPPortal_Tests
 
             authController = new AuthController();
             rfpController  = new RfpController();
+            bidController = new BidController();
+
         }
 
         // public void Seed_Users(){
