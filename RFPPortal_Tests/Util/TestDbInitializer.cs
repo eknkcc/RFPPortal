@@ -37,6 +37,7 @@ namespace RFPPortal_Tests
             RFPPortalWebsite.Startup.LoadConfig(config);
 
             context = new rfpdb_context();
+            context.ChangeTracker.Clear();
             context.Database.EnsureDeleted();
             RFPPortalWebsite.Startup.InitializeService();
         }
@@ -145,9 +146,14 @@ namespace RFPPortal_Tests
                 }
             );
             context.SaveChanges();
+            context.ChangeTracker.Clear();
 
         }
         
+        /// <summary>
+        /// Creates an Admin user and adds to the database
+        /// 
+        /// </summary>
         public static void SeedRfp(){
 
             User AdminUser;
@@ -165,8 +171,7 @@ namespace RFPPortal_Tests
                 );
             } else {
                 AdminUser = context.Users.Where(a => a.UserType == "Admin").FirstOrDefault();
-            }
-                            
+            }                            
 
             context.Rfps.AddRange(
                 new Rfp{
@@ -223,21 +228,32 @@ namespace RFPPortal_Tests
                 }
             );            
             context.SaveChanges();
+            context.ChangeTracker.Clear();
         }
 
+        /// <summary>
+        /// Truncates User, RFPs and Bids table in the database
+        /// </summary>
         public static void ClearDatabase(){
             foreach(var user in context.Users){
                 context.Remove(user);
+                context.Entry(user).State = EntityState.Detached;
             }
             foreach(var bid in context.RfpBids){
                 context.Remove(bid);
+                context.Entry(bid).State = EntityState.Detached;
             }
             foreach(var rfp in context.Rfps){
                 context.Remove(rfp);
+                context.Entry(rfp).State = EntityState.Detached;
             }
             context.SaveChanges(); 
         }
         
+        /// <summary>
+        /// Creates a bidding environment with multiple RFPs
+        /// </summary>
+        /// <returns>(IQueryable<Tuple<int,int>>) How many bids of which RFP</returns>
         public static IQueryable<Tuple<int,int>> SeedRfpBids(){
             
             SeedUsers();
@@ -251,7 +267,7 @@ namespace RFPPortal_Tests
             List<int> internal_Rfp_ids = new List<int>();
             public_Rfp_ids = context.Rfps.AsNoTracking().Where(u => u.Status == "Public").Select(a => a.RfpID).ToList();
             internal_Rfp_ids = context.Rfps.AsNoTracking().Where(u => u.Status == "Internal").Select(a => a.RfpID).ToList();
-
+            
             context.RfpBids.AddRange(
                 //Bidding on Public RFP public user #1               
                 new RfpBid{
@@ -327,6 +343,7 @@ namespace RFPPortal_Tests
                 }                
             );
             context.SaveChanges();
+            context.ChangeTracker.Clear();
 
             IQueryable<Tuple<int,int>> counts = context.RfpBids.GroupBy(r => r.RfpID)
                 .OrderBy(group => group.Key)
@@ -335,7 +352,12 @@ namespace RFPPortal_Tests
             return counts;
         }
 
-
+        /// <summary>
+        /// Mocks a bidding environment.
+        /// Creates and adds 3 different types of users (public, admin and internal) to the database
+        /// Creates and adds a public RFP created by admin to the database
+        /// </summary>
+        /// <returns>An instance of BidInitializeModel. The model holds environmental variables of a bidding instance like user ids, usernames and RFP id </returns>
         public static BidInitializeModel BidInitializer(){
 
             User public_user = new User{
@@ -369,6 +391,7 @@ namespace RFPPortal_Tests
                 public_user, admin_user, internal_user
             );
             context.SaveChanges();
+            context.ChangeTracker.Clear();
 
             Rfp rfp = new Rfp{
                     UserId = admin_user.UserId,
@@ -400,23 +423,53 @@ namespace RFPPortal_Tests
 
         }
 
+        /// <summary>
+        /// Returns all bids for testing purposes.
+        /// </summary>
+        ///<returns>List<RfpBid></returns>
         public static List<RfpBid> GetBids(){
             return context.RfpBids.ToList();
         }
+
+        /// <summary>
+        /// Returns requested bid for testing purposes.
+        /// </summary>
+        /// <param name="bidId">bid id</param>
+        /// <returns>RfpBid</returns>
         public static RfpBid GetBid(int bidId){
             return context.RfpBids.Where(a=>a.RfpBidID == bidId).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns all users for testing purposes.
+        /// </summary>
+        /// <returns>List<User></returns>
         public static List<User> GetUsers(){
             return context.Users.ToList();
         }        
+
+        /// <summary>
+        /// Returns requested user for testing purposes.
+        /// </summary>
+        /// <param name="UserId">user id</param>
+        /// <returns>User</returns>
         public static User GetUser(int userId){
             return context.Users.Where(u => u.UserId == userId).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns all Rfps for testing purposes.
+        /// </summary>
+        /// <returns>List<Rfp></returns>
         public static List<Rfp> GetRfps(){
             return context.Rfps.ToList();
         }
+
+        /// <summary>
+        /// Returns requested Rfp for testing purposes.
+        /// </summary>
+        /// <param name="RfpId">rfp id</param>
+        /// <returns>RFP</returns>
         public static Rfp GetRfp(int rfpId){
             return context.Rfps.Where(z => z.RfpID == rfpId).FirstOrDefault();
         }

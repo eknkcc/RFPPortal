@@ -59,6 +59,11 @@ namespace RFPPortalWebsite.Controllers
                 //Validations
                 using (rfpdb_context db = new rfpdb_context())
                 {
+                    //Required fields control
+                    if(String.IsNullOrEmpty(registerInput.UserName) || String.IsNullOrEmpty(registerInput.Email) || String.IsNullOrEmpty(registerInput.Password))
+                    {
+                        return new SimpleResponse() {Success = false, Message = "Required data missing."};
+                    }  
                     //Email already exists control
                     if (db.Users.Count(x => x.Email == registerInput.Email) > 0)
                     {
@@ -70,6 +75,7 @@ namespace RFPPortalWebsite.Controllers
                     {
                         return new SimpleResponse() { Success = false, Message = "Username already exists." };
                     }
+                    
 
                     //Password match control
                     if (!String.Equals(registerInput.Password, registerInput.RePassword))

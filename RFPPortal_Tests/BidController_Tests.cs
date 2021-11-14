@@ -11,12 +11,22 @@ using System.Linq;
 
 namespace RFPPortal_Tests
 {
+    /// <summary>
+    /// RFP Portal, bid controller methods tests
+    /// SubmitBid()
+    /// DeleteBid()
+    /// EditBid()
+    /// ChooseWinningBid
+    /// </summary>
+    [Collection("Sequential")]
     public class BidController_Tests
     {
         PostTestController controllers;
         ISession session;
 
-
+        /// <summary>
+        /// Application controllers and HttpContext Session are initialized.
+        /// </summary>
         public BidController_Tests(){
             controllers = new PostTestController();
             controllers.bidController.ControllerContext = new ControllerContext();
@@ -24,15 +34,24 @@ namespace RFPPortal_Tests
             session = controllers.bidController.ControllerContext.HttpContext.Session = new MockHttpSession();
         }
 
+        /// <summary>
+        /// SubmidBid method is tested for 2 use cases
+        /// case 1 : proper bid is prepared and submitted
+        /// case 2 : an internal user (VA) tries to bid on a public RFP.
+        /// </summary>
         [Fact]
         public void SubmitBidTest(){
 
-            //Arrange
-            //Initialize the database
+            /// <summary>
+            /// Arrange
+            /// Initialize the database
+            /// </summary>
             TestDbInitializer.ClearDatabase();
             BidInitializeModel envModel =  TestDbInitializer.BidInitializer();
 
-            //condition that should work correctly
+            /// <summary>
+            /// condition that should work correctly
+            /// </summary>
             RfpBid bid = new RfpBid{
                 UserId = envModel.PublicUserId,
                 CreateDate = DateTime.Now,
@@ -41,7 +60,6 @@ namespace RFPPortal_Tests
                 Note = "Bid notes from User input",
                 Time = "Time frame from User input", 
             };
-
             session.SetString("UserType", "Public");
             session.SetInt32("UserId", envModel.PublicUserId);              
 
