@@ -89,29 +89,36 @@ namespace RFPPortalWebsite
         /// <param name="e"></param>
         private static void CheckRfpStatus(Object source, ElapsedEventArgs e)
         {
-            using (rfpdb_context db = new rfpdb_context())
+            try
             {
-                //Check if Rfp internal bidding ended and public bidding started
-                var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.InternalBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
-                
-                //Update rfp status
-                foreach (var rfp in publicRfps)
+                using (rfpdb_context db = new rfpdb_context())
                 {
-                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Public.ToString();
-                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    db.SaveChanges();
-                }
+                    //Check if Rfp internal bidding ended and public bidding started
+                    var publicRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && x.InternalBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
 
-                //Check if rfp public bidding ended without any winner
-                var expiredRfps = db.Rfps.Where(x=> x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+                    //Update rfp status
+                    foreach (var rfp in publicRfps)
+                    {
+                        rfp.Status = Models.Constants.Enums.RfpStatusTypes.Public.ToString();
+                        db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        db.SaveChanges();
+                    }
 
-                //Update rfp status
-                foreach (var rfp in expiredRfps)
-                {
-                    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
-                    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    db.SaveChanges();
+                    //Check if rfp public bidding ended without any winner
+                    var expiredRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+
+                    //Update rfp status
+                    foreach (var rfp in expiredRfps)
+                    {
+                        rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
+                        db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Program.monitizer.AddConsole("Exception in timer CheckRfpStatus. Ex:" + ex.Message);
             }
         }
 

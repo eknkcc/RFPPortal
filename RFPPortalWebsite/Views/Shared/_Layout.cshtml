@@ -11,9 +11,12 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cairo">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/jquery-ui/jquery-ui.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
     <link href="~/css/fontawesome-all.min.css" rel="stylesheet" />
     <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -29,7 +32,7 @@
                 <a class="btn btn-primary px-3 d-inline-block btnSignOut" onclick="Logout(this)"><i class="fa fa-sign-out-alt mr-1"></i> Sign Out</a>
 
                 @*MENU - User info div*@
-                <div class="d-inline-block mr-3 mt-1 mb-2 btnSignIn">
+                <div class="d-inline-block mr-3 mt-1 mb-2 float-right signBox">
                     <p class="mb-0">@HttpContextAccessor.HttpContext.Session.GetString("NameSurname")</p>
                     <small><b>User Type:</b> @HttpContextAccessor.HttpContext.Session.GetString("UserType")</small>
                 </div>
@@ -40,7 +43,7 @@
             else
             {
                 @*MENU - Sign in button*@
-                <a class="btn btn-success px-3 btnSignIn" href="#signup" data-toggle="modal" data-target=".log-sign"><i class="fa fa-user-alt mr-1"></i> Sign In</a>
+                <a class="btn btn-success mr-2 mb-2 signInBtn signBox" href="#signup" data-toggle="modal" data-target=".log-sign"><i class="fa fa-user-alt mr-1"></i> Sign In</a>
             }
 
             @*MENU - RFP List*@
@@ -106,7 +109,7 @@
                                     <!-- Remember me, forgot password -->
                                     <div class="field-item d-flex justify-content-between align-items-center text-secondary mt-3">
                                         <div class="field-item pb-0">
-                                        
+
                                         </div>
                                         <div class="forget-link fz-6">
                                             <a class="cursorp fp forgotPass">Forgot Password</a>
@@ -258,9 +261,30 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>
     <script src="~/lib/toastr/toastr.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/lib/select2/select2.full.min.js"></script>
 
     <script>
         $(document).ready(function () {
+
+            //Toastr options
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "3000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
 
             //Signin modal click event
             $('#tab1').on('click', function () {

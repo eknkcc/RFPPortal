@@ -1,9 +1,11 @@
 ﻿
 @model RFPPortalWebsite.Models.ViewModels.RfpDetailModel
+
 @*User session accessor*@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-@*Find color tag from RFP status*@
+
+@*Find postcard color tag from RFP status*@
 @{
     bool biddingActive = false;
     string clr = "";
@@ -16,7 +18,7 @@
     else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
     {
         //Rfp expired
-        clr = "red";
+        clr = "red"; 
     }
     else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
     {
@@ -57,6 +59,7 @@
                                 <i class="fas fa-calendar-alt mr-2"></i>Posted at: @Model.RfpDeatil.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
                             </time>
                         </div>
+                        <div><small><b>Time frame for this RFP:</b> @Model.RfpDeatil.Timeframe</small></div>
                     </div>
                     <div>
                         <p id="countDownDiv" class="d-none d-sm-block"></p>
@@ -64,10 +67,20 @@
                 </div>
                 <div class="postcard__bar"></div>
                 <div class="postcard__preview-txt">
-                    @Model.RfpDeatil.Description
-
-                    <div><small><b>Time frame for this RFP:</b> @Model.RfpDeatil.Timeframe</small></div>
+                    <p class="text-justify py-3" style="white-space: pre-line">@Model.RfpDeatil.Description</p>
                 </div>
+
+                @if (!string.IsNullOrEmpty(Model.RfpDeatil.Tags))
+                {
+                    <small><b>Tags &amp; Keywords</b></small>
+                    <ul class="postcard__tagbox mt-2">
+                        @foreach (var tag in Model.RfpDeatil.Tags.Split(','))
+                        {
+                            <li class="tag__item">@tag</li>
+                        }
+                    </ul>
+                }
+
                 <ul class="postcard__tagbox">
                     <li class="tag__item"><i class="fas fa-circle mr-2 dot_@clr" title="Status"></i>@Model.RfpDeatil.Status Bidding</li>
                     @if (biddingActive)
@@ -138,7 +151,7 @@
                                                 @* Check if this bid is the winner bid (Displays star icon)  *@
                                                 @if (item.Bid.RfpBidID == Model.RfpDeatil.WinnerRfpBidID)
                                                 {
-                                                    <i class="fas fa-star" title="Winner Bid" style="color: #ffe03c"></i>
+                                                    <i class="fas fa-star mr-2" title="Winner Bid"></i><span>Winner Bid</span>
                                                 }
                                             </td>
                                         </tr>
@@ -428,7 +441,7 @@
     }
 }
 
-@* Create admin modals & functions if yser is admin and RFP status is active *@
+@* Create admin modals & functions if user is admin and RFP status is active *@
 @if (biddingActive && HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
 {
     @* Choose winner bid modal *@

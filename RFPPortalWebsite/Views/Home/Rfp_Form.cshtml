@@ -1,23 +1,22 @@
 ﻿
-<link href="~/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
 <div class="tab-pane">
     <div class="form-horizontal">
         <fieldset id="RFPform">
-            <!-- Sign Up Form -->
-            <!-- Text input-->
+
+            <!-- Job Title Text Input-->
             <div class="group">
                 <input id="Title" name="Title" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
                 <label class="label" for="Title">Type of Job</label>
             </div>
 
-            <!-- Text input-->
+            <!-- Job Description Text Input -->
             <div class="group3">
                 <textarea id="Description" name="Description" required="" class="input" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
                 <span class="highlight"></span><span class="bar"></span>
                 <label class="label" for="Description">Job Description</label>
             </div>
 
-            <!-- Text input-->
+            <!-- Budget Text Input -->
             <div class="group3 d-flex">
                 <div class="col-lg-9 col-md-10 p-0">
                     <input id="Amount" name="Amount" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
@@ -32,24 +31,30 @@
                 </div>
             </div>
 
+            <!-- Timeframe Data Input -->
             <div class="group3 d-flex">
                 <div class="col-lg-4 col-md-6 col-sm-12 pl-0">
                     <input id="startDatepicker" name="Timeframe" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                    <label class="label" for="Timeframe">@*Time Expectations for Job Completion*@Job Start Date</label>
+                    <label class="label" for="Timeframe">Job Start Date</label>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12 pl-0">
                     <input id="endDatepicker" name="Timeframe" required="" class="input" type="text"><span class="highlight"></span><span class="bar"></span>
-                    <label class="label" for="Timeframe">@*Time Expectations for Job Completion*@Job Completion Date</label>
+                    <label class="label" for="Timeframe">Job Completion Date</label>
                 </div>
-                @*<input id="Timeframe" name="Timeframe" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>*@
-                @*<p style="color:#636363">Date: <input type="text" id="startDatepicker" class="input"> End Date : <input type="text" id="endDatepicker" class="input"> </p>*@
-                @*<label class="label" for="Timeframe">Time Expectations for Job Completion</label>*@
             </div>
-            <div class="group3 d-flex">
-                <p class="text-dark"><i>*Bidding period is @Program._settings.InternalBiddingDays days for internal biddings and @Program._settings.PublicBiddingDays days for public biddings. Please adjust your timeframe accordingly.</i></p>
+            <div class="my-3">
+                <small class="text-dark"><i>*Bidding period is @Program._settings.InternalBiddingDays days for internal biddings and @Program._settings.PublicBiddingDays days for public biddings. Please adjust your timeframe accordingly.</i></small>
             </div>
-            <!-- Button -->
-            <div class="control-group d-flex justify-content-center mt-3">
+
+            <!-- Tags Input -->
+            <p class="mb-2">
+                <b>Tags</b>
+                <small class="ml-2">(Coding language, keywords of the job etc.)</small>
+            </p>
+            <select id="tags" class="form-control" multiple="multiple"></select>
+
+            <!-- Submit Button -->
+            <div class="control-group d-flex justify-content-center mt-5">
                 <label class="control-label" for="confirmProposal"></label>
                 <div class="controls col-md-4">
                     <button id="confirmProposal" name="confirmsignup" onclick="SubmitForm(this)" class="btn btn-primary btn-block">Submit Proposal</button>
@@ -60,13 +65,20 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/jquery-ui-1.10.4.custom.min.js"></script>
     <script>
         $(function () {
-            //console.log(new Date().getDate());
-            //console.log(new Date());
+            //Tags input constructor
+            $('#tags').select2({
+                data: ['Rust', 'Python', 'C++', 'C#', 'Sql', 'Html/Css', 'Javascript', 'Java', 'Frontend', 'Backend'],
+                tags: true,
+                maximumSelectionLength: 10,
+                tokenSeparators: [',', ' '],
+                placeholder: "Select or type keywords",
+            });
+
+            //Job time frame date input constructor
             $("#startDatepicker").datepicker({
-                dateFormat: 'mm-dd-yy',
+                dateFormat: 'mm/dd/yy',
                 minDate: @Program._settings.InternalBiddingDays +  @Program._settings.PublicBiddingDays,
                 changeMonth: true,
                 changeYear: true,
@@ -74,8 +86,9 @@
                     $("#startDatepicker").focus();
                 }
             });
+
             $("#endDatepicker").datepicker({
-                dateFormat: 'mm-dd-yy',
+                dateFormat: 'mm/dd/yy',
                 minDate: @Program._settings.InternalBiddingDays +  @Program._settings.PublicBiddingDays,
                 changeMonth: true,
                 changeYear: true,
@@ -95,11 +108,12 @@
             var amount = parseFloat($("#Amount").val());
             var currency = $("#Currency").val();
             var timeframe = $("#startDatepicker").val() + " - " + $("#endDatepicker").val();
+            var tags = $("#tags").val();
 
             $.ajax({
                 type: "Post",
                 url: '../SubmitForm',
-                data: { "Title": title, "Description": description, "Amount": amount, "Currency": currency, "Timeframe": timeframe},
+                data: { "Title": title, "Description": description, "Amount": amount, "Currency": currency, "Timeframe": timeframe, "Tags": tags.join() },
                 cache: false,
                 async: true,
                 success: function (result) {
