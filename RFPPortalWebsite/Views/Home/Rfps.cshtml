@@ -53,15 +53,15 @@
                 </a>
 
                 @* Item body *@
-                <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='../RFP-Detail/'+@item.RfpID">
-                    <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/'+@item.RfpID">@item.Title</a></h1>
+                <div class="postcard__text postcard__text2 t-dark" onclick="window.location.href='../RFP-Detail/@item.RfpID'">
+                    <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/@item.RfpID'">@item.Title</a></h1>
                     <div class="postcard__subtitle small">
                         <time datetime="@item.CreateDate">
                             <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
                         </time>
                     </div>
                     <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">
+                    <div class="postcard__preview-txt py-2">
                         @if (item.Description.Length > 150)
                         {
                             @item.Description.Substring(0, Math.Min(item.Description.Length, 150)) <span>..</span>

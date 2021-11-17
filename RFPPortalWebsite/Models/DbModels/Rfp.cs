@@ -21,5 +21,7 @@ namespace RFPPortalWebsite.Models.DbModels
         public int? WinnerRfpBidID { get; set; }
         public DateTime PublicBidEndDate { get; set; }
         public DateTime InternalBidEndDate { get; set; }
+        //Keywords and coding language seperated with comma
+        public string Tags { get; set; }
     }
 }
