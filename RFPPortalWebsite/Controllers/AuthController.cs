@@ -60,7 +60,7 @@ namespace RFPPortalWebsite.Controllers
                 using (rfpdb_context db = new rfpdb_context())
                 {
                     //Required fields control
-                    if(String.IsNullOrEmpty(registerInput.UserName) || String.IsNullOrEmpty(registerInput.Email) || String.IsNullOrEmpty(registerInput.Password))
+                    if(String.IsNullOrEmpty(registerInput.UserName) || String.IsNullOrEmpty(registerInput.Email) || String.IsNullOrEmpty(registerInput.Password) || String.IsNullOrEmpty(registerInput.NameSurname))
                     {
                         return new SimpleResponse() {Success = false, Message = "Required data missing."};
                     }  

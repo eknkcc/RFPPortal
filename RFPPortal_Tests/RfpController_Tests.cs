@@ -15,12 +15,12 @@ using Microsoft.AspNetCore.Routing.Constraints;
 using System.Linq;
 
 namespace RFPPortal_Tests
-{
- 
+{ 
     public class RfpController_Tests
     {
         PostTestController controllers;
         public RfpController_Tests(){
+            TestDbInitializer.ClearDatabase();
             controllers = new PostTestController();
             TestDbInitializer.SeedRfp();
         }
@@ -126,6 +126,12 @@ namespace RFPPortal_Tests
             //t.Message.Should().Be("Rfp form succesfully posted.");
         }
 
+        /// <summary>
+        /// Calling the required RFP model instance by RFP Id        
+        ///</summary>
+        ///
+
+        
         [Fact]       
         public void GetRfpByRfpId_Test(){           
 
@@ -135,7 +141,7 @@ namespace RFPPortal_Tests
         }
 
         /// <summary>
-        ///  DB seed method adds 3 public RFPs 
+        ///  In the constructor, 3 public RFPs added by TestDbInitializer class 
         ///  Returned list should have 3 elements
         /// </summary>
         /// <param name="Status">Rfp model</param>
@@ -151,7 +157,7 @@ namespace RFPPortal_Tests
         ///  This method can only be accessed by third party admin in ip whitelist.
         /// </summary>
         /// <param name="model">Rfp model</param>
-        /// <returns>Ajax Response</returns>
+        /// <returns>Simple Response</returns>
         [Fact]
         public void ChangeRfpStatus_Test(){
             //Arrange

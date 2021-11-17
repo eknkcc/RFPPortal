@@ -16,6 +16,7 @@ using Stripe;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using RFPPortalWebsite.Models.ViewModels;
 
+
 namespace RFPPortal_Tests
 {
     public class BidInitializeModel{
@@ -27,10 +28,19 @@ namespace RFPPortal_Tests
         public string InternalUserName { get; set; }
         public int RfpId { get; set; } = 0;
     }
-    
+    /// <summary>
+    /// TestDbInitializer class includes necessary environment mocking methods.
+    /// 
+    /// </summary>
     public static class TestDbInitializer
     {
+
         static rfpdb_context context;
+        /// <summary>
+        /// Creates a DB context which should use a "test DB instance".
+        /// Wipes the database itself.
+        /// Builds a database and its entity tables using the DB context        
+        /// </summary>
         static TestDbInitializer()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -42,14 +52,24 @@ namespace RFPPortal_Tests
             RFPPortalWebsite.Startup.InitializeService();
         }
 
+        /// <summary>
+        /// Encrypts given string to to be kept as user password in the database for testing purposes        
+        /// </summary>
         static string Encrypt(string password){
             return RFPPortalWebsite.Utility.Encryption.EncryptPassword(password);
         }
 
+        /// <summary>
+        /// Mocks user registeration email verification for testing purposes
+        /// </summary>
         public static int ActivateUserMock(User usr){
             context.Users.Where(u=>u.UserId == usr.UserId).FirstOrDefault().IsActive = true;            
             return context.SaveChanges();
         }
+
+        /// <summary>
+        /// Adds 4 public, 4 Internal and 1 adminuser properly as registered users to the database for testing purposes.
+        /// </summary>        
         public static void SeedUsers(){
 
             context.Users.AddRange(
@@ -147,12 +167,11 @@ namespace RFPPortal_Tests
             );
             context.SaveChanges();
             context.ChangeTracker.Clear();
-
         }
         
         /// <summary>
-        /// Creates an Admin user and adds to the database
-        /// 
+        /// Creates an Admin user and adds to the database if the database does not currently have an admin user.
+        /// Creates and adds 4 proper RFPs (1 public, 2 internal and 1 comleted) to the database with admin users id.
         /// </summary>
         public static void SeedRfp(){
 

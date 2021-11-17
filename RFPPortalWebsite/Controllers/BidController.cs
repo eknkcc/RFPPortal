@@ -186,7 +186,7 @@ namespace RFPPortalWebsite.Controllers
                     }
                 }
 
-                //Delete bid
+                //Edit bid
                 var result = Methods.BidMethods.EditBid(model);
                 if (result.RfpBidID > 0 )
                 {
