@@ -14,7 +14,9 @@ using System.Text;
 using Microsoft.AspNetCore.Routing.Constraints;
 using System.Linq;
     
-    
+/// <summary>
+/// Mocks HttpContext Session to set session parameters and use in controllers.
+/// </summary>
 public class MockHttpSession : ISession{
     readonly Dictionary<string, object> _sessionStorage = new Dictionary<string, object>();
     //public string Id => throw new NotImplementedException();
@@ -22,12 +24,13 @@ public class MockHttpSession : ISession{
     string ISession.Id=> throw new NotImplementedException();
     bool ISession.IsAvailable=>throw new NotImplementedException();
     IEnumerable<string> ISession.Keys=>_sessionStorage.Keys;
-
+    /// Mock session Set parameter method
     public void Set(string key, byte[] value)
     {
         _sessionStorage[key] = Encoding.UTF8.GetString(value);
     }
 
+    /// Mock session Get parameter method.
     public bool TryGetValue(string key, out byte[] value)
     {
         if (_sessionStorage[key] != null){

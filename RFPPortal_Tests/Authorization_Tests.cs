@@ -1,90 +1,31 @@
-using System.Runtime.Intrinsics.X86;
 using System;
 using Xunit;
 using RFPPortalWebsite.Models.ViewModels;
 using FluentAssertions;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.DbModels;
-using RFPPortalWebsite.Models.Constants;
-using Org.BouncyCastle.Crypto;
-using System.Reflection;
 using RFPPortalWebsite.Utility;
-using Xunit.Sdk;
 
 namespace RFPPortal_Tests
-{
-    /// <summary>
-    ///  This class prepares a set Register Model instances that are missing some values ​​for repetitive entry into the register method.  
-    /// </summary>
-    public class MissingValueUserData : IEnumerable<object[]>
-    {
-        public readonly List<object[]> _data = new List<object[]>{
-            
-            new object[]{
-                new RegisterModel{
-                    UserName    = "",
-                    NameSurname = "UserName Doesnotexist",
-                    Email       = "UserName@Doesnotexist.com",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "NameSurnameDoesnotexist",
-                    NameSurname = "",
-                    Email       = "NameSurname@DoesnotExist.com",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "EmailDoesnotexist",
-                    NameSurname = "Email DoesnotExist",
-                    Email       = "",
-                    Password    = "Password",
-                    RePassword  = "Password"
-                }
-            },
-
-            new object[]{
-                new RegisterModel{
-                    UserName    = "PasswordsDoesnotmatch",
-                    NameSurname = "Passwords Doesnotmatch",
-                    Email       = "Passwords@Doesnotmatch.com",
-                    Password    = "Password",
-                    RePassword  = ""
-                }
-            }    
-        
-        };
-
-        IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator() => _data.GetEnumerator();
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
-    
+{    
     /// <summary>
     /// Collection of authorization test methods.
+    /// Regular_Register_Test()
+    /// RegisterCompleteView_Test()
+    /// Missing_value_Register_Test()
+    /// Signin_Test()
+    /// VA_Signin_Test()
+    /// VA_Register_Test_via_DXDprovided_Api()
+    /// Existing_User_Register_Test()
     /// </summary>
     [Collection("Sequential")]
     public class Authorization_Tests
     {
         PostTestController controllers;
-        ISession session;
-        /// <summary>
-        /// Application controllers and HttpContext Session are initialized.
-        /// </summary>
+        ISession session;        
+        /// Application controllers and HttpContext Session are initialized.        
         public Authorization_Tests(){
             controllers = new PostTestController();
             controllers.bidController.ControllerContext = new ControllerContext();
@@ -93,21 +34,19 @@ namespace RFPPortal_Tests
         }
         
         /// <summary>
-        /// Test of standart public user register.
-        /// Application method returns a SimpleResponse model instance which the "boolean Success" property should be "true".
+        /// Test of AuthController.RegisterUser() method with proper public UserRegister model.
+        /// 1.Initialize the database
+        /// 2.Creates a proper RegisterModel
+        /// 3.Tests AuthController.RegisterUser() method - Assert.True has succeeded.
         /// </summary>
-        /// <param name="regular_user_register">Valid model of ViewModel RegisterModel</param>
-        /// <returns>bool result of Assert.True</returns>
         [Fact]        
         public void Regular_Register_Test()
-        {
-            /// <summary>
-            /// Arrange
-            /// Initializing the database
-            /// </summary>
+        {           
+            // Arrange
+            // Initializing the database            
             TestDbInitializer.ClearDatabase();
             //Createing a Public User model to be registered
-            RegisterModel regular_user_register = new RegisterModel{
+            RegisterModel regular_user = new RegisterModel{
                 UserName    = "Regular_User",
                 NameSurname = "Regular User",
                 Email       = "regular@user.com",
@@ -118,7 +57,7 @@ namespace RFPPortal_Tests
             //Act
             //Attempt to register 
             //register method should return 'SimpleResponse method which Success value should be 'true' and Content value should include a User model'
-            SimpleResponse regular_register_result = controllers.authController.RegisterUser(regular_user_register);
+            SimpleResponse regular_register_result = controllers.authController.RegisterUser(regular_user);
 
             //Assert
             regular_register_result.Success.Should().Be(true);
@@ -129,20 +68,20 @@ namespace RFPPortal_Tests
         }
         
         /// <summary>
-        /// Test of the process that is completed with email verification after registration.
-        /// The successfully completed process returns the "Registration complete" view with "Success" message
+        /// Test of the AuthController.RegisterCompleteView(RegisterationCompletionToken).
+        /// 1.Initialize Database 
+        /// 2.Create a public user 'RegisterModel' instance to be registered
+        /// 3.Registeration process start with applying a proper RegisterModel(type public) to RegisterUser() method.
+        /// 4.Try to login without email conformation - Assert.False has succeeded
+        /// 5.Create fake registeration completion token.
+        /// 6.Test AuthController.RegisterCompleteView method with fake registeration completion token - Assert.True has succeeded.
         /// </summary>
-        /// <returns>bool result of Assert.True</returns>
         [Fact]
         public void RegisterCompleteView_Test(){
-            /// <summary>
-            /// Arrange
-            /// Initializing database
-            /// </summary>
+            // Arrange
+            // Initializing database
             TestDbInitializer.ClearDatabase();
-            /// <summary>
-            /// Creating a public user 'Register Model' instance to be registered
-            /// </summary>
+            // Creating a public user 'Register Model' instance to be registered            
             RegisterModel user = new RegisterModel{
                 UserName    = "Public_User",
                 NameSurname = "Public User",
@@ -150,71 +89,60 @@ namespace RFPPortal_Tests
                 Password    = "PassW0rd",
                 RePassword  = "PassW0rd"
             };
-            /// <summary>
-            /// Starting registration process
-            /// </summary>
+            // Starting registration process
             SimpleResponse result = controllers.authController.RegisterUser(user);
             result.Success.Should().Be(true);
-            /// <summary>
-            /// After registering without email user activation Signin process should fail
-            /// </summary>
+
+            // After registering without email user activation Signin process should fail            
             SimpleResponse login_result = controllers.authController.SignIn(user.Email, user.Password);
             login_result.Success.Should().Be(false);
-            /// <summary>
-            /// Mocking Registeration Completion Token
-            /// </summary>
+            
+            // Mocking Registeration Completion Token            
             string enc = Encryption.EncryptString(user.Email + "|" + DateTime.Now.ToString());
-            /// <summary>
-            /// Act
-            /// Registeration complete view should redirect to [Home]/[Index]
-            /// </summary>
+            
+            // Act
+            // Registeration complete view should redirect to [Home]/[Index]            
             IActionResult register_completion_view = controllers.authController.RegisterCompleteView(enc);
             var RedirectResult = register_completion_view.Should().BeOfType<RedirectToActionResult>().Subject;
-            /// <summary>
-            /// After completion of registeration with email verification user should login
-            /// </summary>
-            /// <returns>bool result of Assert.True</returns>
+            
+            // After completion of registeration with email verification user should login            
+            // <returns>bool result of Assert.True</returns>
             SimpleResponse response = controllers.authController.SignIn(user.Email, user.Password);
             response.Success.Should().Be(true);
         }
 
         /// <summary>
-        /// Repetitively tests user registration models prepared with missing data.
-        /// No registration should take place and all assertions should be false.
+        /// Test of AuthController.RegisterUser() method with improper RegisterUser model.
+        /// All user RegistrationModel instances prepared in the MissingValueUsersData class are applied to method.
+        /// No registration should take place - Assert.False Succeeded.
         /// </summary>
         [Theory]
         [ClassData(typeof(MissingValueUserData))]    
         public void Missing_value_Register_Test(RegisterModel model){
             
-            /// <summary>
-            /// Arrange
-            /// A set of user data with missing required values is prepared in the 'MissingValueData' class
-            /// and applied to this method one by one using [Theory] & [ClassData] decorations    
-            /// Initializing the database
-            /// </summary>
-            TestDbInitializer.ClearDatabase();      
-            
-            /// <summary>
-            /// Act
-            /// Attemptions of registering users with missing required data
-            /// RegisterUser method returns a 'SimpleResponse Model' which has 'boolean Success' property shows the result status of the register process 
-            /// and 'string Message' property to include the success or error message. 
-            /// </summary>
+            // Arrange
+            // A set of user data with missing required values is prepared in the 'MissingValueData' class
+            // and applied to this method one by one using [Theory] & [ClassData] decorations    
+            // Initializing the database
+            TestDbInitializer.ClearDatabase();  
+           
+            // Act
+            // Attemptions of registering users with missing required data
+            // RegisterUser method returns a 'SimpleResponse Model' which has 'boolean Success' property shows the result status of the register process 
+            // and 'string Message' property to include the success or error message. 
             SimpleResponse result = controllers.authController.RegisterUser(model);            
 
-            /// <summary>
-            /// Assert
-            /// By case design all assertions should be false
-            /// </summary>
-            /// <returns>bool result of Assert.False</returns>
+            // Assert
+            // By case design all assertions should be false
+            // </summary>
             Assert.False(result.Success);
         }
 
         /// <summary>
-        /// Tests sign in process with 3 use cases.
-        /// case -1- : Existing user attempting proper login
-        /// case -2- : Non-Existing user attempting login
-        /// case -3- : Existing user attempting improper login
+        /// Tests of AuthController.SignIn(UserEmail, UserPassword) method for 3 use cases.
+        /// case -1- : Existing user attempting proper login - Assert.True Succeeded
+        /// case -2- : Non-Existing user attempting login - Assert.False Succeeded
+        /// case -3- : Existing user attempting improper login - Assert.False Succeeded
         /// </summary>
         [Fact]
         public void Signin_Test(){
@@ -225,61 +153,41 @@ namespace RFPPortal_Tests
             string nonExistingPassword = "PassW0rd";
             string existingUserWrongPassword = "Password";
 
-            /// <summary>
-            //Arrange
-            /// </summary>
+            // Arrange
             TestDbInitializer.SeedUsers();
 
-            /// <summary>
-            //Act
-            //case -1- : Existing user attempting proper login
-            /// </summary>
+            // Act
+            // case -1- : Existing user attempting proper login
             SimpleResponse result_success = controllers.authController.SignIn(existingUserEmail, existingUserPassword);
             User successlogin_usr = result_success.Content as User;
-            /// <summary>
-            //Assert      
-            /// </summary>      
-            /// <returns>bool result of Assert.True</returns>
+            // Assert      
             Assert.True(result_success.Success);
             
-            /// <summary> 
-            //case -2- : Non-Existing user attempting login
-            /// </summary> 
+            // case -2- : Non-Existing user attempting login
             SimpleResponse result_fail = controllers.authController.SignIn(nonExistingUserEmail, nonExistingPassword);
             User failedlogin_user = result_fail.Content as User;
-            /// <summary> 
-            /// Assert            
-            /// </summary> 
-            /// <returns>bool result of Assert.False</returns>
+            // Assert            
             Assert.False(result_fail.Success);
 
-            /// <summary> 
-            //case -3- : Existing user attempting improper login
-            /// </summary> 
+            // case -3- : Existing user attempting improper login
             SimpleResponse result_fail2 = controllers.authController.SignIn(existingUserEmail, existingUserWrongPassword);
             User failedlogin_user2 = result_fail2.Content as User;
 
-            /// <summary> 
-            /// Assert       
-            /// </summary>     
-            /// <returns>bool result of Assert.False</returns> 
+            // Assert       
+            // </summary>     
             Assert.False(result_fail.Success);
         }
 
         /// <summary> 
-        /// VA recognition test on sign in
+        /// VA recognition on AuthController.SignIn(VA_useremail, Userpassword) test. - Assert.True succeeded
         /// </summary> 
         [Fact]
         public void VA_Signin_Test()
         {
-            /// <summary>
-            /// Arrange
-            /// Initializing the database
-            /// </summary>
+            // Arrange
+            // Initializing the database
             TestDbInitializer.ClearDatabase();
-            /// <summary>
-            /// Registering VA user
-            /// </summary>
+            // Registering VA user
             RegisterModel va_usr = new RegisterModel{
                 UserName      = "ekincc"
                 , NameSurname = "Ekin Kececi"
@@ -289,41 +197,31 @@ namespace RFPPortal_Tests
             };
             var result = controllers.authController.RegisterUser(va_usr);
             result.Success.Should().Be(true);
-            /// <summary>
-            /// Adjusting the account as email verified
-            /// </summary>
+            // Adjusting the account as email verified
             var activation_result  = TestDbInitializer.ActivateUserMock((User)result.Content);
             
-            /// <summary>
-            /// Preparing VA parameters for login
-            /// </summary>
+            // Preparing VA parameters for login
             string email = "ekin@ekonteknoloji.com";
             string password = "PassW0rd";
 
-            /// <summary>
-            /// Act
-            /// Signin process should be successfull and returned user type should be "Internal"
-            /// </summary>
+            // Act
+            // Signin process should be successfull and returned user type should be "Internal"
             SimpleResponse signin_result = controllers.authController.SignIn(email, password);
-            /// <summary>
-            /// Assert
-            /// </summary>
-            /// <returns>bool result of Assert.True</returns>
+            // Assert
             signin_result.Success.Should().Be(true);
             ((User)signin_result.Content).UserType.Should().Be("Internal");     
         }       
 
         /// <summary>
-        /// Test method for finding out that a VA user is VA during registration
-        /// This method tests the API to recognize VA users provided by DEVx.
+        /// Test of VA recognition on AuthController.RegisterUser(VA_useremail, Userpassword) test. - Assert.True succeed
+        /// During signup process RegisterUser method uses the DxDApiForUser ["https://backend.devxdao.com/api/va/email/"] API to check if the email included in the given RegisterModel instance belongs to a VA User
+        /// This method also tests the API to recognize VA users provided by DEVx.
         /// </summary>
         [Fact]
         public void VA_Register_Test_via_DXDprovided_Api(){
 
-            /// <summary>
-            /// Arrange
-            /// Initialize the Database
-            /// </summary>
+            // Arrange
+            // Initialize the Database
             TestDbInitializer.ClearDatabase();
             //Creating a user who is already a VA
             RegisterModel VA_User = new RegisterModel{
@@ -333,22 +231,17 @@ namespace RFPPortal_Tests
                 Password    = "Password",
                 RePassword  = "Password"
             };
-
-            /// <summary>
-            /// Act
-            /// Registered user method uses the DxDApiForUser ["https://backend.devxdao.com/api/va/email/"] API to check if the email value of the RegisterModel instance belongs to a VA User
-            /// </summary>
+            
+            // Act
+            // Registered user method uses the DxDApiForUser ["https://backend.devxdao.com/api/va/email/"] API to check if the email value of the RegisterModel instance belongs to a VA User
             SimpleResponse result = controllers.authController.RegisterUser(VA_User);
-            /// <summary>
-            /// Assert
-            /// </summary>
-            /// <returns>bool result of Assert.True</returns>
+            // Assert
             result.Success.Should().Be(true);
             ((User)result.Content).UserType.Should().Be("Internal");
         }
 
         /// <summary>
-        /// Tests whether the already registered user can register again.
+        /// Tests of AuthController.RegisterUser() to see if an already registered user can register again.
         /// 2 use cases are used.
         /// case -1- : attempt of 'Existing UserName' register
         /// case -2- : attempt of 'Existing Email' register
@@ -356,10 +249,8 @@ namespace RFPPortal_Tests
         [Fact]
         public void Existing_User_Register_Test(){
 
-            /// <summary>            
-            /// Arrange
-            /// Creating a new user which will be act as existing user
-            /// </summary>
+            // Arrange
+            // Creating a new user which will be act as existing user
             RegisterModel existing_user = new RegisterModel{
                 UserName    = "Exsiting_User",
                 NameSurname = "Existing User",
@@ -368,9 +259,7 @@ namespace RFPPortal_Tests
                 RePassword  = "Password"
             };
 
-            /// <summary>
-            /// model for case -1- : attempt of 'Existing UserName' register 
-            /// </summary>
+            // model for case -1- : attempt of 'Existing UserName' register 
             RegisterModel new_user_1 = new RegisterModel{
                 UserName    = "Exsiting_User",
                 NameSurname = "Existing User1",
@@ -379,9 +268,7 @@ namespace RFPPortal_Tests
                 RePassword  = "Password"
             };
 
-            /// <summary>
-            /// model for case -2- : attempt of 'Existing Email' register
-            /// </summary>
+            // model for case -2- : attempt of 'Existing Email' register
             RegisterModel new_user_2 = new RegisterModel{
                 UserName    = "Exsiting_User1",
                 NameSurname = "Existing User2",
@@ -390,33 +277,21 @@ namespace RFPPortal_Tests
                 RePassword  = "Password"
             };
 
-            /// <summary>
-            /// Registering the user model which will act as existing user.
-            /// </summary>
+            // Registering the user model which will act as existing user.
             var registered_user = controllers.authController.RegisterUser(existing_user);
 
-            /// <summary>
-            /// Act case : -1-
-            /// </summary>
+            // Act case : -1-
             var case1_result = controllers.authController.RegisterUser(new_user_1);
 
-            /// <summary>
-            /// Assert
-            /// case -1- : Existing UserName
-            /// </summary>
-            /// <returns>bool result of Assert.False</returns>
+            // Assert
+            // case -1- : Existing UserName
             case1_result.Success.Should().Be(false);
 
-            /// <summary>
-            /// Act case : -2-
-            /// </summary>
+            // Act case : -2-
             var case2_result = controllers.authController.RegisterUser(new_user_2);
 
-            /// <summary>            
-            /// Assert
-            /// case -1- : Existing UserEmail
-            /// </summary>
-            /// <returns>bool result of Assert.False</returns>
+            // Assert
+            // case -1- : Existing UserEmail
             case2_result.Success.Should().Be(false);
 
         }

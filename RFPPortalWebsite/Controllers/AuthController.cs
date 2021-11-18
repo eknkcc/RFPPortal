@@ -21,9 +21,9 @@ namespace RFPPortalWebsite.Controllers
         ///  User login function
         /// </summary>
         /// <param name="email">User's email or username</param>
-        /// <param name="password">User's password</param>
+        /// <param name="pass">User's password</param>
         /// <param name="usercode">Captcha code (Needed after 3 failed requests)</param>
-        /// <returns></returns>
+        /// <returns>SimpleResponse</returns>
         [Route("SignIn")]
         public SimpleResponse SignIn(string email, string pass)
         {
@@ -50,7 +50,7 @@ namespace RFPPortalWebsite.Controllers
         ///  This method can be accessed by every user
         /// </summary>
         /// <param name="registerInput">Registration information of the user</param>
-        /// <returns>AjaxResponse object with registration result</returns>
+        /// <returns>SimpleResponse</returns>
         [HttpPost("RegisterUser", Name = "RegisterUser")]
         public SimpleResponse RegisterUser([FromBody] RegisterModel registerInput)
         {

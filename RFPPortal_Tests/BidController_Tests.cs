@@ -26,7 +26,7 @@ namespace RFPPortal_Tests
         ISession session;
 
         /// <summary>
-        /// Application controllers and HttpContext Session are initialized.
+        /// Application controllers and Mock HttpContext Session are initialized.
         /// </summary>
         public BidController_Tests(){
             controllers = new PostTestController();
@@ -36,23 +36,19 @@ namespace RFPPortal_Tests
         }
 
         /// <summary>
-        /// SubmidBid method is tested for 2 use cases
+        /// Test of BidController.SubmidBid() method for 2 use cases
         /// case 1 : proper bid is prepared and submitted
         /// case 2 : an internal user (VA) tries to bid on a public RFP.
         /// </summary>
         [Fact]
         public void SubmitBidTest(){
 
-            /// <summary>
-            /// Arrange
-            /// Initialize the database
-            /// </summary>
+            // Arrange
+            // Initialize the database
             TestDbInitializer.ClearDatabase();
             BidInitializeModel envModel =  TestDbInitializer.BidInitializer();
 
-            /// <summary>
-            /// case -1- : condition that should work correctly
-            /// </summary>
+            // case -1- : condition that should work correctly
             RfpBid bid = new RfpBid{
                 UserId = envModel.PublicUserId,
                 CreateDate = DateTime.Now,
@@ -62,25 +58,16 @@ namespace RFPPortal_Tests
                 Time = "Time frame from User input", 
             };
 
-            /// <summary>
-            /// inserting user type and user id to httpcontext mock session            
-            /// </summary>
+            // inserting user type and user id to httpcontext mock session            
             session.SetString("UserType", "Public");
             session.SetInt32("UserId", envModel.PublicUserId);              
 
-            /// <summary>
-            /// Act            
-            /// </summary>
+            // Act            
             var correct_response = controllers.bidController.SubmitBid(bid);
-            /// <summary>
-            /// Assert            
-            /// </summary>
-            /// <returns>bool result of Assert.True</returns>
+            // Assert            
             correct_response.Success.Should().Be(true);
 
-            /// <summary>
-            /// case -2- : condition that should not work correctly
-            /// </summary>
+            // case -2- : condition that should not work correctly
             RfpBid bid_2 = new RfpBid{
                 UserId = envModel.InternalUserId,
                 CreateDate = DateTime.Now,
@@ -90,40 +77,29 @@ namespace RFPPortal_Tests
                 Time = "Time frame from User input", 
             };            
             
-            /// <summary>
-            /// inserting user type and user id to httpcontext mock session            
-            /// </summary>
+            // inserting user type and user id to httpcontext mock session            
             session.SetString("UserType", "Internal");
             session.SetInt32("UserId", envModel.InternalUserId); 
 
-            /// <summary>
-            /// Act            
-            /// </summary>
+            // Act            
             var incorrect_response = controllers.bidController.SubmitBid(bid);
-            /// <summary>
-            /// Assert            
-            /// </summary>
-            /// <returns>bool result of Assert.False</returns>
+            // Assert            
             incorrect_response.Success.Should().Be(false);
         }
 
         /// <summary>
-        /// Bid deleting test        
+        /// Test of BidController.DeleteBid(Bid) method.
         /// </summary>
         [Fact]
         public void DeleteBidTest(){
 
-            /// <summary>
-            /// Arrange
-            /// Setting the database for deleting process environment
-            /// </summary>
+            // Arrange
+            // Setting the database for deleting process environment
             TestDbInitializer.ClearDatabase();
             BidInitializeModel envModel =  TestDbInitializer.BidInitializer();
 
-            /// <summary>
-            /// Set
-            /// Rfp bid to delete is prepared
-            /// </summary>
+            // Set
+            // Rfp bid to delete is prepared
             RfpBid bid = new RfpBid{
                 UserId = envModel.PublicUserId,
                 CreateDate = DateTime.Now,
@@ -133,55 +109,40 @@ namespace RFPPortal_Tests
                 Time = "Time frame from User input", 
             };            
             
-            /// <summary>
-            /// Setting up mock session 
-            /// </summary>
+            // Setting up mock session 
             controllers.bidController.ControllerContext = new ControllerContext();
             controllers.bidController.ControllerContext.HttpContext = new DefaultHttpContext();
             controllers.bidController.ControllerContext.HttpContext.Session =  new MockHttpSession();
             var _session = controllers.bidController.ControllerContext.HttpContext.Session;
 
-            /// <summary>
-            /// inserting user type and user id to httpcontext mock session            
-            /// </summary>
+            // inserting user type and user id to httpcontext mock session            
             _session.SetString("UserType", "Public");
             _session.SetInt32("UserId", envModel.PublicUserId);  
-            /// <summary>
-            /// Adding bid to be deleted to the database            
-            /// </summary>
+            // Adding bid to be deleted to the database            
             var response = controllers.bidController.SubmitBid(bid);
             response.Success.Should().Be(true);
 
-            /// <summary>
-            /// Act
-            /// Calling the delete method
-            /// </summary>
+            // Act
+            // Calling the delete method
             var delete_response = controllers.bidController.DeleteBid(((RfpBid)response.Content).RfpBidID);
-            /// <summary>
-            /// Assert
-            /// </summary>
-            /// <returns>bool result of Assert.False</returns>
+            // Assert
             delete_response.Success.Should().Be(true);
         }
 
         /// <summary>
-        /// Testing the bid editin process
-        /// Creates a bidding environment by creating an admin user and portal users, an RFP registered by the admin and biddings posted by users.
-        /// The user edits the bid he posted.
+        /// Testing of BidController.EditBid(Bid) method.
+        /// Creates a bidding environment by creating an admin user and portal users, an RFP posted by the admin and biddings posted by users.
+        /// The user edits the bid he posted. -Assert.True succeeded.
         /// </summary>
         [Fact]
         public void EditBidTest(){
-            /// <summary>
-            /// Arrange
-            /// Setting the database for editing a bid environment by using TestDbInitializer class
-            /// </summary>
+            // Arrange
+            // Setting the database for editing a bid environment by using TestDbInitializer class
             TestDbInitializer.ClearDatabase();
             BidInitializeModel envModel =  TestDbInitializer.BidInitializer();
 
-            /// <summary>
-            /// Set
-            /// Preparing the Rfp bid to edit
-            /// </summary>
+            // Set
+            // Preparing the Rfp bid to edit
             RfpBid bid_to_be_edited = new RfpBid
             {
                 UserId = envModel.PublicUserId,
@@ -192,35 +153,25 @@ namespace RFPPortal_Tests
                 Time = "Time frame from User input", 
             };   
 
-            /// <summary>
-            /// Setting up mock session
-            /// </summary>
+            // Setting up mock session
             controllers.bidController.ControllerContext = new ControllerContext();
             controllers.bidController.ControllerContext.HttpContext = new DefaultHttpContext();
             controllers.bidController.ControllerContext.HttpContext.Session =  new MockHttpSession();
             var _session = controllers.bidController.ControllerContext.HttpContext.Session;
 
-            /// <summary>
-            /// inserting user type and user id to httpcontext mock session            
-            /// </summary>
+            // inserting user type and user id to httpcontext mock session            
             _session.SetString("UserType", "Public");
             _session.SetInt32("UserId", envModel.PublicUserId);  
             _session.SetString("UserName", envModel.PublicUserName);
 
-            /// <summary>
-            /// posting the new bid by user
-            /// </summary>
+            // posting the new bid by user
             var response = controllers.bidController.SubmitBid(bid_to_be_edited);
             response.Success.Should().Be(true);
 
-            /// <summary>
-            /// Getting the Id of the bid to be edited
-            /// </summary>
+            // Getting the Id of the bid to be edited
             RfpBid called_bid = controllers.rfpController.GetRfpBidsByRfpId(envModel.RfpId).Find(a=>a.Username == envModel.PublicUserName).Bid;            
 
-            /// <summary>
-            /// Preparing the edited bid.
-            /// </summary>
+            // Preparing the edited bid.
             RfpBid edited_bid = new RfpBid
             {
                 RfpBidID = called_bid.RfpBidID,
@@ -232,58 +183,42 @@ namespace RFPPortal_Tests
                 Time = "Updated Time frame from User input",
             };
 
-            /// <summary>
-            /// Act
-            /// Calling the editing method
-            /// </summary>
-            /// <param name="edited_bid">RfpBid model instance with edited properties</param>
-            /// <returns>instance of SimpleResponse </returns>
+            // Act
+            // Calling the editing method
             SimpleResponse edit_response = controllers.bidController.EditBid(edited_bid);
-            /// <summary>
-            /// Assert 
-            /// SimpleResponse model returned by the method has only boolean result of the process and status message by default
-            /// First assertion is, the 'Success' property of the returned SimpleResponse model should be true.
-            /// </summary>
-            /// <returns>Boolean result of Assert.True</returns>
+            // Assert 
+            // SimpleResponse model returned by the method has only boolean result of the process and status message by default
+            // First assertion is, the 'Success' property of the returned SimpleResponse model should be true.
             edit_response.Success.Should().Be(true);
 
-            /// <summary>
-            /// Act
-            /// Calling the GetRfpBidsByRfpId method to check if the edited bid properties has changed.
-            /// </summary>
-            /// <returns>Instance of SimpleResponse model filled with the latest version of the edited bid</returns>
+            // Calling the GetRfpBidsByRfpId method to check if the edited bid properties has changed.
             RfpBid latest_version_of_bid = controllers.rfpController.GetRfpBidsByRfpId(envModel.RfpId).Find(a=>a.Username == envModel.PublicUserName).Bid; 
             latest_version_of_bid.Amount.Should().Be(550001);            
         }
 
         /// <summary>
-        /// 
+        /// Test of BidController.ChooseWinningBidTest() - Assert.True Succeeded.
         /// </summary>
         [Fact]
         public void ChooseWinningBidTest(){
-            /// <summary>
-            /// Arrange
-            /// Initialize Database
-            /// Clear related tables if there are any data
-            /// </summary>
+            // Arrange
+            // Initialize Database
+            // Clear related tables if there are any data
             TestDbInitializer.ClearDatabase();
-            /// <summary>
-            /// Create and add Users, RFPs, Bids to the database
-            /// </summary>
+            // <summary>
+            // Create and add Users, RFPs, Bids to the database
             TestDbInitializer.SeedRfpBids();
 
-            /// <summary>
-            /// Gets the list of the bids
-            /// </summary>
-            /// <returns>List of bids</returns>
+            // Gets the list of the bids
+            // </summary>
             List<RfpBid> bids = TestDbInitializer.GetBids().ToList(); 
-            /// <summary>Sets the UserId session paramater with the</summary>
+            // Sets the UserId session paramater with the Admin user id.
             session.SetInt32("UserId", bids.ElementAt(3).UserId);           
 
-            //Act
+            // Act
             SimpleResponse result = controllers.bidController.ChooseWinningBid(bids.ElementAt(3).RfpBidID);
 
-            //Assert
+            // Assert
             result.Success.Should().Be(true);
         }        
     }

@@ -16,81 +16,33 @@ using System.Linq;
 
 namespace RFPPortal_Tests
 { 
+    /// <summary>
+    /// RFP Portal, RfpController methods tests
+    /// RfpController.SubmitRfpForm()
+    /// DeleteBid()
+    /// EditBid()
+    /// ChooseWinningBid
+    /// </summary>
     public class RfpController_Tests
     {
+        
         PostTestController controllers;
+        /// <summary>
+        /// Initializing the database, posting controllers and seeds Rfps
+        /// </summary>
         public RfpController_Tests(){
             TestDbInitializer.ClearDatabase();
             controllers = new PostTestController();
             TestDbInitializer.SeedRfp();
         }
-
-        public class RFPData : IEnumerable<object[]>
-        {   
-            public readonly List<object[]> _data = new List<object[]>{
-                
-                new object[]{
-                    new RegisterModel{
-                        UserName    = "A_B",
-                        NameSurname = "Regular User",
-                        Email       = "regular@user.com",
-                        Password    = "Password",
-                        RePassword  = "Password"
-                    }
-                },
-                
-                new object[]{
-                    new RegisterModel{
-                        UserName    = "",
-                        NameSurname = "Regular User",
-                        Email       = "regular@user.com",
-                        Password    = "Password",
-                        RePassword  = "Password"
-                    }
-                },
-
-                new object[]{
-                    new RegisterModel{
-                        UserName    = "regular_user",
-                        NameSurname = "",
-                        Email       = "regular@user.com",
-                        Password    = "Password",
-                        RePassword  = "Password"
-                    }
-                },
-
-                new object[]{
-                    new RegisterModel{
-                        UserName    = "regular_user",
-                        NameSurname = "Regular User",
-                        Email       = "",
-                        Password    = "Password",
-                        RePassword  = "Password"
-                    }
-                },
-
-                new object[]{
-                    new RegisterModel{
-                        UserName    = "regular_user",
-                        NameSurname = "Regular User",
-                        Email       = "regular@user.com",
-                        Password    = "Password",
-                        RePassword  = "Password1"
-                    }
-                }    
-            };
-
-            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator() => _data.GetEnumerator();
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-        }                
-
+        /// <summary>
+        /// Test of RfpController.SubmitRfpForm() with proper Rfp model instance - Assert.True Succeeded
+        /// Sets a fake HttpContext.Session which an Admin user is signed in
+        /// </summary>
         [Fact]
         public void SubmitRfpForm(){
-
+            //Arrange
+            //Mocking HttpContext.Session
             var mockSession = new MockHttpSession();
 
             var cont = controllers.rfpController;
@@ -102,9 +54,11 @@ namespace RFPPortal_Tests
 
             var _session = controllers.rfpController.ControllerContext.HttpContext.Session;
 
+            //Setting Session Parameters
             _session.SetString("UserType", "Admin");
             _session.SetInt32("UserId", 1);            
 
+            //Creating a proper RFP
             Rfp rfp = new Rfp{
                 UserId = 1,
                 CreateDate = DateTime.Now, 
@@ -119,45 +73,43 @@ namespace RFPPortal_Tests
                 InternalBidEndDate = DateTime.Now.AddDays(30)
             };
 
-            //var mock = new Mock<ControllerContext>();
-            
-            var t = controllers.rfpController.SubmitRfpForm(rfp);
-            Assert.True(t.Success);
-            //t.Message.Should().Be("Rfp form succesfully posted.");
+            //Act
+            var result = controllers.rfpController.SubmitRfpForm(rfp);
+            //Assert
+            Assert.True(result.Success);
         }
 
         /// <summary>
+        /// Test of RfpController.GetRfpById(rfpId) method 
         /// Calling the required RFP model instance by RFP Id        
         ///</summary>
-        ///
-
-        
         [Fact]       
         public void GetRfpByRfpId_Test(){           
-
+            //Arrange
             int id = 3;
-            Rfp t = controllers.rfpController.GetRfpById(id);
-            t.RfpID.Should().Be(3);
+            //Act
+            Rfp result = controllers.rfpController.GetRfpById(id);
+            //Assert
+            result.RfpID.Should().Be(3);
         }
 
         /// <summary>
-        ///  In the constructor, 3 public RFPs added by TestDbInitializer class 
-        ///  Returned list should have 3 elements
-        /// </summary>
-        /// <param name="Status">Rfp model</param>
-        /// <returns>List<Rfp></returns>
+        /// Test of RfpController.GetRfpByStatus method.
+        /// In the constructor of this class, 3 public RFPs are added by TestDbInitializer class 
+        /// Returned list should have 3 elements - Assert.True Succeeded
+        /// </summary>        
         [Fact]
         public void GetRfpsByStatus_Test(){
+            //Act
             var result = controllers.rfpController.GetRfpsByStatus("Public");
+            //Assert
             result.Count.Should().Be(1);
         }
 
-        /// <summary>
-        ///  By definition the Rfp Status of the Rfp(id = 1) is Public
-        ///  This method can only be accessed by third party admin in ip whitelist.
+        /// <summary>  
+        ///  The TestDbInitializer.SeedRfp() method seeds the RFPs as the Rfp Status of the Rfp(id = 1) is Public
+        ///  This method should only be accessed by an admin user. - Assert.True Succeeded
         /// </summary>
-        /// <param name="model">Rfp model</param>
-        /// <returns>Simple Response</returns>
         [Fact]
         public void ChangeRfpStatus_Test(){
             //Arrange
@@ -174,10 +126,14 @@ namespace RFPPortal_Tests
             controllers.rfpController.ChangeRfpStatus(updatedRfp);
         }
 
+        ///<summary>
+        ///Test of RfpController.GetRfpBidsByRfpId(RfpId) method.        
+        ///</summary>
         [Fact]
         public void GetRfpBidsByRfpId_Test(){
             //Set Users, RFPs, Bids and returns bid count of RFPs
             TestDbInitializer.ClearDatabase();
+            //method returns 
             IQueryable<Tuple<int,int>> correct_result = TestDbInitializer.SeedRfpBids();
             
             int RfpId = correct_result.FirstOrDefault().Item1;
