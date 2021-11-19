@@ -16,3 +16,5 @@
 /RFPPortal_Tests/bin
 /RFPPortal_Tests/obj
 
+/RFPPortalWebsite/Properties/ServiceDependencies/RFPPortalWebsite - Web Deploy/profile.arm.json
+/RFPPortalWebsite/appsettings.Production.json
