@@ -19,22 +19,14 @@ using RFPPortalWebsite.Models.ViewModels;
 
 namespace RFPPortal_Tests
 {
-    public class BidInitializeModel{
-        public int AdminUserId { get; set; } = 0;
-        public string AdminUserName {get; set; }
-        public int PublicUserId { get;set; } = 0;
-        public string PublicUserName { get; set; }
-        public int InternalUserId { get; set; } = 0;
-        public string InternalUserName { get; set; }
-        public int RfpId { get; set; } = 0;
-    }
+    
     /// <summary>
     /// TestDbInitializer class includes necessary environment mocking methods.
-    /// 
+    /// - Initializes database, creates application dbcontext
+    /// - 
     /// </summary>
     public static class TestDbInitializer
     {
-
         static rfpdb_context context;
         /// <summary>
         /// Creates a DB context which should use a "test DB instance".
@@ -272,7 +264,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Creates a bidding environment with multiple RFPs
         /// </summary>
-        /// <returns>(IQueryable<Tuple<int,int>>) How many bids of which RFP</returns>
+        /// <returns> IQueryable&lt;Tuple&gt;int,int&gt; How many bids of which RFP</returns>
         public static IQueryable<Tuple<int,int>> SeedRfpBids(){
             
             SeedUsers();
@@ -445,7 +437,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Returns all bids for testing purposes.
         /// </summary>
-        ///<returns>List<RfpBid></returns>
+        ///<returns>List&lt;RfpBid&gt;</returns>
         public static List<RfpBid> GetBids(){
             return context.RfpBids.ToList();
         }
@@ -462,7 +454,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Returns all users for testing purposes.
         /// </summary>
-        /// <returns>List<User></returns>
+        /// <returns>List&lt;User&gt;</returns>
         public static List<User> GetUsers(){
             return context.Users.ToList();
         }        
@@ -470,7 +462,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Returns requested user for testing purposes.
         /// </summary>
-        /// <param name="UserId">user id</param>
+        /// <param name="userId">user id</param>
         /// <returns>User</returns>
         public static User GetUser(int userId){
             return context.Users.Where(u => u.UserId == userId).FirstOrDefault();
@@ -479,7 +471,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Returns all Rfps for testing purposes.
         /// </summary>
-        /// <returns>List<Rfp></returns>
+        /// <returns>List&lt;Rfp&gt;</returns>
         public static List<Rfp> GetRfps(){
             return context.Rfps.ToList();
         }
@@ -487,7 +479,7 @@ namespace RFPPortal_Tests
         /// <summary>
         /// Returns requested Rfp for testing purposes.
         /// </summary>
-        /// <param name="RfpId">rfp id</param>
+        /// <param name="rfpId">Rfp Id</param>
         /// <returns>RFP</returns>
         public static Rfp GetRfp(int rfpId){
             return context.Rfps.Where(z => z.RfpID == rfpId).FirstOrDefault();

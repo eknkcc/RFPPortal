@@ -1,0 +1,1118 @@
+Doxygen version used: 1.9.2 (caa4e3de211fbbef2c3adf58a6bd4c86d0eb7cb8)
+Searching for include files...
+Searching for example files...
+Searching for images...
+Searching for dot files...
+Searching for msc files...
+Searching for dia files...
+Searching for files to exclude
+Searching INPUT for files to process...
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/obj
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/obj/Docker
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug/netcoreapp3.1
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug/netcoreapp3.1/runtimes
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug/netcoreapp3.1/runtimes/win
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug/netcoreapp3.1/runtimes/win/lib
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/Constants
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/staticwebassets
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Docker
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Properties
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Views
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Views/Home
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Views/Shared
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/css
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/images
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/js
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/bootstrap
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/bootstrap/dist
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/bootstrap/dist/css
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/bootstrap/dist/js
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/jquery
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/jquery/dist
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/jquery-ui
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/jquery-ui/images
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/select2
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/lib/toastr
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/wwwroot/webfonts
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/cs
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/de
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/es
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/fr
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/it
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/ja
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/ko
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/pl
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/pt-BR
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/ru
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/runtimes
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/runtimes/win
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/runtimes/win/lib
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/tr
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/zh-Hans
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/bin/Debug/netcoreapp3.1/zh-Hant
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util
+Searching for files in directory C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models
+Reading and parsing tag files
+Parsing files
+Reading C:/0A_Projects/_RFP_Portal/RFPPortal/README.md...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Authorization_Tests.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Authorization_Tests.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/BidController_Tests.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/BidController_Tests.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1/RFPPortal_Tests.AssemblyInfo.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1/RFPPortal_Tests.AssemblyInfo.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/RfpController_Tests.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/RfpController_Tests.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/MockHttpSession.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/MockHttpSession.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models/BidInitializeModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models/BidInitializeModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models/MissingValueUserData.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models/MissingValueUserData.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/PostTestController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/PostTestController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/TestDbInitializer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/TestDbInitializer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/InfoController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/InfoController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/RfpController.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/RfpController.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/RfpMethods.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/RfpMethods.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.Designer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.Designer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/rfpdb_contextModelSnapshot.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/rfpdb_contextModelSnapshot.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/Constants/Enums.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/Constants/Enums.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/ApplicationStartResult.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/ApplicationStartResult.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/MonitizerResult.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/MonitizerResult.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/SimpleResponse.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/SimpleResponse.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpBidWUser.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpBidWUser.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpDetailModel.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpDetailModel.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.AssemblyInfo.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.AssemblyInfo.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.MvcApplicationPartsAssemblyInfo.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.MvcApplicationPartsAssemblyInfo.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.RazorAssemblyInfo.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.RazorAssemblyInfo.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.RazorTargetAssemblyInfo.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/RFPPortalWebsite.RazorTargetAssemblyInfo.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/EmailHelper.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/EmailHelper.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Encryption.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Encryption.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/IpHelper.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/IpHelper.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Monitizer.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Monitizer.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Mysql.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Mysql.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Request.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Request.cs...
+Preprocessing C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Serializers.cs...
+Parsing file C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Serializers.cs...
+Building macro definition list...
+Building group list...
+Building directory list...
+Building namespace list...
+Building file list...
+Building class list...
+Building concept list...
+Computing nesting relations for classes...
+Associating documentation with classes...
+Associating documentation with concepts...
+Building example list...
+Searching for enumerations...
+Searching for documented typedefs...
+Searching for members imported via using declarations...
+Searching for included using directives...
+Searching for documented variables...
+Building interface member list...
+Building member list...
+Searching for friends...
+Searching for documented defines...
+Computing class inheritance relations...
+Computing class usage relations...
+Flushing cached template relations that have become invalid...
+Computing class relations...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:38: warning: Compound AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:38: warning: Compound AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:31: warning: Compound AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:52: warning: Compound AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:31: warning: Compound AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:38: warning: Compound AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:30: warning: Compound AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:31: warning: Compound AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:18: warning: Compound RFPPortalWebsite::Controllers::AuthController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:22: warning: Compound RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.cs:5: warning: Compound RFPPortalWebsite::Migrations::AuthKeyDeleted is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::AuthKeyDeleted is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.cs:5: warning: Compound RFPPortalWebsite::Migrations::UserPasswordAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::UserPasswordAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.cs:5: warning: Compound RFPPortalWebsite::Migrations::WinnerRFpBidAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::WinnerRFpBidAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.cs:5: warning: Compound RFPPortalWebsite::Migrations::added_fields_rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::added_fields_rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.cs:7: warning: Compound RFPPortalWebsite::Migrations::db_created is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::db_created is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.cs:5: warning: Compound RFPPortalWebsite::Migrations::deleted_forminput is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::deleted_forminput is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.cs:6: warning: Compound RFPPortalWebsite::Migrations::end_dates_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::end_dates_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/rfpdb_contextModelSnapshot.cs:11: warning: Compound RFPPortalWebsite::Migrations::rfpdb_contextModelSnapshot is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.cs:5: warning: Compound RFPPortalWebsite::Migrations::tags_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::tags_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.cs:5: warning: Compound RFPPortalWebsite::Migrations::user_isactive_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.Designer.cs:13: warning: Compound RFPPortalWebsite::Migrations::user_isactive_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/Constants/Enums.cs:3: warning: Compound RFPPortalWebsite::Models::Constants::Enums is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:9: warning: Compound RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:8: warning: Compound RFPPortalWebsite::Models::SharedModels::DxDUserModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:13: warning: Compound RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:9: warning: Compound RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs:8: warning: Compound RFPPortalWebsite::Models::ViewModels::NewBidModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:8: warning: Compound RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpBidWUser.cs:9: warning: Compound RFPPortalWebsite::Models::ViewModels::RfpBidWUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpDetailModel.cs:9: warning: Compound RFPPortalWebsite::Models::ViewModels::RfpDetailModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:14: warning: Compound RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:16: warning: Compound RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:22: warning: Compound RFPPortalWebsite::Startup is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/EmailHelper.cs:9: warning: Compound RFPPortalWebsite::Utility::EmailHelper is not documented.
+Add enum values to enums...
+Searching for member function documentation...
+Creating members for template instances...
+Building page list...
+Search for main page...
+Computing page relations...
+Determining the scope of groups...
+Sorting lists...
+Determining which enums are documented
+Computing member relations...
+Building full member lists recursively...
+Adding members to member groups.
+Computing member references...
+Inheriting documentation...
+Generating disk names...
+Adding source references...
+Adding xrefitems...
+Sorting member lists...
+Setting anonymous enum type...
+Computing dependencies between directories...
+Generating citations page...
+Counting members...
+Counting data structures...
+Resolving user defined references...
+Finding anchors and sections in the documentation...
+Transferring function references...
+Combining using relations...
+Adding members to index pages...
+Correcting members for VHDL...
+Computing tooltip texts...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating style sheet...
+Generating search indices...
+Generating example documentation...
+Generating file sources...
+Generating file documentation...
+Generating page documentation...
+Generating docs for page md_README...
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:114: warning: unable to resolve reference to 'docs/Entity/ApplicationLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:115: warning: unable to resolve reference to 'docs/Entity/ErrorLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:116: warning: unable to resolve reference to 'docs/Entity/Rfp.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:117: warning: unable to resolve reference to 'docs/Entity/RfpBid.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:118: warning: unable to resolve reference to 'docs/Entity/User.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:119: warning: unable to resolve reference to 'docs/Entity/UserLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:157: warning: Unsupported xml/html tag <XML> found
+Generating group documentation...
+Generating class documentation...
+Generating docs for compound BidInitializeModel...
+Generating docs for compound MissingValueUserData...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+Generating docs for compound MockHttpSession...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+Generating concept documentation...
+Generating namespace index...
+Generating docs for namespace AspNetCore
+Generating docs for compound AspNetCore::Views__ViewImports...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:33: warning: Member ExecuteAsync() (function) of class AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:38: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:40: warning: Member Url (property) of class AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:42: warning: Member Component (property) of class AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:44: warning: Member Json (property) of class AspNetCore::Views__ViewImports is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewImports.cshtml.g.cs:46: warning: Member Html (property) of class AspNetCore::Views__ViewImports is not documented.
+Generating docs for compound AspNetCore::Views__ViewStart...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:34: warning: Member ExecuteAsync() (function) of class AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:47: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:49: warning: Member Url (property) of class AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:51: warning: Member Component (property) of class AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:53: warning: Member Json (property) of class AspNetCore::Views__ViewStart is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/_ViewStart.cshtml.g.cs:55: warning: Member Html (property) of class AspNetCore::Views__ViewStart is not documented.
+Generating docs for compound AspNetCore::Views_Home_My_Bids...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:41: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:210: warning: Member HttpContextAccessor (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:212: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:214: warning: Member Url (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:216: warning: Member Component (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:218: warning: Member Json (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/My_Bids.cshtml.g.cs:220: warning: Member Html (property) of class AspNetCore::Views_Home_My_Bids is not documented.
+Generating docs for compound AspNetCore::Views_Home_RFP_Detail...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:41: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1115: warning: Member HttpContextAccessor (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1117: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1119: warning: Member Url (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1121: warning: Member Component (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1123: warning: Member Json (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/RFP_Detail.cshtml.g.cs:1125: warning: Member Html (property) of class AspNetCore::Views_Home_RFP_Detail is not documented.
+Generating docs for compound AspNetCore::Views_Home_Rfp_Form...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:56: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:281: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:283: warning: Member Url (property) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:285: warning: Member Component (property) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:287: warning: Member Json (property) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfp_Form.cshtml.g.cs:289: warning: Member Html (property) of class AspNetCore::Views_Home_Rfp_Form is not documented.
+Generating docs for compound AspNetCore::Views_Home_Rfps...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:83: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:386: warning: Member HttpContextAccessor (property) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:388: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:390: warning: Member Url (property) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:392: warning: Member Component (property) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:394: warning: Member Json (property) of class AspNetCore::Views_Home_Rfps is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Rfps.cshtml.g.cs:396: warning: Member Html (property) of class AspNetCore::Views_Home_Rfps is not documented.
+Generating docs for compound AspNetCore::Views_Home_Unauthorized...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:34: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:49: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:51: warning: Member Url (property) of class AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:53: warning: Member Component (property) of class AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:55: warning: Member Json (property) of class AspNetCore::Views_Home_Unauthorized is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/Unauthorized.cshtml.g.cs:57: warning: Member Html (property) of class AspNetCore::Views_Home_Unauthorized is not documented.
+Generating docs for compound AspNetCore::Views_Shared__Layout...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:78: warning: Member ExecuteAsync() (function) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:947: warning: Member HttpContextAccessor (property) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:949: warning: Member ModelExpressionProvider (property) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:951: warning: Member Url (property) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:953: warning: Member Component (property) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:955: warning: Member Json (property) of class AspNetCore::Views_Shared__Layout is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs:957: warning: Member Html (property) of class AspNetCore::Views_Shared__Layout is not documented.
+Generating docs for namespace RFPPortal_Tests
+Generating docs for compound RFPPortal_Tests::Authorization_Tests...
+Generating docs for compound RFPPortal_Tests::BidController_Tests...
+Generating docs for compound RFPPortal_Tests::PostTestController...
+Generating docs for compound RFPPortal_Tests::RfpController_Tests...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/RfpController_Tests.cs:133: warning: Member GetRfpBidsByRfpId_Test() (function) of class RFPPortal_Tests::RfpController_Tests is not documented.
+Generating docs for namespace RFPPortalWebsite
+Generating docs for compound RFPPortalWebsite::Program...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:41: warning: Member Main(string[] args) (function) of class RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:46: warning: Member CreateHostBuilder(string[] args) (function) of class RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:37: warning: Member monitizer (variable) of class RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:38: warning: Member mysql (variable) of class RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:39: warning: Member dbOptions (variable) of class RFPPortalWebsite::Program is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:35: warning: Member _settings (property) of class RFPPortalWebsite::Program is not documented.
+Generating docs for nested compound RFPPortalWebsite::Program::Settings...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:18: warning: Member DbConnectionString (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:19: warning: Member InternalBiddingDays (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:20: warning: Member PublicBiddingDays (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:21: warning: Member IpWhitelist (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:22: warning: Member EncryptionKey (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:23: warning: Member DxDApiForUser (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:24: warning: Member DxDApiToken (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:27: warning: Member EmailAddress (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:28: warning: Member EmailDisplayName (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:29: warning: Member EmailPassword (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:30: warning: Member EmailHost (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:31: warning: Member EmailPort (property) of class RFPPortalWebsite::Program::Settings is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Program.cs:32: warning: Member EmailSSL (property) of class RFPPortalWebsite::Program::Settings is not documented.
+Generating docs for compound RFPPortalWebsite::Startup...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:26: warning: Member Startup(IConfiguration configuration) (function) of class RFPPortalWebsite::Startup is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:128: warning: Member ConfigureServices(IServiceCollection services) (function) of class RFPPortalWebsite::Startup is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:142: warning: Member Configure(IApplicationBuilder app, IWebHostEnvironment env) (function) of class RFPPortalWebsite::Startup is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:24: warning: Member rfpStatusTimer (variable) of class RFPPortalWebsite::Startup is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Startup.cs:125: warning: Member Configuration (property) of class RFPPortalWebsite::Startup is not documented.
+Generating docs for namespace RFPPortalWebsite::Contexts
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating docs for compound RFPPortalWebsite::Contexts::rfpdb_context...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:25: warning: Member rfpdb_context(DbContextOptions options) (function) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:30: warning: Member OnConfiguring(DbContextOptionsBuilder optionsBuilder) (function) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:38: warning: Member ApplicationLogs (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:39: warning: Member ErrorLogs (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:40: warning: Member Rfps (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:41: warning: Member RfpBids (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:42: warning: Member Users (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:43: warning: Member UserLogs (property) of class RFPPortalWebsite::Contexts::rfpdb_context is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating docs for namespace RFPPortalWebsite::Controllers
+Generating docs for compound RFPPortalWebsite::Controllers::AuthController...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:162: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::ResetPassword(string email)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:257: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::ResetPasswordComplete(string newpass, string newpassagain)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:21: warning: argument 'password' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::SignIn(string email, string pass)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:21: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::SignIn(string email, string pass)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:28: warning: The following parameter of RFPPortalWebsite.Controllers.AuthController.SignIn(string email, string pass) is not documented:
+  parameter 'pass'
+Generating docs for compound RFPPortalWebsite::Controllers::BidController...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:208: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::ChooseWinningBid([FromQuery] int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:215: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.ChooseWinningBid([FromQuery] int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:92: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::DeleteBid([FromQuery] int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:99: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.DeleteBid([FromQuery] int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:150: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::EditBid([FromBody] RfpBid model)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:157: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.EditBid([FromBody] RfpBid model) is not documented:
+  parameter 'model'
+Generating docs for compound RFPPortalWebsite::Controllers::HomeController...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:24: warning: Member Index() (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:29: warning: Member Unauthorized() (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:36: warning: Member Rfps(int Page=1) (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:55: warning: Member Rfp_Form() (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:63: warning: Member SubmitForm(Rfp model) (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:79: warning: Member RFP_Detail(int BidID) (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/HomeController.cs:103: warning: Member My_Bids() (function) of class RFPPortalWebsite::Controllers::HomeController is not documented.
+Generating docs for compound RFPPortalWebsite::Controllers::InfoController...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+Generating docs for compound RFPPortalWebsite::Controllers::RfpController...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/RfpController.cs:82: warning: The following parameters of RFPPortalWebsite.Controllers.RfpController.GetRfpsByStatusPaged(string status, int page=1, int pageCount=30) are not documented:
+  parameter 'page'
+  parameter 'pageCount'
+Generating docs for namespace RFPPortalWebsite::Methods
+Generating docs for compound RFPPortalWebsite::Methods::AuthMethods...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:167: warning: argument 'model' of command @param is not found in the argument list of RFPPortalWebsite.Methods.AuthMethods::RegisterComplete(string registerToken)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:171: warning: The following parameter of RFPPortalWebsite.Methods.AuthMethods.RegisterComplete(string registerToken) is not documented:
+  parameter 'registerToken'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:211: warning: argument 'model' of command @param is not found in the argument list of RFPPortalWebsite.Methods.AuthMethods::ResetPasswordComplete(string newPass, string passwordChangeToken)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:215: warning: The following parameters of RFPPortalWebsite.Methods.AuthMethods.ResetPasswordComplete(string newPass, string passwordChangeToken) are not documented:
+  parameter 'newPass'
+  parameter 'passwordChangeToken'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:83: warning: The following parameter of RFPPortalWebsite.Methods.AuthMethods.UserSignIn(string email, string pass) is not documented:
+  parameter 'pass'
+Generating docs for compound RFPPortalWebsite::Methods::BidMethods...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:80: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Methods.BidMethods::ChooseWinningBid(RfpBid rfpbid)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:84: warning: The following parameter of RFPPortalWebsite.Methods.BidMethods.ChooseWinningBid(RfpBid rfpbid) is not documented:
+  parameter 'rfpbid'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:50: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Methods.BidMethods::DeleteBid(int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:54: warning: The following parameter of RFPPortalWebsite.Methods.BidMethods.DeleteBid(int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+Generating docs for compound RFPPortalWebsite::Methods::RfpMethods...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/RfpMethods.cs:80: warning: The following parameters of RFPPortalWebsite.Methods.RfpMethods.GetRfpsByStatusPaged(string status, int page=1, int pageCount=30) are not documented:
+  parameter 'page'
+  parameter 'pageCount'
+Generating docs for namespace RFPPortalWebsite::Migrations
+Generating docs for compound RFPPortalWebsite::Migrations::added_fields_rfp...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::added_fields_rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.cs:41: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::added_fields_rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113856_added_fields_rfp.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::added_fields_rfp is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::AuthKeyDeleted...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::AuthKeyDeleted is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.cs:26: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::AuthKeyDeleted is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150750_AuthKeyDeleted.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::AuthKeyDeleted is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::db_created...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.cs:9: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::db_created is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.cs:128: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::db_created is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027085942_db_created.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::db_created is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::deleted_forminput...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::deleted_forminput is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.cs:14: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::deleted_forminput is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211027113259_deleted_forminput.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::deleted_forminput is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::end_dates_added...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.cs:8: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::end_dates_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.cs:25: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::end_dates_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211104070154_end_dates_added.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::end_dates_added is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::rfpdb_contextModelSnapshot...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/rfpdb_contextModelSnapshot.cs:13: warning: Member BuildModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::rfpdb_contextModelSnapshot is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::tags_added...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::tags_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.cs:16: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::tags_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211116093642_tags_added.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::tags_added is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::user_isactive_added...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::user_isactive_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.cs:17: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::user_isactive_added is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211103125633_user_isactive_added.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::user_isactive_added is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::UserPasswordAdded...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::UserPasswordAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.cs:16: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::UserPasswordAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102153931_UserPasswordAdded.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::UserPasswordAdded is not documented.
+Generating docs for compound RFPPortalWebsite::Migrations::WinnerRFpBidAdded...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.cs:7: warning: Member Up(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::WinnerRFpBidAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.cs:16: warning: Member Down(MigrationBuilder migrationBuilder) (function) of class RFPPortalWebsite::Migrations::WinnerRFpBidAdded is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/20211102150941_WinnerRFpBidAdded.Designer.cs:15: warning: Member BuildTargetModel(ModelBuilder modelBuilder) (function) of class RFPPortalWebsite::Migrations::WinnerRFpBidAdded is not documented.
+Generating docs for namespace RFPPortalWebsite::Models
+Generating docs for namespace RFPPortalWebsite::Models::Constants
+Generating docs for compound RFPPortalWebsite::Models::Constants::Enums...
+Generating docs for namespace RFPPortalWebsite::Models::DbModels
+Generating docs for compound RFPPortalWebsite::Models::DbModels::ApplicationLog...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:12: warning: Member ApplicationLogID (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:13: warning: Member Application (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:14: warning: Member Server (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:15: warning: Member Date (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:16: warning: Member IdFieldName (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:17: warning: Member IdField (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:18: warning: Member Type (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ApplicationLog.cs:19: warning: Member Explanation (property) of class RFPPortalWebsite::Models::DbModels::ApplicationLog is not documented.
+Generating docs for compound RFPPortalWebsite::Models::DbModels::ErrorLog...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:12: warning: Member ErrorLogId (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:13: warning: Member Server (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:14: warning: Member Application (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:15: warning: Member Message (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:16: warning: Member Target (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:17: warning: Member Trace (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:18: warning: Member Date (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:19: warning: Member IdFieldName (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:20: warning: Member IdField (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/ErrorLog.cs:21: warning: Member Type (property) of class RFPPortalWebsite::Models::DbModels::ErrorLog is not documented.
+Generating docs for compound RFPPortalWebsite::Models::DbModels::Rfp...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:12: warning: Member RfpID (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:13: warning: Member UserId (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:14: warning: Member CreateDate (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:15: warning: Member Status (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:16: warning: Member Currency (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:17: warning: Member Amount (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:18: warning: Member Timeframe (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:19: warning: Member Title (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:20: warning: Member Description (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:21: warning: Member WinnerRfpBidID (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:22: warning: Member PublicBidEndDate (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:23: warning: Member InternalBidEndDate (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/Rfp.cs:25: warning: Member Tags (property) of class RFPPortalWebsite::Models::DbModels::Rfp is not documented.
+Generating docs for compound RFPPortalWebsite::Models::DbModels::RfpBid...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:12: warning: Member RfpBidID (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:13: warning: Member UserId (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:14: warning: Member CreateDate (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:15: warning: Member RfpID (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:16: warning: Member Amount (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:17: warning: Member Note (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/RfpBid.cs:18: warning: Member Time (property) of class RFPPortalWebsite::Models::DbModels::RfpBid is not documented.
+Generating docs for compound RFPPortalWebsite::Models::DbModels::User...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:12: warning: Member UserId (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:13: warning: Member UserName (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:14: warning: Member NameSurname (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:15: warning: Member Email (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:16: warning: Member UserType (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:17: warning: Member CreateDate (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:18: warning: Member Password (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/User.cs:19: warning: Member IsActive (property) of class RFPPortalWebsite::Models::DbModels::User is not documented.
+Generating docs for compound RFPPortalWebsite::Models::DbModels::UserLog...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:12: warning: Member UserLogId (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:13: warning: Member UserId (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:14: warning: Member Date (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:15: warning: Member Type (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:16: warning: Member Explanation (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:17: warning: Member Application (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:18: warning: Member Ip (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:19: warning: Member Port (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:20: warning: Member IdField (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/UserLog.cs:21: warning: Member IdValue (property) of class RFPPortalWebsite::Models::DbModels::UserLog is not documented.
+Generating docs for namespace RFPPortalWebsite::Models::SharedModels
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::ApplicationStartResult...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/ApplicationStartResult.cs:12: warning: Member Success (property) of class RFPPortalWebsite::Models::SharedModels::ApplicationStartResult is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/ApplicationStartResult.cs:13: warning: Member Exception (property) of class RFPPortalWebsite::Models::SharedModels::ApplicationStartResult is not documented.
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::DxDUserModel...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:10: warning: Member success (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:11: warning: Member User (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel is not documented.
+Generating docs for nested compound RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:15: warning: Member user_id (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:16: warning: Member email (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:17: warning: Member first_name (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:18: warning: Member last_name (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/DxDUserModel.cs:19: warning: Member forum_name (property) of class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser is not documented.
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::MonitizerResult...
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::PaginationEntity...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:16: warning: Member Items (property) of class RFPPortalWebsite::Models::SharedModels::PaginationEntity is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:17: warning: Member MetaData (property) of class RFPPortalWebsite::Models::SharedModels::PaginationEntity is not documented.
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::PaginationMetaData...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:25: warning: Member Count (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:26: warning: Member FirstItemOnPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:27: warning: Member HasNextPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:28: warning: Member HasPreviousPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:29: warning: Member IsFirstPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:30: warning: Member IsLastPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:31: warning: Member LastItemOnPage (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:32: warning: Member PageCount (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:33: warning: Member PageNumber (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:34: warning: Member PageSize (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/PaginationEntity.cs:35: warning: Member TotalItemCount (property) of class RFPPortalWebsite::Models::SharedModels::PaginationMetaData is not documented.
+Generating docs for compound RFPPortalWebsite::Models::SharedModels::SimpleResponse...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/SimpleResponse.cs:11: warning: Member Success (property) of class RFPPortalWebsite::Models::SharedModels::SimpleResponse is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/SimpleResponse.cs:12: warning: Member Message (property) of class RFPPortalWebsite::Models::SharedModels::SimpleResponse is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/SimpleResponse.cs:13: warning: Member Content (property) of class RFPPortalWebsite::Models::SharedModels::SimpleResponse is not documented.
+Generating docs for namespace RFPPortalWebsite::Models::ViewModels
+Generating docs for compound RFPPortalWebsite::Models::ViewModels::MyBidsModel...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:11: warning: Member RfpID (property) of class RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:12: warning: Member Title (property) of class RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:13: warning: Member Status (property) of class RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:14: warning: Member Bid (property) of class RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/MyBidsModel.cs:15: warning: Member WinnerRfpBidID (property) of class RFPPortalWebsite::Models::ViewModels::MyBidsModel is not documented.
+Generating docs for compound RFPPortalWebsite::Models::ViewModels::NewBidModel...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs:10: warning: Member RfpID (property) of class RFPPortalWebsite::Models::ViewModels::NewBidModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs:11: warning: Member Amount (property) of class RFPPortalWebsite::Models::ViewModels::NewBidModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs:12: warning: Member Note (property) of class RFPPortalWebsite::Models::ViewModels::NewBidModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/NewBidModel.cs:13: warning: Member TimeFrame (property) of class RFPPortalWebsite::Models::ViewModels::NewBidModel is not documented.
+Generating docs for compound RFPPortalWebsite::Models::ViewModels::RegisterModel...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:10: warning: Member UserName (property) of class RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:11: warning: Member NameSurname (property) of class RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:12: warning: Member Email (property) of class RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:13: warning: Member Password (property) of class RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RegisterModel.cs:14: warning: Member RePassword (property) of class RFPPortalWebsite::Models::ViewModels::RegisterModel is not documented.
+Generating docs for compound RFPPortalWebsite::Models::ViewModels::RfpBidWUser...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpBidWUser.cs:11: warning: Member Bid (property) of class RFPPortalWebsite::Models::ViewModels::RfpBidWUser is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpBidWUser.cs:13: warning: Member Username (property) of class RFPPortalWebsite::Models::ViewModels::RfpBidWUser is not documented.
+Generating docs for compound RFPPortalWebsite::Models::ViewModels::RfpDetailModel...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpDetailModel.cs:11: warning: Member BidList (property) of class RFPPortalWebsite::Models::ViewModels::RfpDetailModel is not documented.
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/RfpDetailModel.cs:12: warning: Member RfpDeatil (property) of class RFPPortalWebsite::Models::ViewModels::RfpDetailModel is not documented.
+Generating docs for namespace RFPPortalWebsite::Utility
+Generating docs for compound RFPPortalWebsite::Utility::AdminUserAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:96: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::AdminUserAuthorization is not documented.
+Generating docs for compound RFPPortalWebsite::Utility::EmailHelper...
+Generating docs for compound RFPPortalWebsite::Utility::Encryption...
+Generating docs for compound RFPPortalWebsite::Utility::InternalUserAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:57: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::InternalUserAuthorization is not documented.
+Generating docs for compound RFPPortalWebsite::Utility::IpWhitelistAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:173: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::IpWhitelistAuthorization is not documented.
+Generating docs for compound RFPPortalWebsite::Utility::LocalMachineAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:212: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::LocalMachineAuthorization is not documented.
+Generating docs for compound RFPPortalWebsite::Utility::Monitizer...
+Generating docs for compound RFPPortalWebsite::Utility::Mysql...
+Generating docs for compound RFPPortalWebsite::Utility::PublicUserAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:22: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::PublicUserAuthorization is not documented.
+Generating docs for compound RFPPortalWebsite::Utility::UserAuthorization...
+'epstopdf' is not recognized as an internal or external command,
+operable program or batch file.
+error: Problems running epstopdf. Check your TeX installation!
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/Authorization.cs:136: warning: Member OnActionExecuting(ActionExecutingContext context) (function) of class RFPPortalWebsite::Utility::UserAuthorization is not documented.
+Generating graph info page...
+Generating directory documentation...
+Generating index page...
+Generating page index...
+Generating module index...
+Generating namespace index...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating namespace member index...
+Generating concept index...
+Generating annotated compound index...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating alphabetical compound index...
+Generating hierarchical class index...
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating member index...
+Generating file index...
+Generating file member index...
+Generating example index...
+finalizing index lists...
+writing tag file...
+Generating XML output...
+Generating XML output for class RFPPortalWebsite::Migrations::added_fields_rfp
+Generating XML output for class RFPPortalWebsite::Utility::AdminUserAuthorization
+Generating XML output for class RFPPortalWebsite::Models::DbModels::ApplicationLog
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::ApplicationStartResult
+Generating XML output for class RFPPortalWebsite::Controllers::AuthController
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:21: warning: argument 'password' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::SignIn(string email, string pass)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:21: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::SignIn(string email, string pass)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:28: warning: The following parameter of RFPPortalWebsite.Controllers.AuthController.SignIn(string email, string pass) is not documented:
+  parameter 'pass'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:162: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::ResetPassword(string email)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/AuthController.cs:257: warning: argument 'usercode' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.AuthController::ResetPasswordComplete(string newpass, string newpassagain)
+Generating XML output for class RFPPortalWebsite::Migrations::AuthKeyDeleted
+Generating XML output for class RFPPortalWebsite::Methods::AuthMethods
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:83: warning: The following parameter of RFPPortalWebsite.Methods.AuthMethods.UserSignIn(string email, string pass) is not documented:
+  parameter 'pass'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:167: warning: argument 'model' of command @param is not found in the argument list of RFPPortalWebsite.Methods.AuthMethods::RegisterComplete(string registerToken)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:171: warning: The following parameter of RFPPortalWebsite.Methods.AuthMethods.RegisterComplete(string registerToken) is not documented:
+  parameter 'registerToken'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:211: warning: argument 'model' of command @param is not found in the argument list of RFPPortalWebsite.Methods.AuthMethods::ResetPasswordComplete(string newPass, string passwordChangeToken)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/AuthMethods.cs:215: warning: The following parameters of RFPPortalWebsite.Methods.AuthMethods.ResetPasswordComplete(string newPass, string passwordChangeToken) are not documented:
+  parameter 'newPass'
+  parameter 'passwordChangeToken'
+Generating XML output for class RFPPortal_Tests::Authorization_Tests
+Generating XML output for class RFPPortalWebsite::Controllers::BidController
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:92: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::DeleteBid([FromQuery] int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:99: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.DeleteBid([FromQuery] int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:150: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::EditBid([FromBody] RfpBid model)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:157: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.EditBid([FromBody] RfpBid model) is not documented:
+  parameter 'model'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:208: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Controllers.BidController::ChooseWinningBid([FromQuery] int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/BidController.cs:215: warning: The following parameter of RFPPortalWebsite.Controllers.BidController.ChooseWinningBid([FromQuery] int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+Generating XML output for class RFPPortal_Tests::BidController_Tests
+Generating XML output for class BidInitializeModel
+Generating XML output for class RFPPortalWebsite::Methods::BidMethods
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:50: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Methods.BidMethods::DeleteBid(int RfpBidID)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:54: warning: The following parameter of RFPPortalWebsite.Methods.BidMethods.DeleteBid(int RfpBidID) is not documented:
+  parameter 'RfpBidID'
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:80: warning: argument 'rfpbidid' of command @param is not found in the argument list of RFPPortalWebsite.Methods.BidMethods::ChooseWinningBid(RfpBid rfpbid)
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/BidMethods.cs:84: warning: The following parameter of RFPPortalWebsite.Methods.BidMethods.ChooseWinningBid(RfpBid rfpbid) is not documented:
+  parameter 'rfpbid'
+Generating XML output for class RFPPortalWebsite::Migrations::db_created
+Generating XML output for class RFPPortalWebsite::Migrations::deleted_forminput
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::DxDUserModel::DxDUser
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::DxDUserModel
+Generating XML output for class RFPPortalWebsite::Utility::EmailHelper
+Generating XML output for class RFPPortalWebsite::Utility::Encryption
+Generating XML output for class RFPPortalWebsite::Migrations::end_dates_added
+Generating XML output for class RFPPortalWebsite::Models::Constants::Enums
+Generating XML output for class RFPPortalWebsite::Models::DbModels::ErrorLog
+Generating XML output for class RFPPortalWebsite::Controllers::HomeController
+Generating XML output for class RFPPortalWebsite::Controllers::InfoController
+Generating XML output for class RFPPortalWebsite::Utility::InternalUserAuthorization
+Generating XML output for class RFPPortalWebsite::Utility::IpHelper
+Generating XML output for class RFPPortalWebsite::Utility::IpWhitelistAuthorization
+Generating XML output for class RFPPortalWebsite::Utility::LocalMachineAuthorization
+Generating XML output for class MissingValueUserData
+Generating XML output for class MockHttpSession
+Generating XML output for class RFPPortalWebsite::Utility::Monitizer
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::MonitizerResult
+Generating XML output for class RFPPortalWebsite::Models::ViewModels::MyBidsModel
+Generating XML output for class RFPPortalWebsite::Utility::Mysql
+Generating XML output for class RFPPortalWebsite::Models::ViewModels::NewBidModel
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::PaginationEntity
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::PaginationMetaData
+Generating XML output for class RFPPortal_Tests::PostTestController
+Generating XML output for class RFPPortalWebsite::Program
+Generating XML output for class RFPPortalWebsite::Utility::PublicUserAuthorization
+Generating XML output for class RFPPortalWebsite::Models::ViewModels::RegisterModel
+Generating XML output for class RFPPortalWebsite::Utility::Request
+Generating XML output for class RFPPortalWebsite::Models::DbModels::Rfp
+Generating XML output for class RFPPortalWebsite::Models::DbModels::RfpBid
+Generating XML output for class RFPPortalWebsite::Models::ViewModels::RfpBidWUser
+Generating XML output for class RFPPortalWebsite::Controllers::RfpController
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/RfpController.cs:82: warning: The following parameters of RFPPortalWebsite.Controllers.RfpController.GetRfpsByStatusPaged(string status, int page=1, int pageCount=30) are not documented:
+  parameter 'page'
+  parameter 'pageCount'
+Generating XML output for class RFPPortal_Tests::RfpController_Tests
+Generating XML output for class RFPPortalWebsite::Contexts::rfpdb_context
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/rfpdb_context.cs:15: warning: Unsupported xml/html tag <migration_text> found
+Generating XML output for class RFPPortalWebsite::Migrations::rfpdb_contextModelSnapshot
+Generating XML output for class RFPPortalWebsite::Models::ViewModels::RfpDetailModel
+Generating XML output for class RFPPortalWebsite::Methods::RfpMethods
+C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/RfpMethods.cs:80: warning: The following parameters of RFPPortalWebsite.Methods.RfpMethods.GetRfpsByStatusPaged(string status, int page=1, int pageCount=30) are not documented:
+  parameter 'page'
+  parameter 'pageCount'
+Generating XML output for class RFPPortalWebsite::Utility::Serializers
+Generating XML output for class RFPPortalWebsite::Program::Settings
+Generating XML output for class RFPPortalWebsite::Models::SharedModels::SimpleResponse
+Generating XML output for class RFPPortalWebsite::Startup
+Generating XML output for class RFPPortalWebsite::Migrations::tags_added
+Generating XML output for class RFPPortal_Tests::TestDbInitializer
+Generating XML output for class RFPPortalWebsite::Models::DbModels::User
+Generating XML output for class RFPPortalWebsite::Migrations::user_isactive_added
+Generating XML output for class RFPPortalWebsite::Utility::UserAuthorization
+Generating XML output for class RFPPortalWebsite::Models::DbModels::UserLog
+Generating XML output for class RFPPortalWebsite::Migrations::UserPasswordAdded
+Generating XML output for class AspNetCore::Views__ViewImports
+Generating XML output for class AspNetCore::Views__ViewStart
+Generating XML output for class AspNetCore::Views_Home_My_Bids
+Generating XML output for class AspNetCore::Views_Home_RFP_Detail
+Generating XML output for class AspNetCore::Views_Home_Rfp_Form
+Generating XML output for class AspNetCore::Views_Home_Rfps
+Generating XML output for class AspNetCore::Views_Home_Unauthorized
+Generating XML output for class AspNetCore::Views_Shared__Layout
+Generating XML output for class RFPPortalWebsite::Migrations::WinnerRFpBidAdded
+Generating XML output for namespace AspNetCore
+Generating XML output for namespace Castle::Components::DictionaryAdapter
+Generating XML output for namespace FluentAssertions
+Generating XML output for namespace global
+Generating XML output for namespace global::MicrosoftAspNetCore
+Generating XML output for namespace global::MicrosoftAspNetCore::Mvc
+Generating XML output for namespace global::MicrosoftAspNetCore::Mvc::Razor
+Generating XML output for namespace Microsoft::AspNetCore::Builder
+Generating XML output for namespace Microsoft::AspNetCore::Hosting
+Generating XML output for namespace Microsoft::AspNetCore::Http
+Generating XML output for namespace Microsoft::AspNetCore::HttpsPolicy
+Generating XML output for namespace Microsoft::AspNetCore::Mvc
+Generating XML output for namespace Microsoft::AspNetCore::Mvc::Filters
+Generating XML output for namespace Microsoft::AspNetCore::Mvc::Rendering
+Generating XML output for namespace Microsoft::AspNetCore::Mvc::ViewFeatures
+Generating XML output for namespace Microsoft::AspNetCore::Routing::Constraints
+Generating XML output for namespace Microsoft::EntityFrameworkCore
+Generating XML output for namespace Microsoft::EntityFrameworkCore::ChangeTracking::Internal
+Generating XML output for namespace Microsoft::EntityFrameworkCore::Diagnostics
+Generating XML output for namespace Microsoft::EntityFrameworkCore::Infrastructure
+Generating XML output for namespace Microsoft::EntityFrameworkCore::Internal
+Generating XML output for namespace Microsoft::EntityFrameworkCore::Migrations
+Generating XML output for namespace Microsoft::EntityFrameworkCore::Storage::ValueConversion
+Generating XML output for namespace Microsoft::Extensions::Configuration
+Generating XML output for namespace Microsoft::Extensions::DependencyInjection
+Generating XML output for namespace Microsoft::Extensions::Hosting
+Generating XML output for namespace Microsoft::Extensions::Logging
+Generating XML output for namespace Moq
+Generating XML output for namespace MySql::Data::MySqlClient
+Generating XML output for namespace MySql::EntityFrameworkCore::Extensions
+Generating XML output for namespace MySql::EntityFrameworkCore::Metadata
+Generating XML output for namespace MySqlX::XDevAPI
+Generating XML output for namespace Newtonsoft::Json
+Generating XML output for namespace PagedList::Core
+Generating XML output for namespace PagedList::Core::Mvc
+Generating XML output for namespace RFPPortal_Tests
+Generating XML output for namespace RFPPortalWebsite
+Generating XML output for namespace RFPPortalWebsite::Contexts
+Generating XML output for namespace RFPPortalWebsite::Controllers
+Generating XML output for namespace RFPPortalWebsite::Methods
+Generating XML output for namespace RFPPortalWebsite::Migrations
+Generating XML output for namespace RFPPortalWebsite::Models
+Generating XML output for namespace RFPPortalWebsite::Models::Constants
+Generating XML output for namespace RFPPortalWebsite::Models::Constants::Enums
+Generating XML output for namespace RFPPortalWebsite::Models::DbModels
+Generating XML output for namespace RFPPortalWebsite::Models::SharedModels
+Generating XML output for namespace RFPPortalWebsite::Models::ViewModels
+Generating XML output for namespace RFPPortalWebsite::Program
+Generating XML output for namespace RFPPortalWebsite::Utility
+Generating XML output for namespace static
+Generating XML output for namespace Stripe
+Generating XML output for namespace System
+Generating XML output for namespace System::Collections::Generic
+Generating XML output for namespace System::Collections::Immutable
+Generating XML output for namespace System::ComponentModel
+Generating XML output for namespace System::ComponentModel::DataAnnotations
+Generating XML output for namespace System::Diagnostics
+Generating XML output for namespace System::IO
+Generating XML output for namespace System::Linq
+Generating XML output for namespace System::Net
+Generating XML output for namespace System::Net::Mail
+Generating XML output for namespace System::Reflection
+Generating XML output for namespace System::Runtime::Serialization::Formatters::Binary
+Generating XML output for namespace System::Security::Cryptography
+Generating XML output for namespace System::Text
+Generating XML output for namespace System::Text::RegularExpressions
+Generating XML output for namespace System::Threading::Tasks
+Generating XML output for namespace System::Timers
+Generating XML output for namespace System::Xml
+Generating XML output for namespace Xunit
+Generating XML output for namespace Xunit::Sdk
+Generating XML output for file README.md
+Generating XML output for file Authorization_Tests.cs
+Generating XML output for file BidController_Tests.cs
+Generating XML output for file RFPPortal_Tests.AssemblyInfo.cs
+Generating XML output for file RfpController_Tests.cs
+Generating XML output for file MockHttpSession.cs
+Generating XML output for file BidInitializeModel.cs
+Generating XML output for file MissingValueUserData.cs
+Generating XML output for file PostTestController.cs
+Generating XML output for file TestDbInitializer.cs
+Generating XML output for file rfpdb_context.cs
+Generating XML output for file AuthController.cs
+Generating XML output for file BidController.cs
+Generating XML output for file HomeController.cs
+Generating XML output for file InfoController.cs
+Generating XML output for file RfpController.cs
+Generating XML output for file AuthMethods.cs
+Generating XML output for file BidMethods.cs
+Generating XML output for file RfpMethods.cs
+Generating XML output for file 20211027085942_db_created.cs
+Generating XML output for file 20211027085942_db_created.Designer.cs
+Generating XML output for file 20211027113259_deleted_forminput.cs
+Generating XML output for file 20211027113259_deleted_forminput.Designer.cs
+Generating XML output for file 20211027113856_added_fields_rfp.cs
+Generating XML output for file 20211027113856_added_fields_rfp.Designer.cs
+Generating XML output for file 20211102150750_AuthKeyDeleted.cs
+Generating XML output for file 20211102150750_AuthKeyDeleted.Designer.cs
+Generating XML output for file 20211102150941_WinnerRFpBidAdded.cs
+Generating XML output for file 20211102150941_WinnerRFpBidAdded.Designer.cs
+Generating XML output for file 20211102153931_UserPasswordAdded.cs
+Generating XML output for file 20211102153931_UserPasswordAdded.Designer.cs
+Generating XML output for file 20211103125633_user_isactive_added.cs
+Generating XML output for file 20211103125633_user_isactive_added.Designer.cs
+Generating XML output for file 20211104070154_end_dates_added.cs
+Generating XML output for file 20211104070154_end_dates_added.Designer.cs
+Generating XML output for file 20211116093642_tags_added.cs
+Generating XML output for file 20211116093642_tags_added.Designer.cs
+Generating XML output for file rfpdb_contextModelSnapshot.cs
+Generating XML output for file Enums.cs
+Generating XML output for file ApplicationLog.cs
+Generating XML output for file ErrorLog.cs
+Generating XML output for file Rfp.cs
+Generating XML output for file RfpBid.cs
+Generating XML output for file User.cs
+Generating XML output for file UserLog.cs
+Generating XML output for file ApplicationStartResult.cs
+Generating XML output for file DxDUserModel.cs
+Generating XML output for file MonitizerResult.cs
+Generating XML output for file PaginationEntity.cs
+Generating XML output for file SimpleResponse.cs
+Generating XML output for file MyBidsModel.cs
+Generating XML output for file NewBidModel.cs
+Generating XML output for file RegisterModel.cs
+Generating XML output for file RfpBidWUser.cs
+Generating XML output for file RfpDetailModel.cs
+Generating XML output for file .NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+Generating XML output for file .NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+Generating XML output for file _ViewImports.cshtml.g.cs
+Generating XML output for file _ViewStart.cshtml.g.cs
+Generating XML output for file My_Bids.cshtml.g.cs
+Generating XML output for file RFP_Detail.cshtml.g.cs
+Generating XML output for file Rfp_Form.cshtml.g.cs
+Generating XML output for file Rfps.cshtml.g.cs
+Generating XML output for file Unauthorized.cshtml.g.cs
+Generating XML output for file _Layout.cshtml.g.cs
+Generating XML output for file RFPPortalWebsite.AssemblyInfo.cs
+Generating XML output for file RFPPortalWebsite.MvcApplicationPartsAssemblyInfo.cs
+Generating XML output for file RFPPortalWebsite.RazorAssemblyInfo.cs
+Generating XML output for file RFPPortalWebsite.RazorTargetAssemblyInfo.cs
+Generating XML output for file Program.cs
+Generating XML output for file Startup.cs
+Generating XML output for file Authorization.cs
+Generating XML output for file EmailHelper.cs
+Generating XML output for file Encryption.cs
+Generating XML output for file IpHelper.cs
+Generating XML output for file Monitizer.cs
+Generating XML output for file Mysql.cs
+Generating XML output for file Request.cs
+Generating XML output for file Serializers.cs
+Generating XML output for page md_README
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:114: warning: unable to resolve reference to 'docs/Entity/ApplicationLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:115: warning: unable to resolve reference to 'docs/Entity/ErrorLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:116: warning: unable to resolve reference to 'docs/Entity/Rfp.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:117: warning: unable to resolve reference to 'docs/Entity/RfpBid.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:118: warning: unable to resolve reference to 'docs/Entity/User.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:119: warning: unable to resolve reference to 'docs/Entity/UserLog.md' for \ref command
+C:/0A_Projects/_RFP_Portal/RFPPortal/README.md:157: warning: Unsupported xml/html tag <XML> found
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/Constants/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Contexts/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Controllers/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/DbModels/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Home/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Methods/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Migrations/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/Models/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/Debug/netcoreapp3.1/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/obj/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/Shared/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/SharedModels/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortal_Tests/Util/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Utility/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/Models/ViewModels/
+Generate XML output for dir C:/0A_Projects/_RFP_Portal/RFPPortal/RFPPortalWebsite/obj/Debug/netcoreapp3.1/Razor/Views/
+Running plantuml with JAVA...
+lookup cache used 1375/65536 hits=8081 misses=1852
+finished...
+*** Doxygen has finished
