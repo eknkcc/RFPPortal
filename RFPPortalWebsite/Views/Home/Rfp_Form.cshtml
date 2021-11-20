@@ -117,14 +117,8 @@
                 cache: false,
                 async: true,
                 success: function (result) {
-
                     if (result.success == true) {
-                        toastr.success(result.message);
-                        $(':input').not(':button, :submit, :reset, :hidden').val('');
-                        setTimeout(function () {
-                            window.location.href = "../Rfps";
-                        }, 1500);
-
+                        window.location.href = "../Rfps";
                     }
                     else {
                         toastr.warning(result.message);

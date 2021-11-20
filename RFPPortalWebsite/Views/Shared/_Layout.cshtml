@@ -43,7 +43,7 @@
             else
             {
                 @*MENU - Sign in button*@
-                <a class="btn btn-success mr-2 mb-2 signInBtn signBox" href="#" onclick="OpenSignInModal();"><i class="fa fa-user-alt mr-1"></i> Sign In</a>
+                <a class="btn btn-primary mr-2 mb-2 signInBtn signBox" href="#" onclick="OpenSignInModal();"><i class="fa fa-user-alt mr-1"></i> Sign In</a>
             }
 
             @*MENU - RFP List*@
@@ -390,7 +390,7 @@
                     async: true,
                     success: function (result) {
                         if (result.success == true) {
-                            toastr.success("Welcome, " + result.content.nameSurname);
+                            toastr.success("Welcome, " + result.content.nameSurname +". Redirecting...");
                             window.location.reload();
                         }
                         else {
