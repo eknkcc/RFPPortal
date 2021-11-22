@@ -4,6 +4,12 @@ Proposal Request Portal is the platform which RFPs are posted by the authenticat
 - The project was developed with dotnet core 3.1 in C# as language.
 - jQuery UI - v1.10.4 and Razor was used to develop the frontend.
 
+##Test Environment
+Address: 193.140.239.52:1098 <br>
+Test Admin User: <br>
+username: Ekin <br>
+password: 1parola1 <br>
+
 ## Setup
 ### Build and run with docker-compose
 Docker must be installed on your system.
