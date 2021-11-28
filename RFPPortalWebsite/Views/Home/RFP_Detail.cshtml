@@ -54,7 +54,7 @@
                         <h1 class="postcard__title @clr">@Model.RfpDeatil.Title</h1>
                         <div class="postcard__subtitle small">
                             <time datetime="@Model.RfpDeatil.CreateDate">
-                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @Model.RfpDeatil.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
+                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @Model.RfpDeatil.CreateDate.ToLocalTime()
                             </time>
                         </div>
                         <div><small><b>Time frame for this RFP:</b> @Model.RfpDeatil.Timeframe</small></div>
@@ -114,7 +114,7 @@
 
                                         <tr>
                                             <td id="name_@item.Bid.RfpBidID" scope="row">@item.Username</td>
-                                            <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@item.Bid.CreateDate.ToLocalTime()</td>
                                             <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
                                             <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
                                             <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">

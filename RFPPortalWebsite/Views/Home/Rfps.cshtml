@@ -57,7 +57,7 @@
                     <h1 class="postcard__title @clr"><a onclick="window.location.href='../RFP-Detail/@item.RfpID'">@item.Title</a></h1>
                     <div class="postcard__subtitle small">
                         <time datetime="@item.CreateDate">
-                            <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
+                            <i class="fas fa-calendar-alt mr-2"></i>Posted at: @item.CreateDate.ToLocalTime()
                         </time>
                     </div>
                     <div class="postcard__bar"></div>

@@ -16,6 +16,8 @@ using System.Timers;
 using static RFPPortalWebsite.Models.Constants.Enums;
 using static RFPPortalWebsite.Program;
 using Stripe;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace RFPPortalWebsite
 {
@@ -158,13 +160,33 @@ namespace RFPPortalWebsite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
             app.UseSession();
+
+            app.UseStaticFiles();
+
+            var defaultDateCulture = "en-US";
+            var ci = new CultureInfo(defaultDateCulture);
+            ci.NumberFormat.NumberDecimalSeparator = ".";
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+            ci.NumberFormat.NumberGroupSeparator = ",";
+
+            // Configure the Localization middleware
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(ci),
+                SupportedCultures = new List<CultureInfo> { ci, },
+                SupportedUICultures = new List<CultureInfo> { ci, }
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
