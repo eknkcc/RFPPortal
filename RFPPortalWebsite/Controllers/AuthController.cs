@@ -22,7 +22,6 @@ namespace RFPPortalWebsite.Controllers
         /// </summary>
         /// <param name="email">User's email or username</param>
         /// <param name="pass">User's password</param>
-        /// <param name="usercode">Captcha code (Needed after 3 failed requests)</param>
         /// <returns>SimpleResponse</returns>
         [Route("SignIn")]
         public SimpleResponse SignIn(string email, string pass)
@@ -97,8 +96,8 @@ namespace RFPPortalWebsite.Controllers
                         var baseUrl = $"{this.Request.Scheme}://{this.Request.Host.Value.ToString()}{this.Request.PathBase.Value.ToString()}";
 
                         //Set email title and content
-                        string emailTitle = "Welcome to RFP Portal";
-                        string emailContent = "Thank you for your registration. Please use the link below to activate your account. <br><br> <a href='" + baseUrl + "/RegisterCompleteView?str=" + enc + "'>Click here to complete the registration.</a>";
+                        string emailTitle = "Welcome to DEVxDAO RFP Portal";
+                        string emailContent = "Welcome to DEVxDAO RFP Portal, <br><br> Thank you for your registration. Please use the link below to activate your account. <br><br> <a href='" + baseUrl + "/RegisterCompleteView?str=" + enc + "'>Click here to complete the registration.</a>";
 
                         //Send email
                         EmailHelper.SendEmail(emailTitle, emailContent, new List<string>() { usr.Email }, new List<string>(), new List<string>());

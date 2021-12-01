@@ -21,7 +21,7 @@ namespace RFPPortalWebsite.Controllers
     /// </summary>
     [Route("[controller]")]
     [ApiController]
-    public class RfpController : ControllerBase
+    public class RfpController : Controller
     {
 
         /// <summary>
@@ -134,17 +134,23 @@ namespace RFPPortalWebsite.Controllers
             {
                 using (rfpdb_context db = new rfpdb_context())
                 {
-                    model.CreateDate = DateTime.Now;                    
+                    model.CreateDate = DateTime.Now;
                     model = Methods.RfpMethods.SubmitRfpForm(model);
 
                     if (model.RfpID > 0)
+                    {
+
+                        TempData["toastr-message"] = "Rfp form succesfully posted.";
+                        TempData["toastr-type"] = "success";
+
                         return new SimpleResponse() { Success = true, Message = "Rfp form succesfully posted.", Content = model };
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddException(ex, LogTypes.ApplicationError, true);
-                
+
             }
 
             return new SimpleResponse() { Success = false, Message = "An error occured while proccesing your request." };

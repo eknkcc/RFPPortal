@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace RFPPortalWebsite.Migrations
 {
-    public partial class db_created : Migration
+    public partial class db_init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,10 +73,17 @@ namespace RFPPortalWebsite.Migrations
                     RfpID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FormInput = table.Column<string>(type: "text", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: true),
-                    WinnerRfpBidID = table.Column<int>(type: "int", nullable: false)
+                    Currency = table.Column<string>(type: "text", nullable: true),
+                    Amount = table.Column<double>(type: "double", nullable: false),
+                    Timeframe = table.Column<string>(type: "text", nullable: true),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    WinnerRfpBidID = table.Column<int>(type: "int", nullable: true),
+                    PublicBidEndDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    InternalBidEndDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Tags = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,9 +122,8 @@ namespace RFPPortalWebsite.Migrations
                     Email = table.Column<string>(type: "text", nullable: true),
                     UserType = table.Column<string>(type: "text", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    AuthKey = table.Column<string>(type: "text", nullable: true),
-                    ThirdPartyKey = table.Column<string>(type: "text", nullable: true),
-                    ThirdPartyType = table.Column<string>(type: "text", nullable: true)
+                    Password = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {

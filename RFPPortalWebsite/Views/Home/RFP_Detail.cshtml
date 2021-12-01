@@ -1,10 +1,8 @@
 ﻿
 @model RFPPortalWebsite.Models.ViewModels.RfpDetailModel
-
 @*User session accessor*@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-
 @*Find postcard color tag from RFP status*@
 @{
     bool biddingActive = false;
@@ -18,7 +16,7 @@
     else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Expired.ToString())
     {
         //Rfp expired
-        clr = "red"; 
+        clr = "red";
     }
     else if (Model.RfpDeatil.Status == RFPPortalWebsite.Models.Constants.Enums.RfpStatusTypes.Completed.ToString())
     {
@@ -56,7 +54,7 @@
                         <h1 class="postcard__title @clr">@Model.RfpDeatil.Title</h1>
                         <div class="postcard__subtitle small">
                             <time datetime="@Model.RfpDeatil.CreateDate">
-                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @Model.RfpDeatil.CreateDate.ToLocalTime().ToString("MM/dd/yyyy")
+                                <i class="fas fa-calendar-alt mr-2"></i>Posted at: @Model.RfpDeatil.CreateDate.ToLocalTime()
                             </time>
                         </div>
                         <div><small><b>Time frame for this RFP:</b> @Model.RfpDeatil.Timeframe</small></div>
@@ -116,7 +114,7 @@
 
                                         <tr>
                                             <td id="name_@item.Bid.RfpBidID" scope="row">@item.Username</td>
-                                            <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@item.Bid.CreateDate.ToLocalTime()</td>
                                             <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
                                             <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
                                             <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">
@@ -144,7 +142,7 @@
                                                     @* Check if user is admin (Displays 'Choose Winning Bid' button) *@
                                                     if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
                                                     {
-                                                        <button id="@item.Bid.RfpBidID" onclick="WinningBidModal(this.id)" type="button" class="btn btnEdit  btn-sm" title="Choose the winning bid"><i class="far fa-star"></i></button>
+                                                        <button id="@item.Bid.RfpBidID" onclick="WinningBidModal(this.id)" type="button" class="btn btnEdit  btn-sm" title="Choose the winning bid"><i class="far fa-star"></i> Select Winner</button>
                                                     }
                                                 }
 
@@ -216,7 +214,7 @@
                         <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="timeframe" placeholder="Timeframe" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="text" class="form-control" id="timeframe" placeholder="Expected Timeframe (Days)" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="amount" placeholder="Amount" onfocus="this.removeAttribute('readonly');" readonly>
@@ -256,7 +254,7 @@
                 </div>
                 <div id="editButtons" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-info" onclick="ConfirmEditBid(this.id)">Confirm Edit</button>
+                    <button type="button" class="btn btn-info" onclick="ConfirmEditBid(this)">Confirm Edit</button>
                 </div>
             </div>
         </div>
@@ -277,7 +275,7 @@
                 </div>
                 <div id="deleteButtons" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-info" onclick="ConfirmDeleteBid(this.id)">Delete Bid</button>
+                    <button type="button" class="btn btn-info" onclick="ConfirmDeleteBid(this)">Delete Bid</button>
                 </div>
             </div>
         </div>
@@ -342,6 +340,7 @@
 
             //Submit bid function
             function SubmitBid(e) {
+                //Disable submit button
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Sending Bid..');
 
@@ -352,25 +351,28 @@
                  $.ajax({
                      type: "POST",
                      url: '../Bid/SubmitBid',
-                     async: false,
+                     async: true,
                      contentType: 'application/json',
                      data: JSON.stringify({ "Time": timeframe, "Amount": amount, "Note": note, "RfpID": @Model.RfpDeatil.RfpID }),
                      success: function (result) {
                          if (result.success == true) {
-                             toastr.success(result.message, "Success");
-                             setTimeout(function () { location.reload(); }, 1500);
+                             location.reload();
                          }
                          else {
                              toastr.error(result.message, "Error");
+
+                             //Enable submit button
+                             $(e).prop("disabled", false);
+                             $(e).html('Submit Bid');
                          }
                      },
                      error: function () {
-
+                        //Enable submit button
+                         $(e).prop("disabled", false);
+                         $(e).html('Submit Bid');
                      }
                  });
 
-                $(e).prop("disabled", false);
-                $(e).html('Submit Bid');
             }
 
             //Toggle edit bid modal
@@ -389,7 +391,11 @@
             }
 
             //Edit bid confirmation
-            function ConfirmEditBid(id) {
+            function ConfirmEditBid(e) {
+                //Disable submit button
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Updating Bid..');
+
                 var timeframe = $("#EditTimeframe").val();
                 var amount = parseFloat($("#EditAmount").val());
                 var note = $("#EditNote").val();
@@ -397,42 +403,55 @@
                  $.ajax({
                      type: "POST",
                      url: '../Bid/EditBid',
-                     async: false,
+                     async: true,
                      contentType: 'application/json',
-                     data: JSON.stringify({ "RfpBidID": parseInt(id), "Amount": parseFloat(amount), "Time": timeframe, "Note": note }),
+                     data: JSON.stringify({ "RfpBidID": parseInt(e.id), "Amount": parseFloat(amount), "Time": timeframe, "Note": note }),
                      success: function (result) {
                          if (result.success == true) {
-                             toastr.success(result.message, "Success");
-                             setTimeout(function () { location.reload(); }, 1500);
+                             location.reload();
                          }
                          else {
                              toastr.error(result.message, "Error");
+
+                             $(e).prop("disabled", false);
+                             $(e).html('Submit Bid');
                          }
                      },
                      error: function () {
-
+                        //Enable submit button
+                         $(e).prop("disabled", false);
+                         $(e).html('Submit Bid');
                      }
                 });
             }
 
             //Delete bid confirmation
-            function ConfirmDeleteBid(id) {
+            function ConfirmDeleteBid(e) {
+                //Disable submit button
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Deleting Bid..');
+
                 $.ajax({
                      type: "DELETE",
-                    url: '../Bid/DeleteBid?RfpBidID='+id,
-                     async: false,
+                    url: '../Bid/DeleteBid?RfpBidID='+e.id,
+                     async: true,
                      contentType: 'application/json',
                      success: function (result) {
                          if (result.success == true) {
-                             toastr.success(result.message, "Success");
-                             setTimeout(function () { location.reload(); }, 1500);
+                             location.reload();
                          }
                          else {
                              toastr.error(result.message, "Error");
+
+                            //Enable submit button
+                             $(e).prop("disabled", false);
+                             $(e).html('Submit Bid');
                          }
                      },
-                     error: function () {
-
+                    error: function () {
+                        //Enable submit button
+                         $(e).prop("disabled", false);
+                         $(e).html('Submit Bid');
                      }
                 });
             }
@@ -487,10 +506,7 @@
                     async: true,
                     success: function (result) {
                         if (result.success == true) {
-                            toastr.success(result.message);
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 1000)
+                            location.reload();
                         }
                         else {
                             toastr.warning(result.message);

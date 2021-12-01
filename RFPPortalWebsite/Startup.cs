@@ -16,6 +16,8 @@ using System.Timers;
 using static RFPPortalWebsite.Models.Constants.Enums;
 using static RFPPortalWebsite.Program;
 using Stripe;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace RFPPortalWebsite
 {
@@ -23,9 +25,16 @@ namespace RFPPortalWebsite
     {
         public static System.Timers.Timer rfpStatusTimer;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            //Get related appsettings.json file (Development or Production)
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
 
             LoadConfig(configuration);
             InitializeService();
@@ -151,13 +160,33 @@ namespace RFPPortalWebsite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
             app.UseSession();
+
+            app.UseStaticFiles();
+
+            var defaultDateCulture = "en-US";
+            var ci = new CultureInfo(defaultDateCulture);
+            ci.NumberFormat.NumberDecimalSeparator = ".";
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+            ci.NumberFormat.NumberGroupSeparator = ",";
+
+            // Configure the Localization middleware
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(ci),
+                SupportedCultures = new List<CultureInfo> { ci, },
+                SupportedUICultures = new List<CultureInfo> { ci, }
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
