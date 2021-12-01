@@ -44,11 +44,20 @@ The daorfpdb database should have tables below;
 Your smtp information must be entered to SMPT section in the appsettings.json file.
 This is required to create a user because the registration process is completed with the activation mail.
 
+Email Information in appsettings.json
+```json
+"EmailAddress": "info@ekonteknoloji.com",
+"EmailDisplayName": "RFP Portal",
+"EmailPassword": "********",
+"EmailHost": "smtp.zoho.com",
+"EmailPort": "587",
+"EmailSSL": "true"
+```
+
 ### Creating a Public User
 Simply Click the login button in the upper right corner.
 A model will appear with a 'Sign Up' tab.
-Fill out the form and hit the sign up button. An activation email will be sent to you. Click on the link specified in the activation e-mail. You will be redirected to the application url using your default browser. Once the page appeared, you should see a toaster indicating that the activation was successful.<br>
-As a public user
+Fill out the form and hit the sign up button. If you have entered the necessary information in the relevant places in the appsettings.json file an activation email will be sent to you. Click on the link specified in the activation e-mail. You will be redirected to the application url using your default browser. Once the page appeared, you should see a toaster indicating that the activation was successful.<br>
 
 ### Creating an Internal User
 Signing up with an internal email automatically creates an internal user.<br>
