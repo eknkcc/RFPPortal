@@ -12,6 +12,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=Fidelio06
       - MYSQL_DATABASE=daorfpdb
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=Fidelio06 --execute \"SHOW DATABASES;\"" #["CMD", 'mysqladmin', 'ping', '-h', 'localhost:3317', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      interval: 20s
+      retries: 10
     networks:
       - rfpnetwork
 
@@ -21,7 +25,8 @@ services:
       context: .
       dockerfile: RFPPortalWebsite/Dockerfile
     depends_on:
-      - rfpportal_db
+      rfpportal_db:
+        condition: service_healthy
     networks:
      - rfpnetwork
 
