@@ -88,8 +88,8 @@ namespace RFPPortal_Tests
                 UserName    = "Public_User",
                 NameSurname = "Public User",
                 Email       = "public@user.com",
-                Password    = "PassW0rd",
-                RePassword  = "PassW0rd"
+                Password    = testPassword,
+                RePassword  = testPassword
             };
             // Starting registration process
             SimpleResponse result = controllers.authController.RegisterUser(user);
