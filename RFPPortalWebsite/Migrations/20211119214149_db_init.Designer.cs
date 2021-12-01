@@ -9,8 +9,8 @@ using RFPPortalWebsite.Contexts;
 namespace RFPPortalWebsite.Migrations
 {
     [DbContext(typeof(rfpdb_context))]
-    [Migration("20211103125633_user_isactive_added")]
-    partial class user_isactive_added
+    [Migration("20211119214149_db_init")]
+    partial class db_init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,7 +107,16 @@ namespace RFPPortalWebsite.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("InternalBidEndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("PublicBidEndDate")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Tags")
                         .HasColumnType("text");
 
                     b.Property<string>("Timeframe")

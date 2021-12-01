@@ -37,7 +37,7 @@
                                         <div class="tag__item play"><i class="fas fa-stop mr-2" style="color: #d55062"></i> Bidding Ended</div>
                                     }
                                 </td>
-                                <td>@item.Bid.CreateDate.ToString("MM/dd/yyyy")</td>
+                                <td>@item.Bid.CreateDate.ToLocalTime()</td>
                                 <td>@item.Bid.Amount</td>
                                 <td>@item.Bid.Time</td>
                                 <td>
@@ -47,7 +47,7 @@
                                     @*Winner bid icon*@
                                     @if (item.WinnerRfpBidID == item.Bid.RfpBidID)
                                     {
-                                        <i class="fas fa-star" title="Winner Bid" style="color: #ffe03c"></i>
+                                        <i class="fas fa-star" title="Winner Bid"></i> <span>Winner Bid</span>
                                     }
                                 </td>
                             </tr>
