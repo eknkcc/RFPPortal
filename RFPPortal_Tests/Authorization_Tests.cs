@@ -25,12 +25,14 @@ namespace RFPPortal_Tests
     {
         PostTestController controllers;
         ISession session;        
-        /// Application controllers and HttpContext Session are initialized.        
+        string testPassword = Guid.NewGuid().ToString("d").Substring(1,8);
+        /// Application controllers and HttpContext Session are initialized.   
         public Authorization_Tests(){
             controllers = new PostTestController();
             controllers.bidController.ControllerContext = new ControllerContext();
             controllers.bidController.ControllerContext.HttpContext = new DefaultHttpContext();
             session = controllers.bidController.ControllerContext.HttpContext.Session = new MockHttpSession();
+            //testPassword = System.Web.Security.Membership.GeneratePassword(8, 4);
         }
         
         /// <summary>
@@ -50,8 +52,8 @@ namespace RFPPortal_Tests
                 UserName    = "Regular_User",
                 NameSurname = "Regular User",
                 Email       = "regular@user.com",
-                Password    = "PassW0rd",
-                RePassword  = "PassW0rd"
+                Password    = testPassword,
+                RePassword  = testPassword
             };
 
             //Act
