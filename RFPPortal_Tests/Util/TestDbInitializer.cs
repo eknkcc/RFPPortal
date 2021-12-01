@@ -27,12 +27,16 @@ namespace RFPPortal_Tests
     /// </summary>
     public static class TestDbInitializer
     {
+        ///Test password generated for user model crud operations tests
+        public static string testPassword = Guid.NewGuid().ToString("d").Substring(1,6); 
         static rfpdb_context context;
         /// <summary>
         /// Creates a DB context which should use a "test DB instance".
         /// Wipes the database itself.
         /// Builds a database and its entity tables using the DB context        
         /// </summary>
+        
+
         static TestDbInitializer()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -71,8 +75,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user1.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
-                    // Password    = "m8pz2xVkmv9xd1gBoczRTjUALudqlwDqWk42h0KGDr6Ui4Ny",
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -82,7 +85,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user2.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -92,7 +95,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user1.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -102,7 +105,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user2.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -112,7 +115,7 @@ namespace RFPPortal_Tests
                     Email       = "admin@user.com",
                     UserType    = Enums.UserIdentityType.Admin.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -122,7 +125,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user3.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -132,7 +135,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user4.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -142,7 +145,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user3.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 },
@@ -152,7 +155,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user4.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = Encrypt("PassW0rd"),
+                    Password    = Encrypt(testPassword),
                     IsActive    = true
 
                 }
@@ -176,7 +179,7 @@ namespace RFPPortal_Tests
                         Email       = "admin@user.com",
                         UserType    = Enums.UserIdentityType.Admin.ToString(),
                         CreateDate  = DateTime.Now,
-                        Password    = Encrypt("PassW0rd"),
+                        Password    = Encrypt(testPassword),
                         IsActive    = true
                     }
                 );
@@ -377,7 +380,7 @@ namespace RFPPortal_Tests
                     Email       = "public@user.com",
                     UserType    = Enums.UserIdentityType.Public.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = testPassword,
                     IsActive    = true
                     };
             User admin_user = new User{
@@ -386,7 +389,7 @@ namespace RFPPortal_Tests
                     Email       = "admin@user.com",
                     UserType    = Enums.UserIdentityType.Admin.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = testPassword,
                     IsActive    = true
                 };
             User internal_user = new User{
@@ -395,7 +398,7 @@ namespace RFPPortal_Tests
                     Email       = "internal@user.com",
                     UserType    = Enums.UserIdentityType.Internal.ToString(),
                     CreateDate  = DateTime.Now,
-                    Password    = "PassW0rd",
+                    Password    = testPassword,
                     IsActive    = true
                 };
             context.Users.AddRange(
