@@ -152,7 +152,7 @@ namespace RFPPortal_Tests
             string existingUserPassword = TestDbInitializer.testPassword;
             string nonExistingUserEmail = "nonexisting@user.com";
             string nonExistingPassword = TestDbInitializer.testPassword;
-            string existingUserWrongPassword = "Password";
+            string existingUserWrongPassword = Guid.NewGuid().ToString("d").Substring(1,7); 
 
             // Arrange
             TestDbInitializer.SeedUsers();
