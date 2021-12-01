@@ -42,7 +42,8 @@ The daorfpdb database should have tables below;
 
 ## Usage
 Your smtp information must be entered to SMPT section in the appsettings.json file.
-This is required to create a user because the registration process is completed with the activation mail.
+This is required to create a user because the registration process is completed with the activation mail. <br>
+To activate a user without email registeration, the IsActive column in the Users table in the daorfpdb database should be set to 1 manually.<br>
 
 Email Information in appsettings.json
 ```json
@@ -161,7 +162,7 @@ Example:
 }
 ```
 
-After configuring the database, run the following commands from the project directory.
+After configuring the database, run the following commands from the test project directory.
 
 ```shell
 dotnet test --filter DisplayName~Authorization_Tests
