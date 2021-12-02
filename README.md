@@ -212,7 +212,7 @@ rfpportalwebsite:
 An ssl certificate can be generated and placed in a location on the machine where the docker container is running.<br>
 One way to generate an SSL certificate is explained [here](https://docs.microsoft.com/en-us/dotnet/core/additional-tools/self-signed-certificates-guide).
 
-The presentation of the generated ssl certificate in the docker compose file is as follows:
+The definition of the generated ssl certificate in the docker compose file is as follows:
 ```yml
 rfpportalwebsite:
     environment:
