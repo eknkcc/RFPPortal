@@ -52,6 +52,7 @@ Example:
 	/# mysql -u root -p daorfpdb
 	> update Users set IsActive = 1 where Username = 'username of the user that is required to be activated';
 ```
+Where "rfpportal-rfpportal_db" is the name of the container. All running containers can be listed with `docker ps -a` command from the terminal.
 
 Email Information in appsettings.json
 ```json
@@ -93,7 +94,6 @@ The database can be accessed by docker cli.
 	/# mysql -u root -p daorfpdb
 	> update Users set UserType = 'Admin' where Username = 'username of the user that is required to be admin';
 ```
-Where "rfpportal-rfpportal_db" is the name of the container. All running containers can be listed with `docker ps -a` command from the terminal.
 
 ### Creating RFP
 When logged in to the application as an Admin user, there appears a 'New RFP' navigation button on the top left corner in addition to 'My Bids' and 'RFP List' navigation buttons.
@@ -157,6 +157,8 @@ The users can see their bidding history and RFP details of the belonging bid.
 
 ## Testing
 A mysql database should be up and running with a testing environment setup.<br>
+To run tests from terminal dotnet sdk should be installed on your system.<br>
+
 The easiest and recommended way is pulling a mysql docker image and run in a docker container with minimum parameters.
 ```shell
 docker run --detach --name=test-mysql -p 3317:3306  --env="MYSQL_ROOT_PASSWORD=mypassword" mysql
@@ -183,7 +185,7 @@ Example:
 }
 ```
 
-After configuring the database, run the following commands from the test project directory.
+After configuring the database, run the following commands from the test project directory `\PathToSolution\RFPPortal_Tests\`.
 
 ```shell
 dotnet test --filter DisplayName~Authorization_Tests
