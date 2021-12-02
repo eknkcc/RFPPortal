@@ -224,6 +224,6 @@ rfpportalwebsite:
 # Path of the certificate file
       - ASPNETCORE_Kestrel__Certificates__Default__Path= < location of the ssl certificate in docker container. Example: '/https/aspnetapp.pfx' > 
     volumes:
-	# Mount the local volume where the certificate exists to docker container
+# Mount the local volume where the certificate exists to docker container
       - < location of the ssl certificate in the host machine> : < location of the ssl certificate in docker container. Example: '~/.aspnet/https:/https:ro'>	
 ```
