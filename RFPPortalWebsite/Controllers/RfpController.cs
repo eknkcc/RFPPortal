@@ -139,10 +139,11 @@ namespace RFPPortalWebsite.Controllers
 
                     if (model.RfpID > 0)
                     {
-
-                        TempData["toastr-message"] = "Rfp form succesfully posted.";
-                        TempData["toastr-type"] = "success";
-
+                        try{
+                            TempData["toastr-message"] = "Rfp form succesfully posted.";
+                            TempData["toastr-type"] = "success";
+                        }
+                        catch(Exception){}
                         return new SimpleResponse() { Success = true, Message = "Rfp form succesfully posted.", Content = model };
                     }
                 }
