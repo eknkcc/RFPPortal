@@ -73,10 +73,12 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(model.UserId, UserLogType.Request, "User submitted a new bid for RFP: " + model.RfpID);
-
-                    TempData["toastr-message"] = "Bid submitted successfully.";
-                    TempData["toastr-type"] = "success";
                     
+                    try{
+                        TempData["toastr-message"] = "Bid submitted successfully.";
+                        TempData["toastr-type"] = "success";
+                    }
+                    catch(Exception){}
                     return new SimpleResponse() { Success = true, Message = "Bid submitted successfully.", Content = bidResult };
                 }
                 else
@@ -137,10 +139,12 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
-
-                    TempData["toastr-message"] = "Rfp bid succesfully deleted.";
-                    TempData["toastr-type"] = "success";
-
+                    try{
+                        TempData["toastr-message"] = "Rfp bid succesfully deleted.";
+                        TempData["toastr-type"] = "success";
+                    }
+                    catch(Exception){}
+                    
                     return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
                 }
             }
@@ -198,10 +202,12 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
-
-                    TempData["toastr-message"] = "Rfp bid succesfully edited.";
-                    TempData["toastr-type"] = "success";
-
+                    
+                    try{
+                        TempData["toastr-message"] = "Rfp bid succesfully edited.";
+                        TempData["toastr-type"] = "success";
+                    }
+                    catch(Exception){}
                     return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully edited." };
                 }
             }
@@ -250,10 +256,11 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
-
-                    TempData["toastr-message"] = "Rfp winning bid and status succesfully updated.";
-                    TempData["toastr-type"] = "success";
-
+                    try{
+                        TempData["toastr-message"] = "Rfp winning bid and status succesfully updated.";
+                        TempData["toastr-type"] = "success";
+                    }
+                    catch(Exception){}
                     return new SimpleResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
                 }
 
