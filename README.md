@@ -175,7 +175,7 @@ mysql>
 ```
 
 The root password, the expose port and many other parameters can be changed optionally.
-The test database connection string should be written under the PlatformSettings section taking place in the ``` \PathToSolution\RFPPortalWebsite\appsettings.json ``` file.<br>
+The test database connection string should be written under the PlatformSettings section taking place in the ``` \PathToSolution\RFPPortalWebsite\appsettings.json ``` file and rebuild with command `dotnet build`.<br>
 Example:
 ```json
 "PlatformSettings": {
