@@ -7,8 +7,8 @@ Proposal Request Portal is the platform which RFPs are posted by the authenticat
 ## Test Environment
 Address: 193.140.239.52:1098 <br>
 Test Admin User: <br>
-username: Ekin <br>
-password: 1parola1 <br>
+username: Ekin<br>
+password: 1parola1<br>
 
 ## Setup
 ### Build and run with docker-compose
@@ -16,7 +16,7 @@ Docker must be installed on your system.
 
 Enter your smtp information to `\PathToSolution\RFPPortal\RFPPortalWebsite\appsettings.json` under `SMTP` section.
 
-Under the project folder, type
+Under the project folder `\PathToSolution\RFPPortal\RFPPortalWebsite\`, type
 ```
 docker-compose up --build
 ```
@@ -25,8 +25,9 @@ Docker-compose downloads/creates(if necessary) builds and runs;
 - rfpportalwebsite image
 
 when all containers are up, you can access the application from
-`https://localhost:6443`
-and the mysql database is accessible on localhost:3317.
+`http://localhost:6080`
+and the mysql database is accessible on localhost:3317.<br>
+To access the database, Mysql client must be installed on your system.
 
 The container endpoint ports can be changed from docker-compose.override.yml file.
 
@@ -43,7 +44,14 @@ The daorfpdb database should have tables below;
 ## Usage
 Your smtp information must be entered to SMPT section in the appsettings.json file.
 This is required to create a user because the registration process is completed with the activation mail. <br>
-To activate a user without email registeration, the IsActive column in the Users table in the daorfpdb database should be set to 1 manually.<br>
+To activate a user without email registeration, the `IsActive` column in the `daorfpdb.Users` table in the database should be set to 1 manually.<br>
+
+Example:
+```shell
+	docker exec -it rfpportal-rfpportal_db bash -l
+	/# mysql -u root -p daorfpdb
+	> update Users set IsActive = 1 where Username = 'username of the user that is required to be activated';
+```
 
 Email Information in appsettings.json
 ```json
@@ -61,8 +69,21 @@ A model will appear with a 'Sign Up' tab.
 Fill out the form and hit the sign up button. If you have entered the necessary information in the relevant places in the appsettings.json file an activation email will be sent to you. Click on the link specified in the activation e-mail. You will be redirected to the application url using your default browser. Once the page appeared, you should see a toaster indicating that the activation was successful.<br>
 
 ### Creating an Internal User
-Signing up with an internal email automatically creates an internal user.<br>
-Internal accounts are recognized by RFPPortal via an api provided by DEVxDAO.
+Internal accounts are recognized by RFPPortal via the api below, provided by DEVxDAO.<br>
+`https://backend.devxdao.com/api/va/email/`<br>
+The api needs two parameters;
+- Email
+- DxDApiToken (The token is added to Headers/Authorization of the HttpWebRequest)
+
+If DxDApiToken is provided signing up with an internal email automatically creates an internal user.<br>
+To create an internal user without the api call, the `UserType` column in the `daorfpdb.Users` table in the database should be set to `Internal` manually.<br>
+
+Example:
+```shell
+	docker exec -it rfpportal-rfpportal_db bash -l
+	/# mysql -u root -p daorfpdb
+	> update Users set UserType = 'Internal' where Username = 'username of the user that is required to be Internal';
+```
 
 ### Creating an Admin User
 To create an admin user, first a public user should be created and user type should be updated to 'admin' manually from the database.
