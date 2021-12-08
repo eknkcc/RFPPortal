@@ -41,6 +41,20 @@ namespace RFPPortalWebsite.Controllers
                 {
                     var rfp = db.Rfps.Find(model.RfpID);
 
+                    //Check if timeframe is valid
+                    int n;
+                    if (!int.TryParse(model.Time, out n))
+                    {
+                        return new SimpleResponse() { Success = false, Message = "Timeframe must be integer (Days)" };
+                    }
+
+                    //Check if amount is valid
+                    int n2;
+                    if (!int.TryParse(model.Amount.ToString(), out n2))
+                    {
+                        return new SimpleResponse() { Success = false, Message = "Amount must be integer (Euros)" };
+                    }
+
                     //Check if RfpID is a valid identity.
                     if (rfp == null || rfp.RfpID <= 0)
                     {
@@ -172,6 +186,20 @@ namespace RFPPortalWebsite.Controllers
                 {
                     rfpbid = db.RfpBids.Find(model.RfpBidID);
                     rfp = db.Rfps.Find(rfpbid.RfpID);
+
+                    //Check if timeframe is valid
+                    int n;
+                    if (!int.TryParse(model.Time, out n))
+                    {
+                        return new SimpleResponse() { Success = false, Message = "Timeframe must be integer (Days)" };
+                    }
+
+                    //Check if amount is valid
+                    int n2;
+                    if (!int.TryParse(model.Amount.ToString(), out n2))
+                    {
+                        return new SimpleResponse() { Success = false, Message = "Amount must be integer (Euros)" };
+                    }
 
                     //Check if user is trying to edit bid for another user
                     if (HttpContext.Session.GetInt32("UserId") != rfpbid.UserId)

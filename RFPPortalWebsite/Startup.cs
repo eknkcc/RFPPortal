@@ -24,6 +24,7 @@ namespace RFPPortalWebsite
     public class Startup
     {
         public static System.Timers.Timer rfpStatusTimer;
+        public static bool rfpCheckInProgress = false;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -98,6 +99,10 @@ namespace RFPPortalWebsite
         /// <param name="e"></param>
         private static void CheckRfpStatus(Object source, ElapsedEventArgs e)
         {
+            if (rfpCheckInProgress) return;
+
+            rfpCheckInProgress = true;
+
             try
             {
                 using (rfpdb_context db = new rfpdb_context())
@@ -111,24 +116,68 @@ namespace RFPPortalWebsite
                         rfp.Status = Models.Constants.Enums.RfpStatusTypes.Public.ToString();
                         db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         db.SaveChanges();
+
+                        Program.monitizer.AddApplicationLog(LogTypes.ApplicationLog, "Public bidding started for RFP #" + rfp.RfpID, "RfpID", rfp.RfpID);
                     }
 
-                    //Check if rfp public bidding ended without any winner
-                    var expiredRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+                    ////This section is commented out because at the end of public bidding, bids will be posted to DEVxDAO survey and survey result will determine the winner.
+                    ////Check if rfp public bidding ended without any winner
+                    //var expiredRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+                    ////Update rfp status
+                    //foreach (var rfp in expiredRfps)
+                    //{
+                    //    rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
+                    //    db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    //    db.SaveChanges();
+                    //}
 
-                    //Update rfp status
-                    foreach (var rfp in expiredRfps)
+                    //Check if rfp public bidding completed
+                    var completedRfps = db.Rfps.Where(x => x.Status == Models.Constants.Enums.RfpStatusTypes.Public.ToString() && x.PublicBidEndDate < DateTime.Now && x.WinnerRfpBidID == null).ToList();
+
+                    foreach (var rfp in completedRfps)
                     {
-                        rfp.Status = Models.Constants.Enums.RfpStatusTypes.Expired.ToString();
+                        rfp.Status = Models.Constants.Enums.RfpStatusTypes.Completed.ToString();
                         db.Entry(rfp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         db.SaveChanges();
+
+
+                        //Post survey to DxD
+                        DxDSurvey survey = new DxDSurvey();
+                        survey.job_description = rfp.Description;
+                        string[] startDate = rfp.Timeframe.Split('-')[0].Trim().Split("/");
+                        survey.job_start_date = new DateTime(Convert.ToInt32(startDate[2]), Convert.ToInt32(startDate[0]), Convert.ToInt32(startDate[1])).ToString("yyyy-MM-dd HH:mm:ss");
+                        string[] endDate = rfp.Timeframe.Split('-')[1].Trim().Split("/");
+                        survey.job_end_date = new DateTime(Convert.ToInt32(endDate[2]), Convert.ToInt32(endDate[0]), Convert.ToInt32(endDate[1])).ToString("yyyy-MM-dd HH:mm:ss");
+                        survey.job_title = rfp.Title;
+                        survey.survey_hours = Program._settings.SurveyHours;
+                        survey.total_price = Convert.ToInt32(rfp.Amount);
+
+                        var bids = db.RfpBids.Where(x => x.RfpID == rfp.RfpID).ToList();
+                        foreach (var bid in bids)
+                        {
+                            var bidUser = db.Users.Find(bid.UserId);
+
+                            DateTime expectedDelivery = new DateTime(Convert.ToInt32(startDate[2]), Convert.ToInt32(startDate[0]), Convert.ToInt32(startDate[1])).AddDays(Convert.ToInt32(bid.Time));
+
+                            DxDBid dxdbid = new DxDBid() { name = bidUser.NameSurname, forum = bidUser.UserName, email = bidUser.Email, amount_of_bid = Convert.ToInt32(bid.Amount), additional_note = bid.Note, delivery_date = expectedDelivery.ToString("yyyy-MM-dd HH:mm:ss") };
+
+                            survey.bids.Add(dxdbid);
+                        }
+                        
+                        //Send to DEVxDAO survey
+                        var surveyJson = Utility.Request.PostDxD(Program._settings.DxDApiForUser + "/api/rfp/survey", Utility.Serializers.SerializeJson(survey), Program._settings.DxDApiToken);
+
+                        Program.monitizer.AddApplicationLog(LogTypes.ApplicationLog, "Public bidding ended for RFP #" + rfp.RfpID + ". DEVxDAO survey post response:" + surveyJson, "RfpID", rfp.RfpID);
                     }
+
                 }
             }
             catch (Exception ex)
             {
                 Program.monitizer.AddConsole("Exception in timer CheckRfpStatus. Ex:" + ex.Message);
             }
+
+            rfpCheckInProgress = false;
         }
 
         public IConfiguration Configuration { get; }

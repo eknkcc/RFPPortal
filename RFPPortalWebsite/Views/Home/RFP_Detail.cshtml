@@ -101,7 +101,7 @@
                                     <th scope="col">Username</th>
                                     <th scope="col">Bid Date</th>
                                     <th scope="col">Amount</th>
-                                    <th scope="col">Time</th>
+                                    <th scope="col">Time (Days)</th>
                                     <th scope="col">Additional Note</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -214,10 +214,10 @@
                         <input type="email" class="form-control" @disabled id="email" placeholder="Email" value="@HttpContextAccessor.HttpContext.Session.GetString("Email")" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="timeframe" placeholder="Expected Timeframe (Days)" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="number" class="form-control" id="timeframe" placeholder="Expected Timeframe (Days)" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="amount" placeholder="Amount" onfocus="this.removeAttribute('readonly');" readonly>
+                        <input type="number" class="form-control" id="amount" placeholder="Amount (Euros)" onfocus="this.removeAttribute('readonly');" readonly>
                     </div>
                     <div class="form-group">
                         <textarea type="text" class="form-control" id="note" placeholder="Additional Note" rows="5" onfocus="this.removeAttribute('readonly');" readonly></textarea>
@@ -320,7 +320,6 @@
 
                 // If the count down is over, write some text
                 if (distance < 0) {
-                    clearInterval(x);
                     document.getElementById("countDownDiv").innerHTML = "Bidding Ended";
                 }
 
@@ -344,7 +343,7 @@
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Sending Bid..');
 
-                var timeframe = $("#timeframe").val();
+                var timeframe = $("#timeframe").val().toString();
                 var amount = parseFloat($("#amount").val());
                 var note = $("#note").val();
 
@@ -396,7 +395,7 @@
                 $(e).prop("disabled", true);
                 $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Updating Bid..');
 
-                var timeframe = $("#EditTimeframe").val();
+                var timeframe = $("#EditTimeframe").val().toString();
                 var amount = parseFloat($("#EditAmount").val());
                 var note = $("#EditNote").val();
 

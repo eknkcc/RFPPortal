@@ -11,29 +11,6 @@ namespace RFPPortalWebsite.Utility
     /// </summary>
     public static class Request
     {
-        public static string GetDxD(string url, string token = "")
-        {
-            string result = string.Empty;
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Headers.Add("AcceptLanguage", System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
-                if (!String.IsNullOrEmpty(token))
-                    request.Headers.Add("Authorization", "Token "+ token);
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    result = reader.ReadToEnd();
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-
-            return result;
-        }
         public static string Get(string url, string token="")
         {
             string result = string.Empty;
@@ -174,6 +151,67 @@ namespace RFPPortalWebsite.Utility
 
             }
             return false;
-        }         
+        }
+
+
+        //Http requests for DEVxDAO
+        public static string GetDxD(string url, string token = "")
+        {
+            string result = string.Empty;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Headers.Add("AcceptLanguage", System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                if (!String.IsNullOrEmpty(token))
+                    request.Headers.Add("Authorization", "Token " + token);
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return result;
+        }
+
+        public static string PostDxD(string url, string postData, string token = "")
+        {
+            string result = string.Empty;
+
+            try
+            {
+                var data = Encoding.UTF8.GetBytes(postData);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Headers.Add("AcceptLanguage", System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                if (!String.IsNullOrEmpty(token))
+                    request.Headers.Add("Authorization", "Token " + token);
+                request.ContentType = "application/json; charset=utf-8";
+                request.Method = "POST";
+                request.Accept = "application/json; charset=utf-8";
+                request.ContentLength = data.Length;
+
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                result = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return result;
+        }
     }
 }

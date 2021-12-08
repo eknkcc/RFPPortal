@@ -145,9 +145,11 @@ namespace RFPPortalWebsite.Methods
                 {
                     //Control with email
 
-                    var checkUserJson = Utility.Request.GetDxD(Program._settings.DxDApiForUser + email, Program._settings.DxDApiToken);
-                    registerResponse = Utility.Serializers.DeserializeJson<DxDUserModel>(checkUserJson);
+                    var checkUserJson = Utility.Request.GetDxD(Program._settings.DxDApiForUser + "/api/va/email/" + email, Program._settings.DxDApiToken);
 
+                    Program.monitizer.AddApplicationLog(LogTypes.ApplicationLog, "User registration internal user control. DxD response " + checkUserJson);
+
+                    registerResponse = Utility.Serializers.DeserializeJson<DxDUserModel>(checkUserJson);
 
                     if (registerResponse == null)
                         return new DxDUserModel();
