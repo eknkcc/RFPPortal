@@ -25,7 +25,8 @@ namespace RFPPortal_Tests
     {
         PostTestController controllers;
         ISession session;        
-        /// Application controllers and HttpContext Session are initialized.        
+        
+        /// Application controllers and HttpContext Session are initialized.   
         public Authorization_Tests(){
             controllers = new PostTestController();
             controllers.bidController.ControllerContext = new ControllerContext();
@@ -50,8 +51,8 @@ namespace RFPPortal_Tests
                 UserName    = "Regular_User",
                 NameSurname = "Regular User",
                 Email       = "regular@user.com",
-                Password    = "PassW0rd",
-                RePassword  = "PassW0rd"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
 
             //Act
@@ -86,8 +87,8 @@ namespace RFPPortal_Tests
                 UserName    = "Public_User",
                 NameSurname = "Public User",
                 Email       = "public@user.com",
-                Password    = "PassW0rd",
-                RePassword  = "PassW0rd"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
             // Starting registration process
             SimpleResponse result = controllers.authController.RegisterUser(user);
@@ -148,10 +149,10 @@ namespace RFPPortal_Tests
         public void Signin_Test(){
 
             string existingUserEmail = "public@user1.com";
-            string existingUserPassword = "PassW0rd";
+            string existingUserPassword = TestDbInitializer.testPassword;
             string nonExistingUserEmail = "nonexisting@user.com";
-            string nonExistingPassword = "PassW0rd";
-            string existingUserWrongPassword = "Password";
+            string nonExistingPassword = TestDbInitializer.testPassword;
+            string existingUserWrongPassword = Guid.NewGuid().ToString("d").Substring(1,7); 
 
             // Arrange
             TestDbInitializer.SeedUsers();
@@ -192,8 +193,8 @@ namespace RFPPortal_Tests
                 UserName      = "ekincc"
                 , NameSurname = "Ekin Kececi"
                 , Email       = "ekin@ekonteknoloji.com"
-                , Password    = "PassW0rd"
-                , RePassword  = "PassW0rd"
+                , Password    = TestDbInitializer.testPassword
+                , RePassword  = TestDbInitializer.testPassword
             };
             var result = controllers.authController.RegisterUser(va_usr);
             result.Success.Should().Be(true);
@@ -202,7 +203,7 @@ namespace RFPPortal_Tests
             
             // Preparing VA parameters for login
             string email = "ekin@ekonteknoloji.com";
-            string password = "PassW0rd";
+            string password = TestDbInitializer.testPassword;
 
             // Act
             // Signin process should be successfull and returned user type should be "Internal"
@@ -228,8 +229,8 @@ namespace RFPPortal_Tests
                 UserName    = "VA_User",
                 NameSurname = "VA User",
                 Email       = "ekin@ekonteknoloji.com",
-                Password    = "Password",
-                RePassword  = "Password"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
             
             // Act
@@ -255,8 +256,8 @@ namespace RFPPortal_Tests
                 UserName    = "Exsiting_User",
                 NameSurname = "Existing User",
                 Email       = "existing@user.com",
-                Password    = "Password",
-                RePassword  = "Password"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
 
             // model for case -1- : attempt of 'Existing UserName' register 
@@ -264,8 +265,8 @@ namespace RFPPortal_Tests
                 UserName    = "Exsiting_User",
                 NameSurname = "Existing User1",
                 Email       = "existing@user1.com",
-                Password    = "Password",
-                RePassword  = "Password"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
 
             // model for case -2- : attempt of 'Existing Email' register
@@ -273,8 +274,8 @@ namespace RFPPortal_Tests
                 UserName    = "Exsiting_User1",
                 NameSurname = "Existing User2",
                 Email       = "existing@user.com",
-                Password    = "Password",
-                RePassword  = "Password"
+                Password    = TestDbInitializer.testPassword,
+                RePassword  = TestDbInitializer.testPassword
             };
 
             // Registering the user model which will act as existing user.
