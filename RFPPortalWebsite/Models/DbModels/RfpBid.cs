@@ -16,5 +16,6 @@ namespace RFPPortalWebsite.Models.DbModels
         public double Amount { get; set; }
         public string Note { get; set; }
         public string Time { get; set; }
+        public bool? DosPaid { get; set; }
     }
 }

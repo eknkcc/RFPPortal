@@ -9,7 +9,8 @@ namespace RFPPortalWebsite.Models.ViewModels
     public class RfpBidWUser
     {
         public RfpBid Bid { get; set; }
-
         public string Username { get; set; }
+        public string UserType { get; set; }
+
     }
 }

@@ -9,6 +9,7 @@ using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Models.ViewModels;
 using RFPPortalWebsite.Utility;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,14 +38,7 @@ namespace RFPPortalWebsite.Controllers
         {
             PagedList.Core.IPagedList<Rfp> model = new PagedList<Rfp>(null, 1, 1);
 
-            if (HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Internal.ToString() || HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Admin.ToString())
-            {
-                model = Methods.RfpMethods.GetRfpsByStatusPaged(null, Page, 5);
-            }
-            else
-            {
-                model = Methods.RfpMethods.GetRfpsByStatusPaged(Models.Constants.Enums.RfpStatusTypes.Public.ToString(), Page, 5);
-            }
+            model = Methods.RfpMethods.GetRfpsByStatusPaged(null, Page, 5);
 
             ViewBag.PageTitle = "DEVxDAO - Request for Proposals Portal";
             return View(model);
@@ -84,11 +78,6 @@ namespace RFPPortalWebsite.Controllers
             {
                 model.RfpDeatil = cont.GetRfpById(BidID);
                 model.BidList = cont.GetRfpBidsByRfpId(BidID);
-
-                if (model.RfpDeatil.Status == Models.Constants.Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Models.Constants.Enums.UserIdentityType.Public.ToString())
-                {
-                    return RedirectToAction("Unauthorized");
-                }
             }
             catch (Exception)
             {
@@ -109,5 +98,60 @@ namespace RFPPortalWebsite.Controllers
             return View(model);
         }
 
+
+        [UserAuthorization]
+        [HttpPost]
+        public IActionResult DosFeeProcess(string stripeToken, string stripeEmail, int rfpid, int rfpbidid)
+        {
+            try
+            {
+                Dictionary<string, string> Metadata = new Dictionary<string, string>();
+                Metadata.Add("Product", "RFP Bid DoS Fee");
+                Metadata.Add("Quantity", "1");
+                var options = new ChargeCreateOptions
+                {
+                    Amount = Convert.ToInt64(Program._settings.DosFee * 100),
+                    Currency = "USD",
+                    Description = "Rfp bid DoS fee payment. RfpID: " + rfpid + ", RfpBidId: " + rfpbidid,
+                    Source = stripeToken,
+                    ReceiptEmail = stripeEmail,
+                    Metadata = Metadata
+                };
+                var service = new ChargeService();
+                Charge charge = service.Create(options);
+
+                if (charge.Paid)
+                {
+                    using (rfpdb_context db = new rfpdb_context())
+                    {
+                        var bid = db.RfpBids.Find(rfpbidid);
+                        bid.DosPaid = true;
+                        db.SaveChanges();
+                    }
+
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "DoS fee payment result. Sucessful.  RfpID: " + rfpid + ", RfpBidId: " + rfpbidid);
+
+                    TempData["toastr-message"] = "Payment succesful. Your bid is now validated.";
+                    TempData["toastr-type"] = "success";
+                }
+                else
+                {
+                    Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "DoS fee payment result. " + charge.FailureMessage + "  RfpID: " + rfpid + ", RfpBidId: " + rfpbidid);
+
+                    TempData["toastr-message"] = "Payment failed. Err: " + charge.FailureMessage;
+                    TempData["toastr-type"] = "error";
+                }
+
+            }
+            catch (StripeException ex)
+            {
+                TempData["toastr-message"] = "Payment failed. Err: " + ex.Message;
+                TempData["toastr-type"] = "error";
+
+                Program.monitizer.AddException(ex, LogTypes.ApplicationError);
+            }
+
+            return Redirect("../RFP-Detail/" + rfpid);
+        }
     }
 }

@@ -19,11 +19,16 @@ namespace RFPPortalWebsite
             public int InternalBiddingDays { get; set; }
             public int PublicBiddingDays { get; set; }
             public int SurveyHours { get; set; }
+            public int DosFee { get; set; }
 
             public List<string> IpWhitelist { get; set; }
             public string EncryptionKey { get; set; }
             public string DxDApiForUser { get; set; }
             public string DxDApiToken { get; set; }
+
+            public string StripePublicKey { get; set; }
+            public string StripePrivateKey { get; set; }
+
 
             //SMTP SETTINGS
             public string EmailAddress { get; set; }

@@ -6,6 +6,7 @@ using RFPPortalWebsite.Models.Constants;
 using RFPPortalWebsite.Models.DbModels;
 using RFPPortalWebsite.Models.SharedModels;
 using RFPPortalWebsite.Utility;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,26 +74,41 @@ namespace RFPPortalWebsite.Controllers
                         return new SimpleResponse() { Success = false, Message = "Bid already exists for given UserId. Please delete your bid first." };
                     }
 
+                    //Commented out because collection for public bids starts immediately.
                     //Check if public user trying to post bid on internal bid
-                    if (rfp.Status == Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Enums.UserIdentityType.Public.ToString())
+                    //if (rfp.Status == Enums.RfpStatusTypes.Internal.ToString() && HttpContext.Session.GetString("UserType") == Enums.UserIdentityType.Public.ToString())
+                    //{
+                    //    return new SimpleResponse() { Success = false, Message = "Public users can't bid to internal bidding." };
+                    //}
+
+
+                    model.UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+
+                    //If user is internal skip DOS fee payment
+                    var user = db.Users.Find(model.UserId);
+                    if (user.UserType == Models.Constants.Enums.UserIdentityType.Public.ToString())
                     {
-                        return new SimpleResponse() { Success = false, Message = "Public users can't bid to internal bidding." };
+                        model.DosPaid = false;
+                    }
+                    else
+                    {
+                        model.DosPaid = true;
                     }
                 }
 
-                model.UserId = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
                 RfpBid bidResult = Methods.BidMethods.SubmitBid(model);
 
                 if (bidResult.RfpBidID > 0)
                 {
                     //Log
                     Program.monitizer.AddUserLog(model.UserId, UserLogType.Request, "User submitted a new bid for RFP: " + model.RfpID);
-                    
-                    try{
+
+                    try
+                    {
                         TempData["toastr-message"] = "Bid submitted successfully.";
                         TempData["toastr-type"] = "success";
                     }
-                    catch(Exception){}
+                    catch (Exception) { }
                     return new SimpleResponse() { Success = true, Message = "Bid submitted successfully.", Content = bidResult };
                 }
                 else
@@ -153,12 +169,13 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
-                    try{
+                    try
+                    {
                         TempData["toastr-message"] = "Rfp bid succesfully deleted.";
                         TempData["toastr-type"] = "success";
                     }
-                    catch(Exception){}
-                    
+                    catch (Exception) { }
+
                     return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully deleted." };
                 }
             }
@@ -226,16 +243,17 @@ namespace RFPPortalWebsite.Controllers
 
                 //Edit bid
                 var result = Methods.BidMethods.EditBid(model);
-                if (result.RfpBidID > 0 )
+                if (result.RfpBidID > 0)
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "User deleted bid for RFP: " + rfpbid.RfpID);
-                    
-                    try{
+
+                    try
+                    {
                         TempData["toastr-message"] = "Rfp bid succesfully edited.";
                         TempData["toastr-type"] = "success";
                     }
-                    catch(Exception){}
+                    catch (Exception) { }
                     return new SimpleResponse() { Success = true, Message = "Rfp bid succesfully edited." };
                 }
             }
@@ -284,11 +302,12 @@ namespace RFPPortalWebsite.Controllers
                 {
                     //Log
                     Program.monitizer.AddUserLog(Convert.ToInt32(HttpContext.Session.GetInt32("UserId")), UserLogType.Request, "Admin choose winning bid for RFP: " + rfpbid.RfpID + ", RfpBid: " + RfpBidID);
-                    try{
+                    try
+                    {
                         TempData["toastr-message"] = "Rfp winning bid and status succesfully updated.";
                         TempData["toastr-type"] = "success";
                     }
-                    catch(Exception){}
+                    catch (Exception) { }
                     return new SimpleResponse() { Success = true, Message = "Rfp winning bid and status succesfully updated." };
                 }
 

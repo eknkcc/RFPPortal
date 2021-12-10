@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RFPPortalWebsite.Contexts;
 
 namespace RFPPortalWebsite.Migrations
 {
     [DbContext(typeof(rfpdb_context))]
-    partial class rfpdb_contextModelSnapshot : ModelSnapshot
+    [Migration("20211209080336_dxd_surveyid_added")]
+    partial class dxd_surveyid_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,9 +153,6 @@ namespace RFPPortalWebsite.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
-
-                    b.Property<bool?>("DosPaid")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Note")
                         .HasColumnType("text");

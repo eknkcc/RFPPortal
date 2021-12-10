@@ -123,7 +123,8 @@ namespace RFPPortalWebsite.Methods
                              select new RfpBidWUser
                              {
                                  Bid = bid,
-                                 Username = user.UserName
+                                 Username = user.UserName,
+                                 UserType = user.UserType
                              }).ToList();
                 }
             }

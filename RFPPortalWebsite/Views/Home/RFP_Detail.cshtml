@@ -99,9 +99,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Username</th>
-                                    <th scope="col">Bid Date</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Time (Days)</th>
+                                    <th class="cursorp thSort" scope="col">User Type <i class="fas fa-sort"></i></th>
+                                    <th class="cursorp thSort" scope="col">Bid Date <i class="fas fa-sort"></i></th>
+                                    <th class="cursorp thSort" scope="col">Amount <i class="fas fa-sort"></i></th>
+                                    <th class="cursorp thSort" scope="col">Time (Days) <i class="fas fa-sort"></i></th>
                                     <th scope="col">Additional Note</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -114,13 +115,14 @@
 
                                         <tr>
                                             <td id="name_@item.Bid.RfpBidID" scope="row">@item.Username</td>
+                                            <td scope="row">@item.UserType</td>
                                             <td>@item.Bid.CreateDate.ToLocalTime()</td>
                                             <td id="amount_@item.Bid.RfpBidID">@item.Bid.Amount @Model.RfpDeatil.Currency</td>
                                             <td id="timeFrame_@item.Bid.RfpBidID">@item.Bid.Time</td>
                                             <td id="note_@item.Bid.RfpBidID" title="@item.Bid.Note">
-                                                @if (item.Bid.Note != null && item.Bid.Note.Length > 50)
+                                                @if (item.Bid.Note != null && item.Bid.Note.Length > 20)
                                                 {
-                                                    @item.Bid.Note.Substring(0, Math.Min(item.Bid.Note.Length, 50)) <span>..</span>
+                                                    @item.Bid.Note.Substring(0, Math.Min(item.Bid.Note.Length, 20))<span class="cursor-pointer" onclick="ShowNoteModal('@item.Bid.Note');">...<i class="fas fa-eye ml-1"></i></span>
                                                 }
                                                 else
                                                 {
@@ -135,8 +137,28 @@
                                                     @* Check if this bid belongs to user (Displays bid delete and edit buttons) *@
                                                     if (item.Username == HttpContextAccessor.HttpContext.Session.GetString("Username"))
                                                     {
-                                                        <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
-                                                        <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                        if (item.Bid.DosPaid == true)
+                                                        {
+                                                            <button id="@item.Bid.RfpBidID" onclick="EditBidModal(this.id)" type="button" class="btn btnEdit btn-sm"><i class="fas fa-edit mr-1"></i>Edit</button>
+                                                            <button id="@item.Bid.RfpBidID" onclick="DeleteBidModal(this.id)" type="button" class="btn btnEdit  btn-sm"><i class="fas fa-edit mr-1"></i>Delete</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <form action="../Home/DosFeeProcess" method="POST">
+                                                                <input type="hidden" value="@item.Bid.RfpID" name="rfpid">
+                                                                <input type="hidden" value="@item.Bid.RfpBidID" name="rfpbidid">
+                                                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                                        data-key="pk_test_51K4gybBY9GMD1AgYf1OySdf1e0Q7oMtKMHsRvQihRcUA25vXAXjmMdI5bb4FSfJSVklNVjfVNhUmMziW3Uh0exRZ00CWMZfdry"
+                                                                        data-amount="@ViewBag.PaymentAmount"
+                                                                        data-name="Dos Fee Payment @Program._settings.DosFee$"
+                                                                        data-description="Please pay the DoS fee to validate your bid."
+                                                                        data-locale="en"
+                                                                        data-zip-code="false"
+                                                                        data-label="Pay DoS Fee">
+                                                                </script>
+                                                            </form>
+                                                        }
+
                                                     }
 
                                                     @* Check if user is admin (Displays 'Choose Winning Bid' button) *@
@@ -280,10 +302,95 @@
             </div>
         </div>
     </div>
+}
 
-    @* Bidding functions *@
-    @section Scripts{
+@* Create admin modals & functions if user is admin and RFP status is active *@
+@if (biddingActive && HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
+{
+    @* Choose winner bid modal *@
+    <div class="modal fade" id="WinningBidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body">Winner Bid For RFP #@Model.RfpDeatil.RfpID</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-black-50">
+                    Are you sure you want to select the winner bid as <span id="winner"></span>?
+                </div>
+                <div id="winnerButtons" class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-info" onclick="SubmitWinnerBid(this)">Confirm Winner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Admin functions *@
+    @section ScriptsAdmin{
         <script>
+            //Toggle winning bid confirmation modal
+            function WinningBidModal(id) {
+                $("#winnerButtons button:nth-of-type(2)").attr("id", id);
+                $("#winner").text($("#name_" + id).text());
+                $("#WinningBidModal").modal("toggle");
+            }
+
+            //Submit bid confirmation
+            function SubmitWinnerBid(e) {
+                $(e).prop("disabled", true);
+                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
+
+                $.ajax({
+                    type: "Put",
+                    url: '../Bid/ChooseWinningBid?RfpBidID=' + $(e).attr("id"),
+                    cache: false,
+                    async: true,
+                    success: function (result) {
+                        if (result.success == true) {
+                            location.reload();
+                        }
+                        else {
+                            toastr.warning(result.message);
+                        }
+                        $(e).prop("disabled", false);
+                        $(e).html('Select Winner');
+                    },
+                    error: function () {
+                        toastr.error("An error occurred during the process. Please try again later. ");
+                        $(e).prop("disabled", false);
+                        $(e).html('Select Winner');
+                    }
+                });
+            }
+        </script>
+    }
+}
+
+@* User note modal *@
+<div class="modal fade" id="userNoteModal" tabindex="-1" role="dialog" aria-labelledby="userNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-body">User Note</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="userNoteContent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
 
             @{
                 var dt1 = Model.RfpDeatil.InternalBidEndDate;
@@ -329,7 +436,12 @@
             function NewBidModal() {
                 @if (string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("Username")))
                 {
-                    <text>$("#modal-login").modal("toggle");</text>
+                    <text>
+                    $("#modal-login").modal("toggle");
+                    setTimeout(function () {
+                        $('#LoginEmail').focus();
+                    }, 250);
+                    </text>
                 }
                 else
                 {
@@ -455,71 +567,31 @@
                 });
             }
 
-        </script>
-    }
-}
 
-@* Create admin modals & functions if user is admin and RFP status is active *@
-@if (biddingActive && HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
-{
-    @* Choose winner bid modal *@
-    <div class="modal fade" id="WinningBidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-body">Winner Bid For RFP #@Model.RfpDeatil.RfpID</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-black-50">
-                    Are you sure you want to select the winner bid as <span id="winner"></span>?
-                </div>
-                <div id="winnerButtons" class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-info" onclick="SubmitWinnerBid(this)">Confirm Winner</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        //Toggles user note modal to show all UserNote content
+        function ShowNoteModal(note) {
+            $("#userNoteContent").html(note);
+            $("#userNoteModal").modal("toggle");
+        }
 
-    @* Admin functions *@
-    @section ScriptsAdmin{
-        <script>
-            //Toggle winning bid confirmation modal
-            function WinningBidModal(id) {
-                $("#winnerButtons button:nth-of-type(2)").attr("id", id);
-                $("#winner").text($("#name_" + id).text());
-                $("#WinningBidModal").modal("toggle");
+        //Bids table sorting functions
+        $('.thSort').click(function () {
+            var table = $(this).parents('table').eq(0)
+            var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+            this.asc = !this.asc
+            if (!this.asc) { rows = rows.reverse() }
+            for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+        })
+
+        function comparer(index) {
+            return function (a, b) {
+                var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
             }
+        }
 
-            //Submit bid confirmation
-            function SubmitWinnerBid(e) {
-                $(e).prop("disabled", true);
-                $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
-
-                $.ajax({
-                    type: "Put",
-                    url: '../Bid/ChooseWinningBid?RfpBidID=' + $(e).attr("id"),
-                    cache: false,
-                    async: true,
-                    success: function (result) {
-                        if (result.success == true) {
-                            location.reload();
-                        }
-                        else {
-                            toastr.warning(result.message);
-                        }
-                        $(e).prop("disabled", false);
-                        $(e).html('Select Winner');
-                    },
-                    error: function () {
-                        toastr.error("An error occurred during the process. Please try again later. ");
-                        $(e).prop("disabled", false);
-                        $(e).html('Select Winner');
-                    }
-                });
-            }
-        </script>
-    }
+        function getCellValue(row, index) {
+            return $(row).children('td').eq(index).text()
+        }
+    </script>
 }
