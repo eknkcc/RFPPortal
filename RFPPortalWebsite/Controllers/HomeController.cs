@@ -44,15 +44,26 @@ namespace RFPPortalWebsite.Controllers
             return View(model);
         }
 
-        [AdminUserAuthorization]
+        [UserAuthorization]
         [Route("Rfp-Form")]
         public IActionResult Rfp_Form()
         {
-            ViewBag.PageTitle = "RFP Form";
-            return View();
+            if(HttpContext.Session.GetString("RfpFormKey") == null)
+            {
+                if(HttpContext.Session.GetString("UserType") != Models.Constants.Enums.UserIdentityType.Admin.ToString())
+                    return View("Unauthorized");
+                else
+                    return View();
+            }
+            else
+            {
+                ViewBag.PageTitle = "RFP Form";
+                return View();
+            }
+       
         }
 
-        [AdminUserAuthorization]
+        [UserAuthorization]
         [Route("SubmitForm")]
         public IActionResult SubmitForm(Rfp model)
         {
@@ -97,7 +108,6 @@ namespace RFPPortalWebsite.Controllers
 
             return View(model);
         }
-
 
         [UserAuthorization]
         [HttpPost]
@@ -152,6 +162,33 @@ namespace RFPPortalWebsite.Controllers
             }
 
             return Redirect("../RFP-Detail/" + rfpid);
+        }
+
+        [UserAuthorization]
+        [HttpGet]
+        public SimpleResponse CheckRFPFormKey(string key)
+        {
+            SimpleResponse res = new SimpleResponse();
+            if (key == Program._settings.RfpKey)
+            {
+                try
+                {
+                    HttpContext.Session.SetString("RfpFormKey", key);
+                    res.Success = true;
+                }
+                catch (Exception)
+                {
+                    res.Success = false;
+                    res.Message = "An error occurred during the process. Please try again later.";
+                }
+            }
+            else
+            {
+                res.Success = false;
+                res.Message = "Invalid key. Please try again.";
+            }
+
+            return res;
         }
     }
 }

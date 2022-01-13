@@ -376,7 +376,7 @@ header {
     padding: 10px;
 }
 
-    .topnav a {
+    .topnav a, .topnav button {
         float: left;
         display: block;
         color: #82bbf9;

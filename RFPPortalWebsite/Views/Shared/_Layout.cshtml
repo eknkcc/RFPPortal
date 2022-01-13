@@ -70,9 +70,9 @@
             <a class="btn btn-outline-primary mr-2" href="../Rfps"><i class="fa fa-list-alt"></i> RFP List</a>
 
             @* Show RFP post menu for admins *@
-            @if (HttpContextAccessor.HttpContext.Session.GetString("UserType") == RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString())
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") != null)
             {
-                <a class="btn btn-outline-primary mr-2" href="../Rfp-Form"><i class="fa fa-plus-square"></i> New RFP</a>
+                <button class="btn btn-outline-primary mr-2" onclick="CheckUserKey()"><i class="fa fa-plus-square"></i> New RFP</button>
             }
 
             @*MENU - Mobile menu collapse button *@
@@ -258,8 +258,35 @@
                             <label class="label" for="date">New password confirmation</label>
                         </div>
 
-                        <button type="button" onclick="ResetPasswordComplete();" class="btn btn-primary btn-block btn-md float-right submitFormButton mt-3">Set New Password</button>
+                        <button type="button" onclick="ResetPasswordComplete(this);" class="btn btn-primary btn-block btn-md float-right submitFormButton mt-3">Set New Password</button>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RFP Form Key for users other than admin -->
+    <div class="modal fade" id="modal-rfp-form">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body"> RFP Form Post Key</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body p-md-4 p-lg-5">
+                    <div class="row">
+                        <p class="tc-default">Please enter RFP Form Post Key</p>
+
+                        <div class="group w-100">
+                            <input id="rfpFormKey" required="" class="input" type="text" onfocus="this.removeAttribute('readonly');" readonly><span class="highlight"></span><span class="bar"></span>
+                            <label class="label" for="date">Form Key</label>
+                        </div>
+
+                        <button type="button" onclick="CheckFormKey(this);" class="btn btn-primary btn-block btn-md float-right submitFormButton mt-3">Check Key</button>
                     </div>
                 </div>
             </div>
@@ -578,6 +605,59 @@
             $(e).html('<i class="fas fa-circle-notch fa-spin"></i>');
 
             window.location.href = '../Logout';
+        }
+
+
+        function CheckFormKey(e) {
+            //Disable submit button
+            $(e).prop("disabled", true);
+            $(e).html('<i class="fas fa-circle-notch fa-spin"></i> Please wait..');
+
+            //Create new key model
+            var key = $('#rfpFormKey').val()
+
+            //Ajax post action
+            $.ajax({
+                type: "GET",
+                url: "../Home/CheckRFPFormKey",
+                async: true,
+                data: { "key": key },
+                success: function (result) {
+                    if (result.success) {
+                      
+                        $("#modal-rfp-form").modal("toggle");
+                        setTimeout(function () {
+                            window.location.href = "../Rfp-Form";
+                        }, 500);
+                    }
+                    else {
+                        toastr.error(result.message);
+                    }
+                },
+                error: function (response) {
+                    toastr.error("An error occurred during the process. Please try again later. ");
+                }
+            }).done(function () {
+                //Enable submit button
+                $(e).prop("disabled", false);
+                $(e).html('Check Key');
+
+            });
+        }
+
+        function CheckUserKey() {
+            var userType = @if(HttpContextAccessor.HttpContext.Session.GetString("UserType") == null) {<text>""</text>} else {<text> "@HttpContextAccessor.HttpContext.Session.GetString("UserType").ToString()" </text> };
+            var RfpFormKey = @if(HttpContextAccessor.HttpContext.Session.GetString("RfpFormKey") == null) {<text>""</text>} else {<text> "@HttpContextAccessor.HttpContext.Session.GetString("RfpFormKey").ToString()" </text> };
+
+            if (userType == "@RFPPortalWebsite.Models.Constants.Enums.UserIdentityType.Admin.ToString()") {
+                window.location.href = "../Rfp-Form";
+            }
+            else if (RfpFormKey != "" ) {
+                window.location.href = "../Rfp-Form";
+            }
+            else {
+                $("#modal-rfp-form").modal("toggle");
+            }
         }
 
     </script>

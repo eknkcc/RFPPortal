@@ -21,6 +21,9 @@ namespace RFPPortalWebsite
             public int SurveyHours { get; set; }
             public int DosFee { get; set; }
 
+            // Key for Rfp Form users other than admin
+            public string RfpKey { get; set; }
+
             public List<string> IpWhitelist { get; set; }
             public string EncryptionKey { get; set; }
             public string DxDApiForUser { get; set; }
